@@ -9,7 +9,11 @@
 //#include <DGtal/io/readers/PGMReader.h>
 //#include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
+////////////////////////////////////////////////////////////////////////////////
 #include "Tools/LireImgPgm.h"
+#include "Modifieurs/Traitement_AntiBruit.h"
+#include "Modifieurs/Traitement_AntiInversion.h"
+#include "Tests/AntiInversion/Test_AntiInversion.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -18,5 +22,6 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 			    //32bit integers
 int main(int argc,char** argv)
 {
+  Test_AntiInversion();
   return 0;
 }
