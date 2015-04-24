@@ -9,6 +9,7 @@
 //#include <DGtal/io/readers/PGMReader.h>
 //#include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
+#include "Tools/LireImgPgm.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
