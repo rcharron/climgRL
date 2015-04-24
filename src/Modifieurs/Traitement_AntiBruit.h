@@ -19,7 +19,7 @@
 /* Fait une liste des huits voisins d'un point */
 std::vector<DGtal::Z2i::Point> Make_Voisins(DGtal::Z2i::Point p);
 
-Image Apply_AntiBruit (Image image);
+Image Apply_AntiBruit (Image & image);
 
 Image Traitement_AntiBruit (std::string filename);
 

@@ -20,7 +20,7 @@ vector<Point> Make_Voisins(Point p){
   return voisins;
 }
 
-Image Apply_AntiBruit (Image image){
+Image Apply_AntiBruit (Image & image){
   Domain domain = image.domain();
   Image new_image = Image(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
