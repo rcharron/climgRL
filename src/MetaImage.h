@@ -6,6 +6,7 @@
 #include <DGtal/io/boards/Board2D.h>
 #include <DGtal/helpers/StdDefs.h>
 #include <DGtal/io/readers/PGMReader.h>
+#include <DGtal/io/writers/PGMWriter.h>
 #include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
 
@@ -17,6 +18,7 @@ public:
   MetaImage(std::string filename);
   operator DGtal::Z2i::DigitalSet() ;
   operator DGtal::Board2D();
+  void saveSVG(std::string filename);
 private:
 };
 

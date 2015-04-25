@@ -26,3 +26,9 @@ MetaImage::operator Board2D()
   board << set2d.domain() << set2d;
   return board;
 }
+
+void MetaImage::saveSVG(string filename)
+{
+  static_cast<Board2D>(*this).saveSVG("rat-9-inverse.scg");
+//  PGMWriter<Image>::exportPGM(filename,*this);
+}
