@@ -1,4 +1,5 @@
 #include "MetaImage.h"
+#include <cmath>
 
 using namespace std;
 using namespace DGtal;
@@ -6,7 +7,7 @@ using namespace DGtal::Z2i;
 
 MetaImage::MetaImage(string filename):Image(PGMReader<Image>::importPGM(filename))
 {
-  //this=(PGMReader<Image>::importPGM(filename));
+  updateMeta();
 }
  
 MetaImage::operator DigitalSet()
@@ -29,6 +30,63 @@ MetaImage::operator Board2D()
 
 void MetaImage::saveSVG(string filename)
 {
-  static_cast<Board2D>(*this).saveSVG("rat-9-inverse.scg");
+  static_cast<Board2D>(*this).saveSVG(filename);
 //  PGMWriter<Image>::exportPGM(filename,*this);
+}
+
+void MetaImage::updateMeta()
+{
+  ComputeCenter();
+  ComputeMean();
+}
+
+
+void MetaImage::ComputeCenter()
+{
+  width=this->domain().upperBound()[0];
+  height=this->domain().upperBound()[1];
+  centerx=0;
+  centery=0;
+  int p=0;
+  for(int i=0;i<width;i++)
+  {
+    for (int j=0;j<height;j++)
+    {
+      if(getValue(i,j))
+      {
+	centerx+=i;
+	centery+=j;
+	p++;
+      }
+    }
+  }
+  centerx/=p;
+  centery/=p;
+}
+
+void MetaImage::ComputeMean()
+{
+  mean=0;
+  p=0;
+  for(int i=0;i<width;i++)
+  {
+    for (int j=0;j<height;j++)
+    {
+      if(getValue(i,j))
+      {
+	mean+=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	p++;
+      }
+    }
+  }
+  mean/=p;
+  mean=sqrt(mean);
+}
+
+int MetaImage::CanonicalValue(float x, float y)
+{
+  x-=0.5f;
+  int x=centerx+x*4*mean;
+  int y=centery+y*4*mean;
+  return getValue(x,y);
 }
