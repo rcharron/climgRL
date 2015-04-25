@@ -10,7 +10,6 @@
 //#include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
 ////////////////////////////////////////////////////////////////////////////////
-#include "Tools/LireImgPgm.h"
 #include "Modifieurs/Traitement_AntiBruit.h"
 #include "Modifieurs/Traitement_AntiInversion.h"
 #include "Tests/AntiInversion/Test_AntiInversion.h"

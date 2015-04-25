@@ -7,11 +7,11 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 			    //32bit integers
 
 void Test_AntiInversion (){
-  Image test1 = Traitement_AntiInversion("rat-8.pgm");
-  Board2D board1 = Image_to_Board(test1);
-  board1.saveEPS("rat-8-inverse.eps");
+  MetaImage test1("../database/rat-8.pgm");
+  Traitement_AntiInversion(test1);
+  static_cast<Board2D>(test1).saveEPS("rat-8-inverse.eps");
 
-  Image test2 = Traitement_AntiInversion("rat-9.pgm");
-  Board2D board2 = Image_to_Board(test1);
-  board2.saveEPS("rat-9-inverse.eps");
+  MetaImage test2("../database/rat-9.pgm");
+  Traitement_AntiInversion(test2);
+  static_cast<Board2D>(test2).saveEPS("rat-9-inverse.eps");
 }

@@ -12,16 +12,16 @@
 #include <DGtal/io/readers/PGMReader.h>
 #include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
-#include "../Tools/LireImgPgm.h"
+#include "../MetaImage.h"
 ///////////////////////////////////////////////////////////////////////////////
 
-bool To_Inverse (Image & image);
+bool To_Inverse (MetaImage& image);
 
-Image Inverse (Image & image);
+void Inverse (MetaImage& image);
     
-Image Apply_AntiInversion (Image & image);
+void Apply_AntiInversion (MetaImage& image);
 
-Image Traitement_AntiInversion (std::string filename);
+void Traitement_AntiInversion (MetaImage& image);
 
 
 #endif 
