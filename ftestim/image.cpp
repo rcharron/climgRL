@@ -28,15 +28,12 @@ image::image(string file)
   }
   while(l[0]=='#');
   
-  stringstream ss(l);
+  stringstream ss2(l);
   char white;
-  ss>>white;
-  do
-  {
-    getline(is,l);
-  }
-  while(l[0]=='#');
-  char c;
+  ss2>>white;
+  getline(is,l);
+
+  
   for(int i=0;i<width;i++)
   {
     for(int j=0;j<height;j++)
@@ -47,6 +44,19 @@ image::image(string file)
   updateMeta();
 }
 
+void image::write(std::string file)
+{
+  ofstream os(file);
+  if(os.fail())throw string("échec écriture "+file);
+  os<<"P5"<<endl<<width<<""<<height<<endl<<1<<endl;
+  for(int i=0;i<width;i++)
+  {
+    for(int j=0;j<height;j++)
+    {
+      os<<data[i][j];
+    }
+  }
+}
 
 void image::updateMeta()
 {
@@ -107,7 +117,7 @@ void image::ComputeMean()
 int image::CanonicalValue(float x, float y)
 {
   x-=0.5f;
-  int x=centerx+x*4*mean;
-  int y=centery+y*4*mean;
-  return getValue(x,y);
+  int i=centerx+x*4*mean;
+  int j=centery+y*4*mean;
+  return getValue(i,j);
 }

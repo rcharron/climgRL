@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "image.h"
+
 
 using namespace std;
 
@@ -11,8 +13,17 @@ string buildmodel(vector<string> images)
   return "";
 }
 
-float estimation(string model,string image)
+float estimation(string model,string img)
 {
+  try
+  {
+  image i(img);
+  i.write("toto.pgm");
+  }
+  catch(string s)
+  {
+    cout<<s<<endl;
+  }
   return 1.0f;
 }
 
