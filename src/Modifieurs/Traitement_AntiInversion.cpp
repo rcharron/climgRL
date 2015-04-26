@@ -16,10 +16,10 @@ bool To_Inverse (MetaImage & image){
   for (Domain::Iterator it = domain.begin(domain.lowerBound()); domain.isInside(*it);(*it)[1]++){ //itère sur les points à gauche
     if (image(*it)) { blancs++; } else { noirs++; }  
   }
-  for (Domain::Iterator it = domain.begin(domain.upperBound()); domain.isInside(*it);(*it)[0]++){ //itère sur les points en haut
+  for (Domain::Iterator it = domain.begin(domain.upperBound()); domain.isInside(*it);(*it)[0]--){ //itère sur les points en haut
     if (image(*it)) { blancs++; } else { noirs++; }  
   }
-  for (Domain::Iterator it = domain.begin(domain.upperBound()); domain.isInside(*it);(*it)[1]++){ //itère sur les points à droite
+  for (Domain::Iterator it = domain.begin(domain.upperBound()); domain.isInside(*it);(*it)[1]--){ //itère sur les points à droite
     if (image(*it)) { blancs++; } else { noirs++; }  
   } 
   return (blancs > noirs);
@@ -34,7 +34,7 @@ void Inverse (MetaImage & image){
     
 void Apply_AntiInversion (MetaImage & image){
   Domain domain = image.domain();
-  if (To_Inverse) Inverse(image);
+  if (To_Inverse(image)) Inverse(image);
 }
 
 
