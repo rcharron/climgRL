@@ -29,9 +29,9 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 /* Fait une liste des huits voisins d'un point */
 std::vector<DGtal::Z2i::Point> Remplissage_Make_Voisins(DGtal::Z2i::Point p);
 
-MetaImage Apply_Remplissage (MetaImage & image);
+Image Apply_Remplissage (Image & image);
 
-void Remplissage (MetaImage & image);
+void Remplissage (Image & image);
 
     
 #endif      

@@ -24,11 +24,11 @@ vector<Point> Remplissage_Make_Voisins(Point p){
   return voisins;
 }
 
-MetaImage Apply_Remplissage (MetaImage & image){
+Image Apply_Remplissage (Image & image){
 //  cout << "début fonction\n";
   Domain domain = image.domain();
   /* Crée une nouvelle image toute blanche */
-  MetaImage new_image = MetaImage(domain);
+  Image new_image = Image(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
     new_image.setValue(*it,1);
   }
@@ -65,7 +65,7 @@ MetaImage Apply_Remplissage (MetaImage & image){
   return new_image;
 }
 
-void Remplissage (MetaImage & image){
+void Remplissage (Image & image){
   image = Apply_Remplissage(image);
 }
 
