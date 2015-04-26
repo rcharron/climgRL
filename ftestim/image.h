@@ -10,10 +10,11 @@ public:
   bool getValue(int i,int j);
   void write(std::string file);
   int CanonicalValue(float x, float y);
-  void myfourier();
   void dessinfourier(std::string file);
+  float distanceEMD(image i2);
 private:
   void updateMeta();
+  void myfourier();
   void ComputeCenter();
   void ComputeMean();
   std::vector<std::vector<bool> > data;
