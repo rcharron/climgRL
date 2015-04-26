@@ -34,7 +34,7 @@ MetaImage::operator Board2D()
 void MetaImage::saveSVG(string filename)
 {
   static_cast<Board2D>(*this).saveSVG(filename.c_str());
-//  PGMWriter<Image>::exportPGM(filename,*this);
+  //PGMWriter<Image>::exportPGM(filename,*this);
 }
 
 void MetaImage::updateMeta()
