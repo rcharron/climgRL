@@ -19,7 +19,7 @@ public:
   MetaImage(Image img);  
   operator DGtal::Z2i::DigitalSet() ;
   operator DGtal::Board2D();
-  void saveSVG(std::string filename);
+  void savePGM(std::string filename);
   void updateMeta();
   //int CanonicalValue(float x,float y);
 private:
