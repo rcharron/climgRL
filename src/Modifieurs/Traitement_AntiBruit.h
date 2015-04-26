@@ -19,11 +19,9 @@
 /* Fait une liste des huits voisins d'un point */
 std::vector<DGtal::Z2i::Point> Make_Voisins(DGtal::Z2i::Point p);
 
-void Apply_AntiBruit (MetaImage & image);
+MetaImage Apply_AntiBruit (MetaImage & image);
 
-
-//TODO Cette fonction est buggée, n'a pas de sens
-void Traitement_AntiBruit (MetaImage& image);
+void Traitement_AntiBruit (MetaImage & image);
 
     
 #endif    

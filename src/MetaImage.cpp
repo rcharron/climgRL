@@ -9,6 +9,9 @@ MetaImage::MetaImage(string filename):Image(PGMReader<Image>::importPGM(filename
 {
   updateMeta();
 }
+
+MetaImage::MetaImage(Image img):Image(img)
+{}
  
 MetaImage::operator DigitalSet()
 {

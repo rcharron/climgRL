@@ -16,6 +16,7 @@ class MetaImage :public Image
 {
 public:
   MetaImage(std::string filename);
+  MetaImage(Image img);  
   operator DGtal::Z2i::DigitalSet() ;
   operator DGtal::Board2D();
   void saveSVG(std::string filename);

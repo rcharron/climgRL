@@ -27,4 +27,6 @@
 *.out
 *.app
 
+*.kdev4
+
 build/*
