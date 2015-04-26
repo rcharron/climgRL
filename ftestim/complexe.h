@@ -5,12 +5,14 @@ class complexe
 {
 public:
   complexe(double a,double b);
-  complexe operator+(complexe a);
-  complexe operator*(complexe a);
-  complexe& operator+=(complexe a);
-  complexe& operator*=(complexe a);
+  complexe(double phase);
+  complexe();
+  complexe operator+(const complexe& a);
+  complexe operator*(const complexe& a);
+  complexe& operator+=(const complexe& a);
+  complexe& operator*=(const complexe& a);
+  complexe& operator/=(const double& a);
   double norm();
-private:
   double re;
   double im;
 };
