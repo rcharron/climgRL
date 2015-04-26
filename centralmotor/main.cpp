@@ -41,7 +41,8 @@ int main(int argc,char**argv){
     cout<<s<<endl;
   try{
   estimator e("./libftestim.so");
-  e.scoreof("","../database/bat-1.pgm");
+  //e.scoreof("","../database/bat-1.pgm");
+  e.scoreof("","../database/beetle-1.pgm");
   }
   catch(char* err)
   {

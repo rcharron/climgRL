@@ -28,5 +28,6 @@
 *.app
 
 *.kdev4
+src/*.pgm
 
 build/*

@@ -11,7 +11,9 @@ MetaImage::MetaImage(string filename):Image(PGMReader<Image>::importPGM(filename
 }
 
 MetaImage::MetaImage(Image img):Image(img)
-{}
+{
+  updateMeta();
+}
  
 MetaImage::operator DigitalSet()
 {
@@ -31,14 +33,27 @@ MetaImage::operator Board2D()
   return board;
 }
 
-void MetaImage::saveSVG(string filename)
+void MetaImage::savePGM(string filename)
 {
-  static_cast<Board2D>(*this).saveSVG(filename.c_str());
+  ofstream os(filename);
+  if(os.fail())throw string("échec écriture "+filename);
+  os<<"P5"<<endl<<width<<" "<<height<<endl<<1<<endl;
+  for(int j=height-1;j>=0;j--)
+  {
+    for(int i=0;i<width;i++)
+    {
+      os<<(char)(*this)(Point(i,j));
+    }
+  }
+  //static_cast<Board2D>(*this).saveSVG(filename.c_str());
   //PGMWriter<Image>::exportPGM(filename,*this);
 }
 
 void MetaImage::updateMeta()
 {
+  width=this->domain().upperBound()[0];
+  height=this->domain().upperBound()[1];
+  
   //ComputeCenter();
   //ComputeMean();
 }
@@ -46,8 +61,6 @@ void MetaImage::updateMeta()
 
 /*void MetaImage::ComputeCenter()
 {
-  width=this->domain().upperBound()[0];
-  height=this->domain().upperBound()[1];
   centerx=0;
   centery=0;
   int p=0;

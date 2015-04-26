@@ -1,4 +1,6 @@
 #include "image.h"
+#include "complexe.h"
+#include "fourrier.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -18,7 +20,7 @@ image::image(string file)
   {
     getline(is,l);
   }
-  while(l[0]=='#');
+  while(l[0]=='#'||l=="");
   
   stringstream ss(l);
   ss>>width>>height;
@@ -27,7 +29,7 @@ image::image(string file)
   {
     getline(is,l);
   }
-  while(l[0]=='#');
+  while(l[0]=='#'||l=="");
   
   stringstream ss2(l);
   int vw;
@@ -39,11 +41,10 @@ image::image(string file)
   
   for(int i=0;i<width;i++)
   {
-    data.push_back(vector< bool>(width));
+    data.push_back(vector< bool>(height));
     for(int j=0;j<height;j++)
     {
       is.get(c);
-      cout<<"-";
       data[i][j]=(/*l[i*width+j]*/c==white);
     }
   }
@@ -126,4 +127,62 @@ int image::CanonicalValue(float x, float y)
   int i=centerx+x*4*mean;
   int j=centery+y*4*mean;
   return getValue(i,j);
+}
+
+
+void image::myfourier()
+{
+  vector<vector<complexe> > d;
+  for(int i=0;i<width;i++)
+  {
+    d.push_back(vector<complexe>(height));
+    for(int j=0;j<height;j++)
+      d[i][j]=complexe(data[i][j],data[i][j]);
+  }
+  
+  
+  std::vector<std::vector<complexe> > r=FFT2D(d,width,height,1);
+  
+  fourier.clear();
+  for(int i=0;i<width;i++)
+  {
+    fourier.push_back(vector<double>(height));
+    for(int j=0;j<height;j++)
+      fourier[i][j]=r[i][j].norm();
+  }
+  /*fourier.clear();
+   * 
+  for(int i=0;i<width;i++)
+  {
+    fourier.push_back(vector<double>(height));
+    for(int j=0;j<height;j++)
+    {
+      complexe c(0,0);
+      for(int k=0;k<width;k++)
+      {
+	for(int l=0;l<height;l++)
+	{
+	  if(data[k][l])
+	    c+=complexe(-2.0*M_PI*((k*i)/width+(l*j)/width));
+	}
+      }
+      c/=(width*height);
+      fourier[i][j]=c.norm();
+      cout<<i<<" "<<j<<endl;
+    }
+  }*/
+}
+
+void image::dessinfourier(string file)
+{
+  ofstream os(file);
+  if(os.fail())throw string("échec écriture "+file);
+  os<<"P5"<<endl<<width<<" "<<height<<endl<<255<<endl;
+  for(int i=0;i<width;i++)
+  {
+    for(int j=0;j<height;j++)
+    {
+      os<<(char)(1-exp(-fourier[i][j])*255);
+    }
+  }
 }
