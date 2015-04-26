@@ -25,12 +25,14 @@ vector<Point> Remplissage_Make_Voisins(Point p){
 }
 
 MetaImage Apply_Remplissage (MetaImage & image){
+//  cout << "début fonction\n";
   Domain domain = image.domain();
   /* Crée une nouvelle image toute blanche */
   MetaImage new_image = MetaImage(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
     new_image.setValue(*it,1);
   }
+//  cout << "a créé nvelle image\n";
   /* Colorie en noir les bords */
   queue<Point> myqueue;
   Point current;
@@ -46,11 +48,12 @@ MetaImage Apply_Remplissage (MetaImage & image){
   for (Point it = domain.upperBound(); domain.isInside(it);(it)[1]--){ //itère sur les points à droite
     if (!image(it)) { new_image.setValue(it,0); myqueue.push(it); }  
   }
+//  cout << "avant boucle while \n";
   while (!myqueue.empty()){
     vector<Point> voisins = Remplissage_Make_Voisins(myqueue.front());    
     for (int i = 0; i < voisins.size(); i++){
       current = voisins[i];
-      if (domain.isInside(current) && !image(current)){		//si le voisin est dans l'image et que sa couleur est noire, on le traite et on l'ajoute à la queue
+      if (domain.isInside(current) && new_image(current) && !image(current)){		//si le voisin est dans l'image et non traité et que sa couleur est noire, on le traite et on l'ajoute à la queue
 	new_image.setValue(current,0);
 	myqueue.push(current);
       }
@@ -58,6 +61,7 @@ MetaImage Apply_Remplissage (MetaImage & image){
     myqueue.pop();
   }
   /* Renvoie l'image ainsi obtenue */
+//  cout << "end\n\n";
   return new_image;
 }
 

@@ -20,11 +20,11 @@ void Test_Remplissage (){
   Remplissage(test3);
   test2.saveSVG("../src/Tests/Remplissage/pocket-20-rempli.svg");
   
-  MetaImage test4("../database/pcup-7.pgm");
+  MetaImage test4("../database/cup-7.pgm");
   Remplissage(test4);
   test4.saveSVG("../src/Tests/Remplissage/cup-7-rempli.svg");
 
-  MetaImage test5("../database/pcup-12.pgm");
+  MetaImage test5("../database/cup-12.pgm");
   Remplissage(test5);
   test5.saveSVG("../src/Tests/Remplissage/cup-12-rempli.svg");    
 }
