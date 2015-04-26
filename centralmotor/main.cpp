@@ -5,7 +5,7 @@
 #include <functional>
 #include <iostream>
 #include "estimator.h"
-
+#include <sstream>
 
 using namespace std;
 
@@ -41,8 +41,13 @@ int main(int argc,char**argv){
     cout<<s<<endl;
   try{
   estimator e("./libftestim.so");
-  //e.scoreof("","../database/bat-1.pgm");
-  e.scoreof("","../database/beetle-1.pgm");
+  for(int i=1;i<10;i++)
+  {
+    stringstream ss,ss2;
+    ss<<"../database/device0-"<<i<<".pgm";
+    ss2<<i;
+    e.scoreof(ss2.str(),ss.str());
+  }
   }
   catch(char* err)
   {

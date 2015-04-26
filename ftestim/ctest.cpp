@@ -18,9 +18,8 @@ float estimation(string model,string img)
   try
   {
   image i(img);
-  i.write("toto.pgm");
-  i.myfourier();
-  i.dessinfourier("totof.pgm");
+  i.write(model+"toto.pgm");
+  i.dessinfourier(model+"totof.pgm");
   }
   catch(string s)
   {

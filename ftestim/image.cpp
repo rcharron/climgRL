@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "Dictionnary.h"
+
 using namespace std;
 
 image::image(string file)
@@ -69,6 +71,7 @@ void image::updateMeta()
 {
   ComputeCenter();
   ComputeMean();
+  myfourier();
 }
 
 bool image::getValue(int i, int j)
@@ -144,11 +147,23 @@ void image::myfourier()
   std::vector<std::vector<complexe> > r=FFT2D(d,width,height,1);
   
   fourier.clear();
+  double norm=0;
   for(int i=0;i<width;i++)
   {
     fourier.push_back(vector<double>(height));
     for(int j=0;j<height;j++)
+    {
       fourier[i][j]=r[i][j].norm();
+      norm+=fourier[i][j];
+    }
+  }
+  for(int i=0;i<width;i++)
+  {
+    fourier.push_back(vector<double>(height));
+    for(int j=0;j<height;j++)
+    {
+      fourier[i][j]/=norm;
+    }
   }
   /*fourier.clear();
    * 
@@ -182,7 +197,15 @@ void image::dessinfourier(string file)
   {
     for(int j=0;j<height;j++)
     {
-      os<<(char)(1-exp(-fourier[i][j])*255);
+      int n=(1-exp(-fourier[i][j]))*255;
+      os<<(char)(n);
     }
   }
+}
+
+
+float image::distanceEMD(image i2)
+{
+  Dictionary d;
+  DictionaryEntry de;
 }
