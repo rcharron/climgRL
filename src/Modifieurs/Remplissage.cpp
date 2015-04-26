@@ -53,7 +53,7 @@ MetaImage Apply_Remplissage (MetaImage & image){
     vector<Point> voisins = Remplissage_Make_Voisins(myqueue.front());    
     for (int i = 0; i < voisins.size(); i++){
       current = voisins[i];
-      if (domain.isInside(current) && new_image(current) && !image(current)){		//si le voisin est dans l'image et non traité et que sa couleur est noire, on le traite et on l'ajoute à la queue
+      if (domain.isInside(current) && new_image(current) && !image(current)){	//si le voisin est dans l'image et non traité et que sa couleur est noire, on le traite et on l'ajoute à la queue
 	new_image.setValue(current,0);
 	myqueue.push(current);
       }
