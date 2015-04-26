@@ -2,6 +2,7 @@
 #include <cmath>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 using namespace std;
 
 image::image(string file)
@@ -29,16 +30,21 @@ image::image(string file)
   while(l[0]=='#');
   
   stringstream ss2(l);
+  int vw;
   char white;
-  ss2>>white;
-  getline(is,l);
-
+  ss2>>vw;
+  white=vw;
+  //getline(is,l);
+  char c=0;
   
   for(int i=0;i<width;i++)
   {
+    data.push_back(vector< bool>(width));
     for(int j=0;j<height;j++)
     {
-      data[i][j]=(l[i*width+j]==white);
+      is.get(c);
+      cout<<"-";
+      data[i][j]=(/*l[i*width+j]*/c==white);
     }
   }
   updateMeta();
@@ -48,12 +54,12 @@ void image::write(std::string file)
 {
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
-  os<<"P5"<<endl<<width<<""<<height<<endl<<1<<endl;
+  os<<"P5"<<endl<<width<<" "<<height<<endl<<1<<endl;
   for(int i=0;i<width;i++)
   {
     for(int j=0;j<height;j++)
     {
-      os<<data[i][j];
+      os<<(char)data[i][j];
     }
   }
 }
