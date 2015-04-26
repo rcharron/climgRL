@@ -1,42 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dlfcn.h>
+#include <dirent.h>
 #include <functional>
+#include <iostream>
 #include "estimator.h"
 
 
- 
-void (*ctest1)(int *);
-void (*ctest2)(int *);
- 
- 
-int main(){
-    void *handle;
-    char *error;
-    int x, y, z;
- 
-    handle = dlopen ("libctest.so.1", RTLD_LAZY);
-    if (!handle) {
-        fputs (dlerror(), stderr);
-        exit(1);
+using namespace std;
+
+bool hasEnding (std::string &fullString, std::string ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
     }
+}
  
-    ctest1 = (void(*)(int*) )( dlsym(handle, "ctest1"));
-    if (( error = dlerror() ) != NULL)  {
-        fputs(error, stderr);
-        exit(1);
+vector<string> lookup(string where)
+{
+  vector<string> res;
+  DIR *dir;
+  struct dirent *ent;
+  if ((dir = opendir (where.c_str())) != NULL) 
+  {
+    while ((ent = readdir (dir)) != NULL) 
+    {
+      string entry=ent->d_name;
+      if(hasEnding(entry,".so"))
+	res.push_back(entry);
     }
+  closedir (dir);
+  } 
+  return res;
+}
  
-    ctest2 = (void(*)(int*))(dlsym(handle, "ctest2"));
-    if (( error = dlerror() ) != NULL)  {
-        fputs(error, stderr);
-        exit(1);
-    }
- 
-    ctest1(&x);
-    ctest2(&y);
-    z = (x / y);
-    printf("%d / %d = %d\n", x, y, z);
-    dlclose(handle);
+int main(int argc,char**argv){
+  vector<string> l=lookup(".");
+  for(string s:l)
+    cout<<s<<endl;
+  try{
+  estimator e("./libftestim.so");
+  }
+  catch(char* err)
+  {
+    cout<<err<<endl;
+  }
     return 0;
 }

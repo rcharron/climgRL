@@ -19,5 +19,26 @@ Name=GCC
 Path=gcc
 Type=GCC
 
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=climgRL
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x00\x0e\x00c\x00l\x00i\x00m\x00g\x00R\x00L\x00\x00\x00\x0e\x00c\x00l\x00i\x00m\x00g\x00R\x00L)
+Dependency Action=Build
+EnvironmentGroup=
+Executable=file:///home/rcharrondiere/Documents/climgRL/
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=climgRL,centralmotor
+Use External Terminal=false
+Working Directory=
+isExecutable=false
+
 [Project]
 VersionControlSupport=kdevgit
