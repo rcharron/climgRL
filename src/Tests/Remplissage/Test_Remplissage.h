@@ -1,11 +1,12 @@
-#ifndef TEST_ANTINVERSION_H
-#define TEST_ANTINVERSION_H
+#ifndef TEST_REMPLISSAGE_H
+#define TEST_REMPLISSAGE_H
 
 ///////////////////////////////////////////////////////////////////////////////
 #include "../../MetaImage.h"
-#include "../../Modifieurs/Traitement_AntiInversion.h"
+#include "../../Modifieurs/Remplissage.h"
 ///////////////////////////////////////////////////////////////////////////////
 
-void Test_AntiInversion ();
+
+void Test_Remplissage ();
 
 #endif

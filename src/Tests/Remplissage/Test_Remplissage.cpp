@@ -1,5 +1,4 @@
-#include "../../MetaImage.h"
-#include "../../Modifieurs/Remplissage.h"
+#include "Test_Remplissage.h"
 
 using namespace std;
 using namespace DGtal;
