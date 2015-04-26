@@ -30,18 +30,18 @@ MetaImage::operator Board2D()
 
 void MetaImage::saveSVG(string filename)
 {
-  static_cast<Board2D>(*this).saveSVG(filename);
+  static_cast<Board2D>(*this).saveSVG(filename.c_str());
 //  PGMWriter<Image>::exportPGM(filename,*this);
 }
 
 void MetaImage::updateMeta()
 {
-  ComputeCenter();
-  ComputeMean();
+  //ComputeCenter();
+  //ComputeMean();
 }
 
 
-void MetaImage::ComputeCenter()
+/*void MetaImage::ComputeCenter()
 {
   width=this->domain().upperBound()[0];
   height=this->domain().upperBound()[1];
@@ -52,7 +52,7 @@ void MetaImage::ComputeCenter()
   {
     for (int j=0;j<height;j++)
     {
-      if(getValue(i,j))
+      if(getValue(i,j)>0)
       {
 	centerx+=i;
 	centery+=j;
@@ -62,12 +62,12 @@ void MetaImage::ComputeCenter()
   }
   centerx/=p;
   centery/=p;
-}
+}*/
 
-void MetaImage::ComputeMean()
+/*void MetaImage::ComputeMean()
 {
   mean=0;
-  p=0;
+  int p=0;
   for(int i=0;i<width;i++)
   {
     for (int j=0;j<height;j++)
@@ -81,12 +81,12 @@ void MetaImage::ComputeMean()
   }
   mean/=p;
   mean=sqrt(mean);
-}
+}*/
 
-int MetaImage::CanonicalValue(float x, float y)
+/*int MetaImage::CanonicalValue(float x, float y)
 {
   x-=0.5f;
   int x=centerx+x*4*mean;
   int y=centery+y*4*mean;
   return getValue(x,y);
-}
+}*/

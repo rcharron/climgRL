@@ -20,10 +20,10 @@ public:
   operator DGtal::Board2D();
   void saveSVG(std::string filename);
   void updateMeta();
-  int CanonicalValue(float x,float y);
+  //int CanonicalValue(float x,float y);
 private:
-  void ComputeCenter();
-  void ComputeMean();
+  //void ComputeCenter();
+  //void ComputeMean();
   int width;
   int height;
   float centerx;

@@ -24,3 +24,25 @@ set(CMAKE_CXX_FLAGS "-std=c++11")
 add_executable(climgRL ${source_files})
 target_link_libraries (climgRL ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
  
+ 
+ 
+project (centralmotor)
+
+file(GLOB_RECURSE central_source_files ${PROJECT_SOURCE_DIR}/centralmotor/*.cpp)
+
+set(CMAKE_CXX_FLAGS "-std=c++11")
+
+add_executable(centralmotor ${central_source_files})
+
+target_link_libraries(centralmotor dl)
+
+
+
+project (ftestim)
+
+file(GLOB_RECURSE ftestim_source_files ${PROJECT_SOURCE_DIR}/ftestim/*.cpp)
+
+set(CMAKE_CXX_FLAGS "-std=c++11")
+
+add_library(ftestim MODULE ${ftestim_source_files})
+ 
