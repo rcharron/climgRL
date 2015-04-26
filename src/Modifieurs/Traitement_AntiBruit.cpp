@@ -12,7 +12,7 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 
 			
 /* Fait une liste des huits voisins d'un point */
-vector<Point> Make_Voisins(Point p){
+vector<Point> Anti_Bruit_Make_Voisins(Point p){
   vector<Point> voisins;
   voisins.push_back(Point(p[0]-1,p[1]));
   voisins.push_back(Point(p[0],p[1]-1));
@@ -31,7 +31,7 @@ MetaImage Apply_AntiBruit (MetaImage & image){
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
     int noirs = 1-image(*it);		//variable indiquant le nombre de noirs
     int blancs = image(*it);		//variable indiquant le nombre de blancs
-    vector<Point> voisins = Make_Voisins(*it);
+    vector<Point> voisins = Anti_Bruit_Make_Voisins(*it);
     for (int i = 0; i < voisins.size(); i++){
         if (domain.isInside(voisins[i])){
 	    noirs  += 1-image(voisins[i]);

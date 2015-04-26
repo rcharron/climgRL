@@ -1,9 +1,10 @@
-#ifndef TRAITEMENT_ANTIBRUIT_H
-#define TRAITEMENT_ANTIBRUIT_H
+#ifndef REMPLISSAGE_H
+#define REMPLISSAGE_H
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <DGtal/base/Common.h>
 #include <DGtal/io/boards/Board2D.h>
 #include <DGtal/helpers/StdDefs.h>
@@ -15,16 +16,25 @@
 #include "../MetaImage.h"
 ///////////////////////////////////////////////////////////////////////////////
 
-			
+/*
+REMPLISSAGE
+*/
+
+
+using namespace std;
+using namespace DGtal;
+using namespace DGtal::Z2i; //We'll only consider Z² digital space on
+			    //32bit integers
+
 /* Fait une liste des huits voisins d'un point */
-std::vector<DGtal::Z2i::Point> Anti_Bruit_Make_Voisins(DGtal::Z2i::Point p);
+std::vector<DGtal::Z2i::Point> Remplissage_Make_Voisins(DGtal::Z2i::Point p);
 
-MetaImage Apply_AntiBruit (MetaImage & image);
+Image Apply_Remplissage (Image & image);
 
-void Traitement_AntiBruit (MetaImage & image);
+void Remplissage (Image & image);
 
     
-#endif    
+#endif      
     
     
     

@@ -13,6 +13,7 @@
 #include "Modifieurs/Traitement_AntiBruit.h"
 #include "Modifieurs/Traitement_AntiInversion.h"
 #include "Tests/AntiInversion/Test_AntiInversion.h"
+#include "Tests/Remplissage/Test_Remplissage.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -22,5 +23,6 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 int main(int argc,char** argv)
 {
   Test_AntiInversion();
+  Test_Remplissage();
   return 0;
 }
