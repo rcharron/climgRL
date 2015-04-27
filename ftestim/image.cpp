@@ -163,10 +163,17 @@ void image::myfourier()
   
   std::vector<std::vector<complexe> > r=FFT2D(d,500,500,1);
   
-  fourier.clear();
-  fourier=vector<vector<double> >(50,vector<double>(50,0.0));
+  fourier=vector<vector<double> >(500,vector<double>(500,0.0));
   
-  double norm=0;
+  
+  for(int i=0;i<500;i++)
+  {
+    for(int j=0;j<500;j++)
+    {
+      fourier[i][j]=r[i][j].norm();
+    }
+  }
+  /*double norm=0;
   for(int i=0;i<500;i++)
   {
     for(int j=0;j<500;j++)
@@ -187,7 +194,7 @@ void image::myfourier()
     {
       fourier[i][j]/=norm;
     }
-  }
+  }*/
   /*fourier.clear();
    * 
   for(int i=0;i<width;i++)
@@ -215,20 +222,21 @@ void image::dessinfourier(string file)
 {
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
-  os<<"P5"<<endl<<50<<" "<<50<<endl<<255<<endl;
+  unsigned int t=fourier.size();
+  os<<"P5"<<endl<<t<<" "<<t<<endl<<255<<endl;
   
   float ma=0;
-  for(int i=0;i<50;i++)
+for(int j=0;j<t;j++)
   {
-    for(int j=0;j<50;j++)
+    for(int i=0;i<t;i++)
     {
       if(fourier[i][j]>=ma)ma=fourier[i][j];
     }
   }
   
-  for(int i=0;i<50;i++)
+  for(int j=0;j<t;j++)
   {
-    for(int j=0;j<50;j++)
+    for(int i=0;i<t;i++)
     {
       int n=(fourier[i][j]/ma)*255;
       os<<(char)(n);
