@@ -127,6 +127,7 @@ void image::ComputeMean()
 int image::CanonicalValue(float x, float y)
 {
   x-=0.5f;
+  y-=0.5f;
   int i=centerx+x*4*mean;
   int j=centery+y*4*mean;
   return getValue(i,j);
@@ -136,31 +137,41 @@ int image::CanonicalValue(float x, float y)
 void image::myfourier()
 {
   vector<vector<complexe> > d;
-  for(int i=0;i<width;i++)
+  int val;
+  for(int i=0;i<800;i++)
+  {
+    d.push_back(vector<complexe>(800));
+    for(int j=0;j<800;j++)
+    {
+      val=this->CanonicalValue((1.0f/800)*i,(1.0f/800)*j);
+      d[i][j]=complexe(val,val);
+    }
+  }
+  /*for(int i=0;i<width;i++)
   {
     d.push_back(vector<complexe>(height));
     for(int j=0;j<height;j++)
       d[i][j]=complexe(data[i][j],data[i][j]);
-  }
+  }*/
   
   
-  std::vector<std::vector<complexe> > r=FFT2D(d,width,height,1);
+  std::vector<std::vector<complexe> > r=FFT2D(d,800,800,1);
   
   fourier.clear();
   double norm=0;
-  for(int i=0;i<width;i++)
+  for(int i=0;i<800;i++)
   {
-    fourier.push_back(vector<double>(height));
-    for(int j=0;j<height;j++)
+    fourier.push_back(vector<double>(800));
+    for(int j=0;j<800;j++)
     {
       fourier[i][j]=r[i][j].norm();
       norm+=fourier[i][j];
     }
   }
-  for(int i=0;i<width;i++)
+  for(int i=0;i<800;i++)
   {
-    fourier.push_back(vector<double>(height));
-    for(int j=0;j<height;j++)
+    fourier.push_back(vector<double>(800));
+    for(int j=0;j<800;j++)
     {
       fourier[i][j]/=norm;
     }

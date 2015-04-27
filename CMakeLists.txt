@@ -48,4 +48,12 @@ file(GLOB_RECURSE ftestim_source_files ${PROJECT_SOURCE_DIR}/ftestim/*.cpp)
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
 add_library(ftestim MODULE ${ftestim_source_files})
- 
+
+
+project (basicestim)
+
+file(GLOB_RECURSE basicestim_source_files ${PROJECT_SOURCE_DIR}/basicestim/*.cpp)
+
+set(CMAKE_CXX_FLAGS "-std=c++11")
+
+add_library(basicestim MODULE ${basicestim_source_files})
