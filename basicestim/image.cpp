@@ -37,11 +37,10 @@ image::image(string file)
   white=vw;
   //getline(is,l);
   char c=0;
-  
-  for(int i=0;i<width;i++)
+  data=vector<vector<bool> >(width,vector<bool>(height,false));
+  for(int j=0;j<height;j++)
   {
-    data.push_back(vector< bool>(height));
-    for(int j=0;j<height;j++)
+    for(int i=0;i<width;i++)
     {
       is.get(c);
       data[i][j]=(/*l[i*width+j]*/c==white);
@@ -69,9 +68,9 @@ void image::write(std::string file)
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
   os<<"P5"<<endl<<800<<" "<<800<<endl<<1<<endl;
-  for(int i=0;i<800;i++)
+  for(int j=0;j<800;j++)
   {
-    for(int j=0;j<800;j++)
+    for(int i=0;i<800;i++)
     {
       os<<(char)this->CanonicalValue((1.0f/800)*i,(1.0f/800)*j);
     }

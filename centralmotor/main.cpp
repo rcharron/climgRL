@@ -40,7 +40,7 @@ int main(int argc,char**argv){
   for(string s:l)
     cout<<s<<endl;
   try{
-  estimator e("./libbasicestim.so");
+  estimator e("./libftestim.so");
   for(int i=1;i<10;i++)
   {
     stringstream ss,ss2;

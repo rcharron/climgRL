@@ -40,11 +40,10 @@ image::image(string file)
   white=vw;
   //getline(is,l);
   char c=0;
-  
-  for(int i=0;i<width;i++)
+  data=vector<vector<bool> >(width,vector<bool>(height,false));
+  for(int j=0;j<height;j++)
   {
-    data.push_back(vector< bool>(height));
-    for(int j=0;j<height;j++)
+    for(int i=0;i<width;i++)
     {
       is.get(c);
       data[i][j]=(/*l[i*width+j]*/c==white);
@@ -57,14 +56,22 @@ void image::write(std::string file)
 {
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
-  os<<"P5"<<endl<<width<<" "<<height<<endl<<1<<endl;
-  for(int i=0;i<width;i++)
+  os<<"P5"<<endl<<500<<" "<<500<<endl<<1<<endl;
+  /*for(int i=0;i<width;i++)
   {
     for(int j=0;j<height;j++)
     {
       os<<(char)data[i][j];
     }
+  }*/
+  for(int j=0;j<500;j++)
+  {
+    for(int i=0;i<500;i++)
+    {
+      os<<(char)this->CanonicalValue((1.0f/500)*i,(1.0f/500)*j);
+    }
   }
+
 }
 
 void image::updateMeta()
@@ -115,13 +122,12 @@ void image::ComputeMean()
     {
       if(getValue(i,j))
       {
-	mean+=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	mean+=sqrt((centerx-i)*(centerx-i)+(centery-j)*(centery-j));
 	p++;
       }
     }
   }
   mean/=p;
-  mean=sqrt(mean);
 }
 
 int image::CanonicalValue(float x, float y)
@@ -138,12 +144,12 @@ void image::myfourier()
 {
   vector<vector<complexe> > d;
   int val;
-  for(int i=0;i<800;i++)
+  for(int i=0;i<500;i++)
   {
-    d.push_back(vector<complexe>(800));
-    for(int j=0;j<800;j++)
+    d.push_back(vector<complexe>(500));
+    for(int j=0;j<500;j++)
     {
-      val=this->CanonicalValue((1.0f/800)*i,(1.0f/800)*j);
+      val=this->CanonicalValue((1.0f/500)*i,(1.0f/500)*j);
       d[i][j]=complexe(val,val);
     }
   }
@@ -155,23 +161,29 @@ void image::myfourier()
   }*/
   
   
-  std::vector<std::vector<complexe> > r=FFT2D(d,800,800,1);
+  std::vector<std::vector<complexe> > r=FFT2D(d,500,500,1);
   
   fourier.clear();
+  fourier=vector<vector<double> >(50,vector<double>(50,0.0));
+  
   double norm=0;
-  for(int i=0;i<800;i++)
+  for(int i=0;i<500;i++)
   {
-    fourier.push_back(vector<double>(800));
-    for(int j=0;j<800;j++)
+    for(int j=0;j<500;j++)
     {
-      fourier[i][j]=r[i][j].norm();
+      fourier[i/10][j/10]+=r[i][j].norm();
+    }
+  }
+  for(int i=0;i<50;i++)
+  {
+    for(int j=0;j<50;j++)
+    {
       norm+=fourier[i][j];
     }
   }
-  for(int i=0;i<800;i++)
+  for(int i=0;i<50;i++)
   {
-    fourier.push_back(vector<double>(800));
-    for(int j=0;j<800;j++)
+    for(int j=0;j<50;j++)
     {
       fourier[i][j]/=norm;
     }
@@ -203,12 +215,22 @@ void image::dessinfourier(string file)
 {
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
-  os<<"P5"<<endl<<width<<" "<<height<<endl<<255<<endl;
-  for(int i=0;i<width;i++)
+  os<<"P5"<<endl<<50<<" "<<50<<endl<<255<<endl;
+  
+  float ma=0;
+  for(int i=0;i<50;i++)
   {
-    for(int j=0;j<height;j++)
+    for(int j=0;j<50;j++)
     {
-      int n=(1-exp(-fourier[i][j]))*255;
+      if(fourier[i][j]>=ma)ma=fourier[i][j];
+    }
+  }
+  
+  for(int i=0;i<50;i++)
+  {
+    for(int j=0;j<50;j++)
+    {
+      int n=(fourier[i][j]/ma)*255;
       os<<(char)(n);
     }
   }

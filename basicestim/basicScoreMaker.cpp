@@ -44,8 +44,9 @@ std::string model(std::vector< float >& mean, std::vector< float >& var)
 float score(float my,float m,float v)
 {
   float t=(my-m);
+  v=2*v;
   t=-t*t*t*t;
-  t/=2*v;
+  t/=v*v*v*v;
   return exp(t);
 }
 
