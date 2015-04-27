@@ -2,6 +2,7 @@
 #define IMAGE_H
 #include <string>
 #include <vector>
+#include "Dictionnary.h"
 
 class image
 {
@@ -13,6 +14,11 @@ public:
   void dessinfourier(std::string file);
   float distanceEMD(image i2);
 private:
+  DictionaryEntry EMDConstraintArrival(int arrivali,int arrivalj,double amont);
+  DictionaryEntry EMDConstraintDeparture(int departurei,int departurej,double amont);
+  DictionaryEntry EMDConstraintTransfert1();
+  DictionaryEntry EMDConstraintTransfert2();
+  DictionaryEntry EMDObjective();
   void updateMeta();
   void myfourier();
   void ComputeCenter();

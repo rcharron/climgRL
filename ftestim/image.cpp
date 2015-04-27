@@ -1,11 +1,10 @@
 #include "image.h"
-#include "complexe.h"
 #include "fourrier.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "Dictionnary.h"
+
 
 using namespace std;
 
@@ -142,15 +141,14 @@ int image::CanonicalValue(float x, float y)
 
 void image::myfourier()
 {
-  vector<vector<complexe> > d;
+  complex d[512*512];
   int val;
-  for(int i=0;i<500;i++)
+  for(int i=0;i<512;i++)
   {
-    d.push_back(vector<complexe>(500));
-    for(int j=0;j<500;j++)
+    for(int j=0;j<512;j++)
     {
-      val=this->CanonicalValue((1.0f/500)*i,(1.0f/500)*j);
-      d[i][j]=complexe(val,val);
+      val=this->CanonicalValue((1.0f/512)*i,(1.0f/512)*j);
+      d[j+512*i]=complex{val,val};
     }
   }
   /*for(int i=0;i<width;i++)
@@ -161,40 +159,32 @@ void image::myfourier()
   }*/
   
   
-  std::vector<std::vector<complexe> > r=FFT2D(d,500,500,1);
+  fft2D(d,512,512,1);
   
-  fourier=vector<vector<double> >(500,vector<double>(500,0.0));
+  fourier=vector<vector<double> >(64,vector<double>(64,0.0));
   
-  
-  for(int i=0;i<500;i++)
+  double norm=0;
+  for(int i=0;i<512;i++)
   {
-    for(int j=0;j<500;j++)
+    for(int j=0;j<512;j++)
     {
-      fourier[i][j]=r[i][j].norm();
+      fourier[i/8][j/8]+=sqrt(d[i+j*512].Re*d[i+j*512].Re+d[i+j*512].Im*d[i+j*512].Im);
     }
   }
-  /*double norm=0;
-  for(int i=0;i<500;i++)
+  for(int i=0;i<64;i++)
   {
-    for(int j=0;j<500;j++)
-    {
-      fourier[i/10][j/10]+=r[i][j].norm();
-    }
-  }
-  for(int i=0;i<50;i++)
-  {
-    for(int j=0;j<50;j++)
+    for(int j=0;j<64;j++)
     {
       norm+=fourier[i][j];
     }
   }
-  for(int i=0;i<50;i++)
+  for(int i=0;i<64;i++)
   {
-    for(int j=0;j<50;j++)
+    for(int j=0;j<64;j++)
     {
       fourier[i][j]/=norm;
     }
-  }*/
+  }
   /*fourier.clear();
    * 
   for(int i=0;i<width;i++)
@@ -249,4 +239,106 @@ float image::distanceEMD(image i2)
 {
   Dictionary d;
   DictionaryEntry de;
+}
+
+DictionaryEntry image::EMDConstraintArrival(int arrivali, int arrivalj,double amont)
+{
+  DictionaryEntry de;
+  de.AddConstant(amont);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      stringstream ss;
+      ss<<i<<" "<<j<<" "<<arrivali<<" "<<arrivalj;
+      de.AddTerm(ss.str(),-1);
+    }
+  } 
+  return de;
+}
+
+DictionaryEntry image::EMDConstraintDeparture(int arrivali, int arrivalj, double amont)
+{
+  DictionaryEntry de;
+  de.AddConstant(amont);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      stringstream ss;
+      ss<<arrivali<<" "<<arrivalj<<" "<<i<<" "<<j;
+      de.AddTerm(ss.str(),-1);
+    }
+  } 
+  return de;
+
+}
+
+DictionaryEntry image::EMDConstraintTransfert1()
+{
+  DictionaryEntry de;
+  de.AddConstant(1);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      for(int k=0;k<64;k++)
+      {
+	for(int l=0;l<64;l++)
+	{
+	  stringstream ss;
+	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
+	  de.AddTerm(ss.str(),-1);
+	}
+      }
+    }
+  } 
+  return de;
+}
+
+DictionaryEntry image::EMDConstraintTransfert2()
+{
+  DictionaryEntry de;
+  de.AddConstant(1);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      for(int k=0;k<64;k++)
+      {
+	for(int l=0;l<64;l++)
+	{
+	  stringstream ss;
+	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
+	  de.AddTerm(ss.str(),1);
+	}
+      }
+    }
+  } 
+  return de;
+}
+
+DictionaryEntry image::EMDObjective()
+{
+  DictionaryEntry de;
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      for(int k=0;k<64;k++)
+      {
+	for(int l=0;l<64;l++)
+	{
+	  stringstream ss;
+	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
+	  de.AddTerm(ss.str(),-sqrt((i-k)*(i-k)+(j-l)*(j-l)));
+	}
+      }
+    }
+  } 
+  return de;
 }

@@ -22,7 +22,8 @@ public:
 private:
 	//private:
 	bool Step();
-
+	bool FirstSolve();
+	void StrangeFirstStep();
 	std::string infvar;
 
 	Status status;

@@ -121,7 +121,8 @@ std::map<std::string, double> Dictionary::GetAsymptote()
 
 void Dictionary::RunSimplex()
 {
-	while (Step());
+	if (FirstSolve())
+		while (Step());
 }
 
 
@@ -135,4 +136,65 @@ void Dictionary::Clear()
 Dictionary::Status Dictionary::GetStatus()
 {
 	return this->status;
+}
+
+
+bool Dictionary::FirstSolve()
+{
+	DictionaryEntry RealObjective = objective;
+	objective.Clear();
+	objective.AddTerm("\\aleph", -1);
+	for (auto it = data.begin(); it != data.end(); it++)
+	{
+		it->AddTerm("\\aleph", 1);
+		it->Simplify();
+	}
+
+	//Solve
+	//std::cout << *this << std::endl;
+	StrangeFirstStep();
+	//std::cout << *this << std::endl;
+	while (Step());
+		//std::cout << *this << std::endl;
+	
+	if (!objective.CoefficientOf("42")>=0)
+	{
+		//TODO
+		status = Status::EMPTY;
+		//SOLUTION IS EMPTY
+		return false;
+	}
+
+	//Projection
+	objective = RealObjective;
+	for (auto it = data.begin(); it != data.end(); it++)
+	{
+		it->AddTerm("\\aleph", 0);
+		it->Simplify();
+		objective.EnterAndLeaves(*it);
+	}
+	return true;
+}
+
+void Dictionary::StrangeFirstStep()
+{
+	double c=0;
+	auto pos = data.begin();
+	for (auto it = data.begin(); it != data.end(); it++)
+	{
+		if (it->CoefficientOf("42") < c)
+		{
+			c = it->CoefficientOf("42");
+			pos = it;
+		}
+	}
+	if (c==0.0)return;
+	pos->Leaves("\\aleph");
+	for (auto it = data.begin(); it != data.end(); it++)
+	{
+		if (it == pos)continue;
+		it->EnterAndLeaves(*pos);
+		it->Simplify();
+	}
+	objective.EnterAndLeaves(*pos);
 }

@@ -44,7 +44,7 @@ int main(int argc,char**argv){
   for(int i=1;i<10;i++)
   {
     stringstream ss,ss2;
-    ss<<"../database/device0-"<<i<<".pgm";
+    ss<<"../database/bat-"<<i<<".pgm";
     ss2<<i;
     e.scoreof(ss2.str(),ss.str());
   }
