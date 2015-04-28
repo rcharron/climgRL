@@ -4,22 +4,19 @@
 #include <sstream>
 #include <iostream>
 #include "image.h"
-
+#include "basicScoreMaker.h"
 
 using namespace std;
 
-string buildmodel(vector<string> images)
-{
-  return "";
-}
 
 float estimation(string model,string img)
 {
   try
   {
-  image i(img);
+  /*image i(img);
   i.write("base"+model+".pgm");
-  i.dessinfourier("fourier"+model+".pgm");
+  i.dessinfourier("fourier"+model+".pgm");*/
+  return score(model,img);
   }
   catch(string s)
   {
@@ -39,7 +36,7 @@ const char* buildmodel(const char* listoffiles)
       res.push_back(l);
   }
   
-  return buildmodel(res).c_str();
+  return model(res).c_str();
 }
 
 float estim(const char* modelc, const char* filec)

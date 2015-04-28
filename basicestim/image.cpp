@@ -128,7 +128,7 @@ void image::ComputeMean()
       if(getValue(i,j))
       {
 	dist=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
-	dist=sqrt(sqrt(dist));
+	dist=sqrt(dist);
 	if(extrema<dist)extrema=dist;
 	mean+=dist;
 	p++;

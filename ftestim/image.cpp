@@ -237,108 +237,12 @@ for(int j=0;j<t;j++)
 
 float image::distanceEMD(image i2)
 {
-  Dictionary d;
-  DictionaryEntry de;
+ emd EMD;
+ return EMD.compute(fourier,i2.fourier);  
 }
 
-DictionaryEntry image::EMDConstraintArrival(int arrivali, int arrivalj,double amont)
+vector< vector< double > >* image::getFourier()
 {
-  DictionaryEntry de;
-  de.AddConstant(amont);
-  
-  for(int i=0;i<64;i++)
-  {
-    for(int j=0;j<64;j++)
-    {
-      stringstream ss;
-      ss<<i<<" "<<j<<" "<<arrivali<<" "<<arrivalj;
-      de.AddTerm(ss.str(),-1);
-    }
-  } 
-  return de;
+  return &fourier;
 }
 
-DictionaryEntry image::EMDConstraintDeparture(int arrivali, int arrivalj, double amont)
-{
-  DictionaryEntry de;
-  de.AddConstant(amont);
-  
-  for(int i=0;i<64;i++)
-  {
-    for(int j=0;j<64;j++)
-    {
-      stringstream ss;
-      ss<<arrivali<<" "<<arrivalj<<" "<<i<<" "<<j;
-      de.AddTerm(ss.str(),-1);
-    }
-  } 
-  return de;
-
-}
-
-DictionaryEntry image::EMDConstraintTransfert1()
-{
-  DictionaryEntry de;
-  de.AddConstant(1);
-  
-  for(int i=0;i<64;i++)
-  {
-    for(int j=0;j<64;j++)
-    {
-      for(int k=0;k<64;k++)
-      {
-	for(int l=0;l<64;l++)
-	{
-	  stringstream ss;
-	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
-	  de.AddTerm(ss.str(),-1);
-	}
-      }
-    }
-  } 
-  return de;
-}
-
-DictionaryEntry image::EMDConstraintTransfert2()
-{
-  DictionaryEntry de;
-  de.AddConstant(1);
-  
-  for(int i=0;i<64;i++)
-  {
-    for(int j=0;j<64;j++)
-    {
-      for(int k=0;k<64;k++)
-      {
-	for(int l=0;l<64;l++)
-	{
-	  stringstream ss;
-	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
-	  de.AddTerm(ss.str(),1);
-	}
-      }
-    }
-  } 
-  return de;
-}
-
-DictionaryEntry image::EMDObjective()
-{
-  DictionaryEntry de;
-  for(int i=0;i<64;i++)
-  {
-    for(int j=0;j<64;j++)
-    {
-      for(int k=0;k<64;k++)
-      {
-	for(int l=0;l<64;l++)
-	{
-	  stringstream ss;
-	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
-	  de.AddTerm(ss.str(),-sqrt((i-k)*(i-k)+(j-l)*(j-l)));
-	}
-      }
-    }
-  } 
-  return de;
-}
