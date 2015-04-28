@@ -1,5 +1,5 @@
-#ifndef CONVEXHULL_H
-#define CONVEXHULL_H
+#ifndef DSS_BRESENHAM_H
+#define DSS_BRESENHAM_H
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <iostream>
@@ -14,21 +14,14 @@
 #include <DGtal/io/readers/PGMReader.h>
 #include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
-#include "../MetaImage.h"
-#include "../Tools/DSS_Bresenham.h"
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef std::vector<DGtal::Z2i::Point>::const_iterator Iterator;
 
-int Determinant(DGtal::Z2i::Point p, DGtal::Z2i::Point q);
+DGtal::Z2i::DigitalSet ConstructLineFstOctant(DGtal::Z2i::Domain & domain, DGtal::Z2i::Point p1, DGtal::Z2i::Point p2);
 
-//DGtal::Z2i::Point lepointp;
+DGtal::Z2i::DigitalSet ConstructLineFstQuart(DGtal::Z2i::Domain & domain, DGtal::Z2i::Point p1, DGtal::Z2i::Point p2);
 
-bool CompOr(DGtal::Z2i::Point a, DGtal::Z2i::Point b);
+DGtal::Z2i::DigitalSet ConstructLine(DGtal::Z2i::Domain & domain, DGtal::Z2i::Point p1, DGtal::Z2i::Point p2);
 
-
-DGtal::Z2i::DigitalSet Build_ConvexHull(DGtal::Z2i::DigitalSet & s);
-
-void ConvexHull (MetaImage& img);
 
 #endif

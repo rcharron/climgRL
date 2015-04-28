@@ -1,17 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <stack>
-#include <DGtal/base/Common.h>
-#include <DGtal/io/boards/Board2D.h>
-#include <DGtal/helpers/StdDefs.h>
-#include <DGtal/geometry/curves/ArithmeticalDSSComputer.h>
-#include <iostream>
-#include <DGtal/io/readers/PGMReader.h>
-#include "DGtal/images/imagesSetsUtils/SetFromImage.h"
-#include "DGtal/images/ImageContainerBySTLVector.h"
-///////////////////////////////////////////////////////////////////////////////
+#include "DSS_Bresenham.h"
+
 
 using namespace std;
 using namespace DGtal;
@@ -64,7 +52,7 @@ DigitalSet ConstructLineFstQuart(Domain & domain, Point p1, Point p2)
   return Line;
 }  
 
-DigitalSet ConstructLine (Domain & domain, Point p1, Point p2)
+DigitalSet ConstructLine(Domain & domain, Point p1, Point p2)
 {
   DigitalSet Line(domain);
   DigitalSet LineFstQuart(domain);
