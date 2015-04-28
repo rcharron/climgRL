@@ -44,5 +44,5 @@ float score(std::string model, float solidite)
   std::stringstream ss(model);
   float m,v;
   ss>>m>>v;
-  return score(solite,m,v);
+  return score(solidite,m,v);
 }

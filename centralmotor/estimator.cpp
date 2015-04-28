@@ -7,22 +7,23 @@
 using namespace std;
 
 
-estimator::estimator(char* library)
+estimator::estimator(const char* library)
 {
   handle = dlopen (library, RTLD_LAZY);
     if (!handle) {
-        throw dlerror();
+        throw string(dlerror());
     }
     char* error;
     buildmodel = (buildmodel_t)( dlsym(handle, "buildmodel"));
     if (( error = dlerror() ) != NULL)  {
-        throw error;
+        throw string(error);
     }
  
     estim = (estim_t)(dlsym(handle, "estim"));
     if (( error = dlerror() ) != NULL)  {
-        throw error;
+        throw string(error);
     }
+    name=library;
 }
 
 estimator::~estimator()
@@ -36,10 +37,15 @@ std::string estimator::makemodel(std::vector< std::string > files)
   stringstream ss;
   for(string s:files)
     ss<<s<<"\n";
-  buildmodel(ss.str().c_str());
+  return buildmodel(ss.str().c_str());
 }
 
 float estimator::scoreof(std::string model, std::string file)
 {
   return estim(model.c_str(),file.c_str());
+}
+
+string estimator::getName()
+{
+  return name;
 }

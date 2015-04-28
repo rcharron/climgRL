@@ -9,11 +9,13 @@ typedef float (*estim_t)(const char*,const char*);
 class estimator
 {
 public:
-  estimator(char* library);
+  estimator(const char* library);
   ~estimator();
   std::string makemodel(std::vector<std::string> files);
   float scoreof(std::string model,std::string file);
+  std::string getName();
 private:
+  std::string name;
   void *handle;
   buildmodel_t buildmodel;
   estim_t estim;

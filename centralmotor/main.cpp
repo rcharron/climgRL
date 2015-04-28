@@ -6,6 +6,8 @@
 #include <iostream>
 #include "estimator.h"
 #include <sstream>
+#include "computer.h"
+
 
 using namespace std;
 
@@ -39,7 +41,7 @@ int main(int argc,char**argv){
   vector<string> l=lookup(".");
   for(string s:l)
     cout<<s<<endl;
-  try{
+  /*try{
   estimator e("./libftestim.so");
   for(int i=1;i<10;i++)
   {
@@ -52,6 +54,16 @@ int main(int argc,char**argv){
   catch(char* err)
   {
     cout<<err<<endl;
+  }*/
+  computer c(l);
+  vector<string> im;
+  
+  for(int i=1;i<10;i++)
+  {
+    stringstream ss;
+    ss<<"../database/bat-"<<i<<".pgm";
+    im.push_back(ss.str());
   }
+  c.AddClass("bat",im);
     return 0;
 }

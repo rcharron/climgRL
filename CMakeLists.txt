@@ -35,9 +35,9 @@ file(GLOB_RECURSE central_source_files ${PROJECT_SOURCE_DIR}/centralmotor/*.cpp)
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
-add_executable(centralmotor ${central_source_files})
+add_executable(centralmotor ${central_source_files} ${PROJECT_SOURCE_DIR}/centralmotor/sqlite3.c)
 
-target_link_libraries(centralmotor dl)
+target_link_libraries(centralmotor dl pthread)
 
 
 
