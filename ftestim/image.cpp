@@ -1,11 +1,10 @@
 #include "image.h"
-#include "complexe.h"
 #include "fourrier.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "Dictionnary.h"
+
 
 using namespace std;
 
@@ -40,11 +39,10 @@ image::image(string file)
   white=vw;
   //getline(is,l);
   char c=0;
-  
-  for(int i=0;i<width;i++)
+  data=vector<vector<bool> >(width,vector<bool>(height,false));
+  for(int j=0;j<height;j++)
   {
-    data.push_back(vector< bool>(height));
-    for(int j=0;j<height;j++)
+    for(int i=0;i<width;i++)
     {
       is.get(c);
       data[i][j]=(/*l[i*width+j]*/c==white);
@@ -57,14 +55,22 @@ void image::write(std::string file)
 {
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
-  os<<"P5"<<endl<<width<<" "<<height<<endl<<1<<endl;
-  for(int i=0;i<width;i++)
+  os<<"P5"<<endl<<500<<" "<<500<<endl<<1<<endl;
+  /*for(int i=0;i<width;i++)
   {
     for(int j=0;j<height;j++)
     {
       os<<(char)data[i][j];
     }
+  }*/
+  for(int j=0;j<500;j++)
+  {
+    for(int i=0;i<500;i++)
+    {
+      os<<(char)this->CanonicalValue((1.0f/500)*i,(1.0f/500)*j);
+    }
   }
+
 }
 
 void image::updateMeta()
@@ -115,18 +121,18 @@ void image::ComputeMean()
     {
       if(getValue(i,j))
       {
-	mean+=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	mean+=sqrt((centerx-i)*(centerx-i)+(centery-j)*(centery-j));
 	p++;
       }
     }
   }
   mean/=p;
-  mean=sqrt(mean);
 }
 
 int image::CanonicalValue(float x, float y)
 {
   x-=0.5f;
+  y-=0.5f;
   int i=centerx+x*4*mean;
   int j=centery+y*4*mean;
   return getValue(i,j);
@@ -135,32 +141,46 @@ int image::CanonicalValue(float x, float y)
 
 void image::myfourier()
 {
-  vector<vector<complexe> > d;
-  for(int i=0;i<width;i++)
+  complex d[512*512];
+  int val;
+  for(int i=0;i<512;i++)
+  {
+    for(int j=0;j<512;j++)
+    {
+      val=this->CanonicalValue((1.0f/512)*i,(1.0f/512)*j);
+      d[j+512*i]=complex{val,val};
+    }
+  }
+  /*for(int i=0;i<width;i++)
   {
     d.push_back(vector<complexe>(height));
     for(int j=0;j<height;j++)
       d[i][j]=complexe(data[i][j],data[i][j]);
-  }
+  }*/
   
   
-  std::vector<std::vector<complexe> > r=FFT2D(d,width,height,1);
+  fft2D(d,512,512,1);
   
-  fourier.clear();
+  fourier=vector<vector<double> >(64,vector<double>(64,0.0));
+  
   double norm=0;
-  for(int i=0;i<width;i++)
+  for(int i=0;i<512;i++)
   {
-    fourier.push_back(vector<double>(height));
-    for(int j=0;j<height;j++)
+    for(int j=0;j<512;j++)
     {
-      fourier[i][j]=r[i][j].norm();
+      fourier[i/8][j/8]+=sqrt(d[i+j*512].Re*d[i+j*512].Re+d[i+j*512].Im*d[i+j*512].Im);
+    }
+  }
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
       norm+=fourier[i][j];
     }
   }
-  for(int i=0;i<width;i++)
+  for(int i=0;i<64;i++)
   {
-    fourier.push_back(vector<double>(height));
-    for(int j=0;j<height;j++)
+    for(int j=0;j<64;j++)
     {
       fourier[i][j]/=norm;
     }
@@ -192,12 +212,23 @@ void image::dessinfourier(string file)
 {
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
-  os<<"P5"<<endl<<width<<" "<<height<<endl<<255<<endl;
-  for(int i=0;i<width;i++)
+  unsigned int t=fourier.size();
+  os<<"P5"<<endl<<t<<" "<<t<<endl<<255<<endl;
+  
+  float ma=0;
+for(int j=0;j<t;j++)
   {
-    for(int j=0;j<height;j++)
+    for(int i=0;i<t;i++)
     {
-      int n=(1-exp(-fourier[i][j]))*255;
+      if(fourier[i][j]>=ma)ma=fourier[i][j];
+    }
+  }
+  
+  for(int j=0;j<t;j++)
+  {
+    for(int i=0;i<t;i++)
+    {
+      int n=(fourier[i][j]/ma)*255;
       os<<(char)(n);
     }
   }
@@ -208,4 +239,106 @@ float image::distanceEMD(image i2)
 {
   Dictionary d;
   DictionaryEntry de;
+}
+
+DictionaryEntry image::EMDConstraintArrival(int arrivali, int arrivalj,double amont)
+{
+  DictionaryEntry de;
+  de.AddConstant(amont);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      stringstream ss;
+      ss<<i<<" "<<j<<" "<<arrivali<<" "<<arrivalj;
+      de.AddTerm(ss.str(),-1);
+    }
+  } 
+  return de;
+}
+
+DictionaryEntry image::EMDConstraintDeparture(int arrivali, int arrivalj, double amont)
+{
+  DictionaryEntry de;
+  de.AddConstant(amont);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      stringstream ss;
+      ss<<arrivali<<" "<<arrivalj<<" "<<i<<" "<<j;
+      de.AddTerm(ss.str(),-1);
+    }
+  } 
+  return de;
+
+}
+
+DictionaryEntry image::EMDConstraintTransfert1()
+{
+  DictionaryEntry de;
+  de.AddConstant(1);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      for(int k=0;k<64;k++)
+      {
+	for(int l=0;l<64;l++)
+	{
+	  stringstream ss;
+	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
+	  de.AddTerm(ss.str(),-1);
+	}
+      }
+    }
+  } 
+  return de;
+}
+
+DictionaryEntry image::EMDConstraintTransfert2()
+{
+  DictionaryEntry de;
+  de.AddConstant(1);
+  
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      for(int k=0;k<64;k++)
+      {
+	for(int l=0;l<64;l++)
+	{
+	  stringstream ss;
+	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
+	  de.AddTerm(ss.str(),1);
+	}
+      }
+    }
+  } 
+  return de;
+}
+
+DictionaryEntry image::EMDObjective()
+{
+  DictionaryEntry de;
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      for(int k=0;k<64;k++)
+      {
+	for(int l=0;l<64;l++)
+	{
+	  stringstream ss;
+	  ss<<k<<" "<<l<<" "<<i<<" "<<j;
+	  de.AddTerm(ss.str(),-sqrt((i-k)*(i-k)+(j-l)*(j-l)));
+	}
+      }
+    }
+  } 
+  return de;
 }

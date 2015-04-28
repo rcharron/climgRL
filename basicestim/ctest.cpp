@@ -3,14 +3,24 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <limits>
 #include "image.h"
+#include "basicScoreMaker.h"
 
 
 using namespace std;
 
 string buildmodel(vector<string> images)
 {
-  return "";
+  vector<float> mean;
+  vector<float> var;
+  for(string f:images)
+  {
+    image i(f);
+    mean.push_back(i.getNormMean());
+    var.push_back(i.getNormVar());
+  }
+  return model(mean,var);
 }
 
 float estimation(string model,string img)
@@ -18,12 +28,13 @@ float estimation(string model,string img)
   try
   {
   image i(img);
-  i.write("base"+model+".pgm");
-  i.dessinfourier("fourier"+model+".pgm");
+  return score(model,i.getNormMean(),i.getNormVar());
+  //return i.getDiam();
   }
   catch(string s)
   {
     cout<<s<<endl;
+    return std::numeric_limits<float>::infinity();
   }
   return 1.0f;
 }
