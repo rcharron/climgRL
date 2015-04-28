@@ -13,9 +13,9 @@ void Test_ConvexHull (){
 
   MetaImage test2("../database/beetle-7.pgm");
   ConvexHull(test2);
-  test2.savePGM("../src/Tests/ConvexHulle/beetle-7-convexHull.pgm");
+  test2.savePGM("../src/Tests/ConvexHull/beetle-7-convexHull.pgm");
   //static_cast<Board2D>(test2).saveEPS("rat-9-inverse.eps");
-  
+
   MetaImage test3("../database/bottle-8.pgm");
   ConvexHull(test3);
   test3.savePGM("../src/Tests/ConvexHull/bottle-8-convexHull.pgm");
@@ -26,5 +26,5 @@ void Test_ConvexHull (){
 
   MetaImage test5("../database/camel-12.pgm");
   ConvexHull(test5);
-  test5.savePGM("../src/Tests/ConvexHull/camel-12-convexHull.pgm");    
+  test5.savePGM("../src/Tests/ConvexHull/camel-12-convexHull.pgm");
 }

@@ -10,7 +10,10 @@
 #include <DGtal/io/readers/PGMReader.h>
 #include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
+///////////////////////////////////////////////////////////////////////////////
 #include "../MetaImage.h"
+#include "../Modifieurs/ConvexHull.h"
+#include "../Modifieurs/Remplissage.h"
 ///////////////////////////////////////////////////////////////////////////////
  
 using namespace std;
@@ -28,8 +31,14 @@ int Solidity_Aire (MetaImage & image){
   return res;
 }
 
-int Solidity (MetaImage & image){
-  
+double Solidity (MetaImage & image){
+  Remplissage(image);
+  int aire = Solidity_Aire(image);
+  MetaImage image_convexhull(image);
+  ConvexHull(image_convexhull);
+  Remplissage(image_convexhull);
+  int aire_convexhull = Solidity_Aire(image_convexhull);
+  return ((double)aire/(double)aire_convexhull);
 }
 
 

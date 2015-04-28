@@ -30,7 +30,7 @@ bool Orientationof(Point p, Point q, Point r){
 }
 
 
-DigitalSet Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne considère que les points du contour (plus rapide)
+vector<Point> Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne considère que les points du contour (plus rapide)
 {
   /*  Tri des Points  */
   Point p = *(s.begin()); //ce sera le point d'abcisse minimal = "le repère"
@@ -57,7 +57,7 @@ DigitalSet Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne consid
 //  if (p == L[0]) { cout << "premier element ok\n"; } else { cout << "premier element pas ok\n"; }
 //  cout << "p appartient à L : " << it != L.end() << "\n";
 //  cout << "p est le premier élément de L : " << p==L[0] << "\n";
-  DigitalSet convhull(domain);
+  vector<Point> convhull;
 //  convhull.insert(p);
   /*  Formation de l'enveloppe  */
   // On prend une pile, on empile les trois premiers, à partir de là : on prend chaque point dans l'ordre, on teste si ça tourne dans le bon sens (grace à Orientationof2(p,q,r), si c'est pas le cas on enlève le haut de la pile et on recommence) 
@@ -92,10 +92,18 @@ DigitalSet Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne consid
   }
 //  cout << "convex hull built\n";
   while (!mystack.empty()){
-    convhull.insert(mystack.top());
+    convhull.push_back(mystack.top());
     mystack.pop();
   }
   return convhull;
+}
+
+DigitalSet Contours_ConvexHull(Domain domain, vector<Point> & convhull){
+  DigitalSet s(domain);
+  for (int i = 0; i < convhull.size(); i++){
+    Trace_Line (s, convhull[i], convhull[(i+1)%convhull.size()]);
+  }
+  return s;
 }
 
 void ConvexHull (MetaImage& img){
@@ -103,9 +111,15 @@ void ConvexHull (MetaImage& img){
   DigitalSet img_set(domain);
   SetFromImage<DigitalSet>::append<Image>(img_set, img, 0, 255);
   MetaImage new_image = MetaImage(domain);
-  DigitalSet convhull = Build_ConvexHull(img_set);
-  for (DigitalSet::Iterator it = convhull.begin(); it != convhull.end(); it++){
-    new_image.setValue(*it,1);
+//  cout << "j'ai pas encore construit convexhull" << endl; 
+  vector<Point> convhull = Build_ConvexHull(img_set);
+//  cout << "j'ai construit convexhull mais pas les contours" << endl;
+  DigitalSet contours_convhull = Contours_ConvexHull(domain, convhull);
+//  cout << "j'ai construit les contours" << endl;
+  for (Point a : contours_convhull){
+//    cout << "je suis dans la boucle (nark nark)" << endl;
+//    cout<< a[0] << "," << a[1] << endl;
+    img.setValue(a,1);
   }
-  img = new_image;
+//  img = new_image;
 } 
