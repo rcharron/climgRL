@@ -18,7 +18,7 @@ void Test_Remplissage (){
   
   MetaImage test3("../database/pocket-20.pgm");
   Remplissage(test3);
-  test2.savePGM("../src/Tests/Remplissage/pocket-20-rempli.pgm");
+  test3.savePGM("../src/Tests/Remplissage/pocket-20-rempli.pgm");
   
   MetaImage test4("../database/cup-7.pgm");
   Remplissage(test4);

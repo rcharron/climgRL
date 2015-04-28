@@ -10,11 +10,12 @@
 //#include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
 ////////////////////////////////////////////////////////////////////////////////
-
+////////////////////// MODIFIEURS //////////////////////////////////////////////
 #include "Modifieurs/Traitement_AntiBruit.h"
 #include "Modifieurs/Traitement_AntiInversion.h"
 #include "Tests/AntiInversion/Test_AntiInversion.h"
 #include "Tests/Remplissage/Test_Remplissage.h"
+#include "Tests/ConvexHull/Test_ConvexHull.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -25,5 +26,6 @@ int main(int argc,char** argv)
 {
   Test_AntiInversion();
   Test_Remplissage();
+  Test_ConvexHull();
   return 0;
 }
