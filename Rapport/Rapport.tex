@@ -9,6 +9,7 @@
 \usepackage[a4paper,colorlinks,linkcolor=darkgray,citecolor=red,urlcolor=blue]{hyperref}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage{amsthm}
 \usepackage{listings}
 \usepackage{tikz}
@@ -58,6 +59,43 @@
     
     \subsection{Remplissage}
     
+      \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20.png}
+	  \label{pocket-non-rempli}
+	\end{subfigure}
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20-rempli.png}
+	\label{pocket-rempli}
+	\end{subfigure}
+	\caption{}
+	\label{remplissage}
+      \end{figure}
+      
+      \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20.png}
+	  \label{pocket-non-rempli}
+	\end{subfigure}
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20-rempli.png}
+	\label{pocket-rempli}
+	\end{subfigure}
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20-rempli.png}
+	\label{pocket-rempli}
+	\end{subfigure}	
+	\caption{}
+	\label{remplissage}
+      \end{figure}      
+   
   \section{Estimateurs}
   
     \subsection{Quelques estimateurs simple et complémentaires}
