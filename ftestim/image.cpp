@@ -148,7 +148,9 @@ void image::myfourier()
     for(int j=0;j<512;j++)
     {
       val=this->CanonicalValue((1.0f/512)*i,(1.0f/512)*j);
-      d[j+512*i]=complex{val,val};
+      //cout<<i<<" "<<j<<endl;
+      d[j+512*i]=complex{static_cast<real>(val),static_cast<real>(val)};
+      
     }
   }
   /*for(int i=0;i<width;i++)
@@ -158,6 +160,8 @@ void image::myfourier()
       d[i][j]=complexe(data[i][j],data[i][j]);
   }*/
   
+  
+  cout<<"coucou"<<endl;
   
   fft2D(d,512,512,1);
   

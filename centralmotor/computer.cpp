@@ -46,6 +46,15 @@ computer::~computer()
   sqlite3_close(db);
 }
 
+static int callback(void *NotUsed, int argc, char **argv, char **azColName){
+   int i;
+   for(i=0; i<argc; i++){
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+   printf("\n");
+   return 0;
+}
+
 
 void computer::AddClass(string name, vector< string > files)
 {
@@ -53,7 +62,18 @@ void computer::AddClass(string name, vector< string > files)
   t=estims.size();
   for(i=0;i<t;i++)
   {
+    string sql="DELETE FROM model WHERE estim='"+estims[i]->getName()+"' AND class='"+name+"'";
+    sqlite3_exec(db, sql.c_str(), 0, 0, NULL);
     string res=estims[i]->makemodel(files);
-    cout<<estims[i]->getName()<<" : "<<res<<endl;
+    sql="INSERT INTO model(estim,class,model) VALUES('"+estims[i]->getName()+"','"+name+"','"+res+"')";
+    char *zErrMsg = 0;
+    int rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
+   if( rc != SQLITE_OK ){
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+   }else{
+      fprintf(stdout, "Records created successfully\n");
+   }
+    cout<<sql<<endl;
   }
 }
