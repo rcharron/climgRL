@@ -22,6 +22,17 @@ computer::computer(vector<string>& files)
    if( rc )
       throw string("Can't open database: %s\n", sqlite3_errmsg(db));
    
+   string sql="CREATE TABLE IF NOT EXISTS model(estim TEXT,class TEST,model TEXT)";
+   
+   rc = sqlite3_exec(db, sql.c_str(), 0, 0, &zErrMsg);
+   if( rc != SQLITE_OK ){
+   	string res="SQL error:";
+	res+= zErrMsg;
+      sqlite3_free(zErrMsg);
+      sqlite3_close(db);
+      throw res;
+   }
+   
 }
 
 
