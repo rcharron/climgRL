@@ -44,5 +44,5 @@ float score(string model, string file)
     }
   }
   emd EMD;
-  return EMD.compute(histref,*img.getFourier());
+  return 1-(EMD.compute(histref,*img.getFourier())/sqrt(50*50+50*50));
 }
