@@ -103,6 +103,7 @@ DigitalSet Contours_ConvexHull(Domain domain, vector<Point> & convhull){
   for (int i = 0; i < convhull.size(); i++){
     Trace_Line (s, convhull[i], convhull[(i+1)%convhull.size()]);
   }
+  return s;
 }
 
 void ConvexHull (MetaImage& img){
@@ -110,10 +111,15 @@ void ConvexHull (MetaImage& img){
   DigitalSet img_set(domain);
   SetFromImage<DigitalSet>::append<Image>(img_set, img, 0, 255);
   MetaImage new_image = MetaImage(domain);
+//  cout << "j'ai pas encore construit convexhull" << endl; 
   vector<Point> convhull = Build_ConvexHull(img_set);
+//  cout << "j'ai construit convexhull mais pas les contours" << endl;
   DigitalSet contours_convhull = Contours_ConvexHull(domain, convhull);
-  for (DigitalSet::Iterator it = contours_convhull.begin(); it != contours_convhull.end(); it++){
-    new_image.setValue(*it,1);
+//  cout << "j'ai construit les contours" << endl;
+  for (Point a : contours_convhull){
+//    cout << "je suis dans la boucle (nark nark)" << endl;
+//    cout<< a[0] << "," << a[1] << endl;
+    img.setValue(a,1);
   }
-  img = new_image;
+//  img = new_image;
 } 
