@@ -83,6 +83,16 @@ DigitalSet ConstructLine(Domain & domain, Point p1, Point p2)
   }
   return Line;  
 }
+
+void Trace_Line (DigitalSet & s, Point p1, Point p2)
+{
+  Domain domain = s.domain();
+  DigitalSet Line(domain);
+  Line = ConstructLine(domain, p1, p2);
+  for (DigitalSet::Iterator it = Line.begin(); it != Line.end(); it++){
+    s.insert(*it);
+  }  
+}
                                                                            
                                                                            
 ///////////////////////////////////////////////////////////////////////////////

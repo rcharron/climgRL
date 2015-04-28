@@ -23,5 +23,6 @@ DGtal::Z2i::DigitalSet ConstructLineFstQuart(DGtal::Z2i::Domain & domain, DGtal:
 
 DGtal::Z2i::DigitalSet ConstructLine(DGtal::Z2i::Domain & domain, DGtal::Z2i::Point p1, DGtal::Z2i::Point p2);
 
+void Trace_Line (DGtal::Z2i::DigitalSet & s, DGtal::Z2i::Point p1, DGtal::Z2i::Point p2);
 
 #endif

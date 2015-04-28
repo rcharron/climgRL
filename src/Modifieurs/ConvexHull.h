@@ -27,7 +27,9 @@ int Determinant(DGtal::Z2i::Point p, DGtal::Z2i::Point q);
 bool CompOr(DGtal::Z2i::Point a, DGtal::Z2i::Point b);
 
 
-DGtal::Z2i::DigitalSet Build_ConvexHull(DGtal::Z2i::DigitalSet & s);
+std::vector<DGtal::Z2i::Point> Build_ConvexHull(DGtal::Z2i::DigitalSet & s);
+
+DGtal::Z2i::DigitalSet Contours_ConvexHull(DGtal::Z2i::Domain domain, std::vector<DGtal::Z2i::Point> & convhull);
 
 void ConvexHull (MetaImage& img);
 
