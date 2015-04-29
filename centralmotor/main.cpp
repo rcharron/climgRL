@@ -62,7 +62,7 @@ int main(int argc,char**argv){
   {
     stringstream ss;
     //ss<<"../database/bat-"<<i<<".pgm";
-    ss<<"../database/device0-"<<i<<".pgm";
+    ss<<"../database/bat-"<<i<<".pgm";
     im.push_back(ss.str());
   }
   c.AddClass("bat",im);

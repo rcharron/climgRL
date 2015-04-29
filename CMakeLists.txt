@@ -57,3 +57,16 @@ file(GLOB_RECURSE basicestim_source_files ${PROJECT_SOURCE_DIR}/basicestim/*.cpp
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
 add_library(basicestim MODULE ${basicestim_source_files})
+
+
+
+project (solidestim)
+
+
+file(GLOB_RECURSE solidestim_source_files ${PROJECT_SOURCE_DIR}/estimsolidity/*.cpp)
+
+set(CMAKE_CXX_FLAGS "-std=c++11")
+
+add_library(solidestim MODULE ${solidestim_source_files})
+target_link_libraries (solidestim ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
+ 
