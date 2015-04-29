@@ -10,7 +10,7 @@ void Test_AntiBruit (){
   
   MetaImage test = MetaImage(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
-    cout << "je suis dans la boucle\n";
+//    cout << "je suis dans la boucle\n";
     test.setValue(*it,1);  
   }
   test.setValue(Point(1,1),0);
@@ -20,7 +20,7 @@ void Test_AntiBruit (){
 
   MetaImage testbis = MetaImage(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
-    cout << "je suis dans la boucle\n";
+//    cout << "je suis dans la boucle\n";
     testbis.setValue(*it,0);  
   }
   testbis.setValue(Point(1,1),1);

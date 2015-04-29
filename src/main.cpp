@@ -17,6 +17,7 @@
 #include "Tests/AntiBruit/Test_AntiBruit.h"
 #include "Tests/Remplissage/Test_Remplissage.h"
 #include "Tests/ConvexHull/Test_ConvexHull.h"
+#include "Tests/Solidity/Test_Solidity.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -25,9 +26,10 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 			    //32bit integers
 int main(int argc,char** argv)
 {
-  Test_AntiInversion();
-  Test_Remplissage();
-  Test_ConvexHull();
-  Test_AntiBruit();
+//  Test_AntiInversion();
+//  Test_Remplissage();
+//  Test_ConvexHull();
+//  Test_AntiBruit();
+  Test_Solidity_Scale();
   return 0;
 }
