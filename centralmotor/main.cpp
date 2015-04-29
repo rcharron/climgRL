@@ -6,6 +6,7 @@
 #include <iostream>
 #include "estimator.h"
 #include <sstream>
+#include <regex>
 #include "computer.h"
 
 
@@ -36,8 +37,97 @@ vector<string> lookup(string where)
   } 
   return res;
 }
+
+vector<string> listclass(string where)
+{
+  vector<string> res;
+  DIR *dir;
+  struct dirent *ent;
+  regex r("(.*)-.*");
+  if ((dir = opendir (where.c_str())) != NULL) 
+  {
+    while ((ent = readdir (dir)) != NULL) 
+    {
+      string entry=ent->d_name;
+      smatch m;
+      if(regex_search(entry,m,r))
+      {
+	if(find(res.begin(),res.end(),m[1])==res.end())
+	  res.push_back(m[1]);
+      }
+    }
+  closedir (dir);
+  } 
+  return res;
+}
+
+
+vector<string> findfiles(string where, string reg)
+{
+  regex r(reg);
+  vector<string> res;
+  DIR *dir;
+  struct dirent *ent;
+  if ((dir = opendir (where.c_str())) != NULL) 
+  {
+    while ((ent = readdir (dir)) != NULL) 
+    {
+      string entry=ent->d_name;
+      if(regex_match(entry, r))
+      {
+	res.push_back(where+entry);
+      }
+    }
+  closedir (dir);
+  } 
+  return res;
+}
  
 int main(int argc,char**argv){
+  if(argc>1)
+  {
+    string action=argv[1];
+    if(action=="learn")
+    {
+      if(argc!=4)
+      {
+	cout<<"Usage ./centralmotor learn nomclass dossier"<<endl;
+	return 0;
+      }
+      string classname=argv[2];
+      string directory=argv[3];
+      if(directory.back()!='/')
+	 directory+='/';
+      vector<string> classfiles=findfiles(directory,classname+".*\\.pgm");
+      vector<string> l=lookup(".");
+      computer c(l);
+      c.AddClass(classname,classfiles);
+      return 0;
+    }
+    if(action=="learnall")
+    {
+      if(argc!=3)
+      {
+	cout<<"Usage ./centralmotor learnall dossier"<<endl;
+	return 0;
+      }
+      string directory=argv[2];
+      if(directory.back()!='/')
+	 directory+='/';
+      vector<string> lc=listclass("../database/");
+      vector<string> l=lookup(".");
+      computer c(l);
+      for(string classname:lc)
+      {
+	vector<string> classfiles=findfiles(directory,classname+".*\\.pgm");
+	c.AddClass(classname,classfiles);
+      }
+      return 0;
+    }
+  }
+  
+
+  
   vector<string> l=lookup(".");
   for(string s:l)
     cout<<s<<endl;
