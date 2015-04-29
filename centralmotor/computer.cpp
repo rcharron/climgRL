@@ -98,3 +98,23 @@ float computer::score(string file, string classname, unsigned int i)
     sqlite3_finalize(stmt);
     return res;
 }
+
+
+float computer::score(string file, string classname)
+{
+  unsigned int i,t;
+  t=estims.size();
+  if(t==0)throw string("Aucun estimateur ne connait cette classe");
+  float sc=0.0;
+  for(i=0;i<t;i++)
+  {
+    try
+    {
+      float v=score(file,classname,i);
+      sc+=v;
+      cout<<"estim"<<i<<" ("<<estims[i]->getName()<<"): "<<v<<endl;
+    }
+    catch(string s){cout<<s<<endl;}
+  }
+  return sc/t;
+}

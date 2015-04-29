@@ -133,6 +133,25 @@ int main(int argc,char**argv){
       cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
       return 0;
     }
+
+    if(action=="estim")
+    {
+      if(argc!=4)
+      {
+	cout<<"Usage ./centralmotor estim nomclass fichier"<<endl;
+	return 0;
+      }
+      string classname=argv[2];
+      string file=argv[3];
+      
+      vector<string> l=lookup(".");
+      computer c(l);
+      try{
+	c.score(file,classname);
+      }
+      catch(string s){cout<<s<<endl;}
+      return 0;
+    }
   }
   
 
