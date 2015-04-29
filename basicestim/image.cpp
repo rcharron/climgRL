@@ -9,6 +9,7 @@ using namespace std;
 image::image(string file)
 {
 //format P5
+  //cout<<"test img : "<<file<<endl;
   ifstream is(file);
   if(is.fail())throw string("échec ouverture "+file);
   string l;
@@ -23,7 +24,7 @@ image::image(string file)
   
   stringstream ss(l);
   ss>>width>>height;
-  
+  //	cout<<"test wh "<<width<<" "<<height<<endl;
   do
   {
     getline(is,l);
@@ -38,14 +39,20 @@ image::image(string file)
   //getline(is,l);
   char c=0;
   data=vector<vector<bool> >(width,vector<bool>(height,false));
+  
+  int test=0;
+  
   for(int j=0;j<height;j++)
   {
     for(int i=0;i<width;i++)
     {
       is.get(c);
-      data[i][j]=(/*l[i*width+j]*/c==white);
+      //if(i==0&&j==0)cout<<(int)c<<endl;
+      //if(c!=white&&c!=0)cout<<(int)c<<endl;
+      data[i][j]=(/*l[i*width+j]*//*c==white*/c!=0);
     }
   }
+  //cout<<endl;
   updateMeta();
 }
 
@@ -135,6 +142,7 @@ void image::ComputeMean()
       }
     }
   }
+  //cout<<"test !0 "<<p<<endl;
   mean/=p;
 }
 

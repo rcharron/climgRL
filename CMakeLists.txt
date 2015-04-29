@@ -33,7 +33,7 @@ project (centralmotor)
 
 file(GLOB_RECURSE central_source_files ${PROJECT_SOURCE_DIR}/centralmotor/*.cpp)
 
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 
 add_executable(centralmotor ${central_source_files} ${PROJECT_SOURCE_DIR}/centralmotor/sqlite3.c)
 

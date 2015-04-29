@@ -117,11 +117,20 @@ int main(int argc,char**argv){
       vector<string> lc=listclass("../database/");
       vector<string> l=lookup(".");
       computer c(l);
-      for(string classname:lc)
+      unsigned int i,t;
+      t=lc.size();
+      for(i=0;i<t;i++)//string classname:lc)
       {
-	vector<string> classfiles=findfiles(directory,classname+".*\\.pgm");
-	c.AddClass(classname,classfiles);
+	int progress=(50*i)/t;
+	cout<<"\r[";
+	for(int w=0;w<progress;w++)cout<<"=";
+	cout<<">";
+	for(int w=0;w<50-progress;w++)cout<<" ";
+	cout<<"] ("<<i<<"/"<<t<<")"<<flush;
+	vector<string> classfiles=findfiles(directory,lc[i]+".*\\.pgm");
+	c.AddClass(lc[i],classfiles);
       }
+      cout<<"\r[================================================] ("<<t<<"/"<<t<<")"<<endl;
       return 0;
     }
   }

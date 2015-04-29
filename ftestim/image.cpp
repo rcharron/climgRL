@@ -45,7 +45,7 @@ image::image(string file)
     for(int i=0;i<width;i++)
     {
       is.get(c);
-      data[i][j]=(/*l[i*width+j]*/c==white);
+      data[i][j]=(c!=0);
     }
   }
   updateMeta();

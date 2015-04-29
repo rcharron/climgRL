@@ -68,12 +68,10 @@ void computer::AddClass(string name, vector< string > files)
     sql="INSERT INTO model(estim,class,model) VALUES('"+estims[i]->getName()+"','"+name+"','"+res+"')";
     char *zErrMsg = 0;
     int rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
-   if( rc != SQLITE_OK ){
+    if( rc != SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
-   }else{
-      fprintf(stdout, "Records created successfully\n");
-   }
-    cout<<sql<<endl;
+    }
+    
   }
 }
