@@ -9,6 +9,7 @@
 \usepackage[a4paper,colorlinks,linkcolor=darkgray,citecolor=red,urlcolor=blue]{hyperref}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage{amsthm}
 \usepackage{listings}
 \usepackage{tikz}
@@ -53,11 +54,91 @@
   \section{Traitement des images}
   
     \subsection{Traitement anti-inversion}
+    
+      \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.49\textwidth}
+	  \begin{subfigure}{.49\textwidth}
+	    \centering
+	    \includegraphics[scale=0.25]{Illustrations/rat-8.png}
+	    \label{1strat}
+	  \end{subfigure}
+	  \begin{subfigure}{.49\textwidth}
+	    \centering
+	    \includegraphics[scale=0.25]{Illustrations/rat-8-inverse.png}
+	    \label{1strat-inverse}
+	  \end{subfigure}
+	  \subcaption{Ce rat n'a pas été inversé}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+	  \begin{subfigure}{.49\textwidth}
+	    \centering
+	    \includegraphics[scale=0.25]{Illustrations/rat-9.png}
+	  \label{2ndrat}
+	  \end{subfigure}
+	  \begin{subfigure}{.49\textwidth}
+	    \centering
+	    \includegraphics[scale=0.25]{Illustrations/rat-9-inverse.png}
+	  \label{2ndrat-inverse}
+	  \end{subfigure}
+	  \subcaption{Ce rat a été inversé}
+	\end{subfigure}
+	\caption{Inversion de l'objet rat}
+	\label{anti-inversion}
+      \end{figure} 
   
     \subsection{Traitement anti-bruit}
     
     \subsection{Remplissage}
     
+      \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20.png}
+	  \label{pocket-non-rempli}
+	\end{subfigure}
+	\begin{subfigure}{.25\textwidth}
+	  \centering
+	  \includegraphics[scale=0.30]{Illustrations/pocket-20-rempli.png}
+	\label{pocket-rempli}
+	\end{subfigure}
+	\caption{Remplissage de l'objet pocket}
+	\label{remplissage}
+      \end{figure}
+      
+      \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.47\textwidth}
+	  \begin{subfigure}{.52\textwidth}
+	    \centering
+	    \includegraphics[scale=0.295]{Illustrations/butterfly-10-rempli.png}
+	    \label{butterfly-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.45\textwidth}
+	    \centering
+	    \includegraphics[scale=0.16]{Illustrations/device9-6-rempli.png}
+	    \label{spirale-rempli}
+	  \end{subfigure}
+	  \subcaption{Certains détails ne sont pas remplis}
+	\end{subfigure}
+	\begin{subfigure}{.44\textwidth}
+	  \begin{subfigure}{.46\textwidth}
+	    \centering
+	    \includegraphics[scale=0.25]{Illustrations/cup-7-rempli.png}
+	  \label{1stcup-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.46\textwidth}
+	    \centering
+	    \includegraphics[scale=0.275]{Illustrations/cup-12-rempli.png}
+	  \label{2ndcup-rempli}
+	  \end{subfigure}
+	  \subcaption{Les tasses ne sont pas remplies pareil}
+	\end{subfigure}
+	\caption{Problèmes soulevés par le remplissage des objets}
+	\label{problèmes-remplissage}
+      \end{figure}      
+   
   \section{Estimateurs}
   
     \subsection{Quelques estimateurs simple et complémentaires}
