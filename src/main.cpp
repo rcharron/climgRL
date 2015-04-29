@@ -18,6 +18,7 @@
 #include "Tests/Remplissage/Test_Remplissage.h"
 #include "Tests/ConvexHull/Test_ConvexHull.h"
 #include "Tests/Solidity/Test_Solidity.h"
+#include "Tests/Rotate/Test_Rotate.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -30,6 +31,7 @@ int main(int argc,char** argv)
 //  Test_Remplissage();
 //  Test_ConvexHull();
 //  Test_AntiBruit();
-  Test_Solidity_Scale();
+//  Test_Solidity_Scale();
+  Test_Rotate();
   return 0;
 }
