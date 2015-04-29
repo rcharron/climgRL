@@ -17,6 +17,7 @@ public:
   ~ computer();
   void AddClass(std::string name,std::vector<std::string> files);
 private:
+  float score(std::string file, std::string classname,unsigned int estimnb);
   std::vector<estimator*> estims;
   sqlite3 *db;
 };

@@ -14,7 +14,7 @@ string model(vector< string > files)
   string fl;
   for(i=0;i<t;i++)
   {
-    cout<<files[i]<<endl;
+    //cout<<files[i]<<endl;
     image img(files[i]);
     for(int i=0;i<64;i++)
     {

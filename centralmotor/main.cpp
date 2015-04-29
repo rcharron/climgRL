@@ -130,7 +130,7 @@ int main(int argc,char**argv){
 	vector<string> classfiles=findfiles(directory,lc[i]+".*\\.pgm");
 	c.AddClass(lc[i],classfiles);
       }
-      cout<<"\r[================================================] ("<<t<<"/"<<t<<")"<<endl;
+      cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
       return 0;
     }
   }

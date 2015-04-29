@@ -74,9 +74,7 @@
 #define M_PI 3.1415926535897932385E0
 #endif
 
-void fft(complex x[], int n, int flag);
-
-void fft3D(complex x[], int n1, int n2, int n3, int flag);
+void fft(std::vector<complex>::iterator x, int n, int flag);
 
 /*----------------------------------------------------------------------*/
 /* Truncated Stockham algorithm for multi-column vector,
@@ -88,9 +86,9 @@ void fft3D(complex x[], int n1, int n2, int n3, int flag);
    terminology of column or row respect to algorithms in the Loan's 
    book is reversed, because we use row major convention of C.
 */
-static void stockham(complex x[], int n, int flag, int n2, complex y[])
+static void stockham(std::vector<complex>::iterator x, int n, int flag, int n2, std::vector<complex>::iterator y)
 {
-   complex  *y_orig, *tmp;
+   std::vector<complex>::iterator  y_orig, tmp;
    int  i, j, k, k2, Ls, r, jrs;
    int  half, m, m2;
    real  wr, wi, tr, ti;
@@ -140,7 +138,7 @@ static void stockham(complex x[], int n, int flag, int n2, complex y[])
    x[] is input data, overwritten by output, viewed as n/n2 by n2
    array. flag = 1 for forward and -1 for backward transform.
 */
-void cooley_tukey(complex x[], int n, int flag, int n2)
+void cooley_tukey(std::vector<complex>::iterator x, int n, int flag, int n2)
 {
    complex c;
    int i, j, k, m, p, n1;
@@ -200,15 +198,15 @@ void cooley_tukey(complex x[], int n, int flag, int n2)
    Simply call stockham with proper arguments.  
    Allocated working space of size n dynamically.
 */
-void fft(complex x[], int n, int flag)
+void fft(std::vector<complex>::iterator x, int n, int flag)
 {
-   complex *y;
+   std::vector<complex> y(n);
    
    assert(1 == flag || -1 == flag);
-   y = (complex *) malloc( n*sizeof(complex) );
-   assert(NULL != y);
-   stockham(x, n, flag, 1, y);
-   free(y);
+   //y = (complex *) malloc( n*sizeof(complex) );
+   //assert(NULL != y);
+   stockham(x, n, flag, 1, y.begin());
+   //free(y);
 }
 
  
@@ -222,40 +220,20 @@ void fft(complex x[], int n, int flag)
    so we take a compromise of the two.
 */
 
-void fft2D(complex x[], int n1, int n2, int flag)
+void fft2D(std::vector<complex>::iterator x, int n1, int n2, int flag)
 {
-   complex *y;
+   std::vector<complex> y(n2);
    int i, n;
 
    assert(1 == flag || -1 == flag);
    n = n1*n2;
-   y = (complex *) malloc( n2*sizeof(complex) );
-   assert(NULL != y);
+   /*y = (complex *) malloc( n2*sizeof(complex) );
+   assert(NULL != y);*/
 
    for(i=0; i < n; i += n2) {                                  /* FFT in y */
-      stockham(x+i, n2, flag, 1, y); 
+      stockham(x+i, n2, flag, 1, y.begin()); 
    }
-   free(y);
+   //free(y);
    cooley_tukey(x, n, flag, n2);                               /* FFT in x */
 }
 
-void fft3D(complex x[], int n1, int n2, int n3, int flag)
-{
-   complex *y;
-   int i, n, n23;
-
-   assert(1 == flag || -1 == flag);
-   n23 = n2*n3;
-   n = n1*n23;
-   y = (complex *) malloc( n23*sizeof(complex) );
-   assert(NULL != y);
-
-   for(i=0; i < n; i += n3) {                                  /* FFT in z */
-      stockham(x+i, n3, flag, 1, y);
-   }
-   for(i=0; i < n; i += n23) {                                 /* FFT in y */
-      stockham(x+i, n23, flag, n3, y); 
-   }
-   free(y);
-   cooley_tukey(x, n, flag, n23);                              /* FFT in x */
-}

@@ -75,3 +75,26 @@ void computer::AddClass(string name, vector< string > files)
     
   }
 }
+
+
+float computer::score(string file, string classname, unsigned int i)
+{
+  sqlite3_stmt * stmt;
+    string sql="SELECT model FROM model WHERE estim='"+estims[i]->getName()+"' AND class='"+classname+"'";
+    sqlite3_prepare( db, sql.c_str(), -1, &stmt, NULL );
+    int result = sqlite3_step( stmt );
+    
+    float res=0.0f;
+    
+    if(result == SQLITE_ROW)
+    {
+      string str = (char *)(sqlite3_column_text( stmt, 0 ));
+      res=estims[i]->scoreof(str,file);
+    }
+    else
+    {
+      throw string("no model provided for estimator "+estims[i]->getName()+"on class "+classname);
+    }
+    sqlite3_finalize(stmt);
+    return res;
+}

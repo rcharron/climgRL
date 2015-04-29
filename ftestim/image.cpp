@@ -141,7 +141,7 @@ int image::CanonicalValue(float x, float y)
 
 void image::myfourier()
 {
-  complex d[512*512];
+  vector<complex> d(512*512);
   int val;
   for(int i=0;i<512;i++)
   {
@@ -161,9 +161,8 @@ void image::myfourier()
   }*/
   
   
-  cout<<"coucou"<<endl;
   
-  fft2D(d,512,512,1);
+  fft2D(d.begin(),512,512,1);
   
   fourier=vector<vector<double> >(64,vector<double>(64,0.0));
   
