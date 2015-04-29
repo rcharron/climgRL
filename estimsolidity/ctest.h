@@ -7,6 +7,7 @@ extern "C" {
  
 const char* buildmodel(const char*);
 float estim(const char*,const char*);
+const char* pre_estim(const char*);
  
 #ifdef __cplusplus
 }

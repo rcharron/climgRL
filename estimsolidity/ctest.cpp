@@ -35,11 +35,22 @@ const char* buildmodel(const char* listoffiles)
   return buildmodel(res);
 }
 
-float estim(const char* modelc, const char* filec)
+float estim(const char* modelc, const char* pcc)
 {
   string model=modelc;
+  string pc=pcc;
+  stringstream ss(pc);
+  float sc;
+  ss>>sc;
+  return score(modelc,sc);
+  
+}
+
+const char* pre_estim(const char* filec)
+{
   string file=filec;
   MetaImage img(filec);
-  return score(modelc,Solidity(img));
-  
+  stringstream ss;
+  ss<<(float)Solidity(img);
+  return ss.str().c_str();
 }

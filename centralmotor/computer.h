@@ -8,6 +8,7 @@
 #include <iostream>
 #include "estimator.h"
 #include <sstream>
+#include <fstream>
 #include "sqlite3.h"
 
 class computer
@@ -17,8 +18,12 @@ public:
   ~ computer();
   void AddClass(std::string name,std::vector<std::string> files);
   float score(std::string file, std::string classname);
+  std::vector<float> score(std::string file);
+  void signature(std::vector<std::string>& classes);
 private:
   float score(std::string file, std::string classname, unsigned int estimnb);
+  float fastscore(std::string precalc, std::string classname, unsigned int estimnb);
+  float fastscore(std::vector<std::string>& precalc, std::string classname);
   std::vector<estimator*> estims;
   sqlite3 *db;
 };

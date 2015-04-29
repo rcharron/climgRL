@@ -23,6 +23,12 @@ estimator::estimator(const char* library)
     if (( error = dlerror() ) != NULL)  {
         throw string(error);
     }
+    
+    pre_estim = (pre_estim_t)(dlsym(handle, "pre_estim"));
+    if (( error = dlerror() ) != NULL)  {
+        throw string(error);
+    }
+    
     name=library;
 }
 
@@ -40,10 +46,16 @@ std::string estimator::makemodel(std::vector< std::string > files)
   return buildmodel(ss.str().c_str());
 }
 
-float estimator::scoreof(std::string model, std::string file)
+float estimator::scoreof(std::string model, std::string pc)
 {
-  return estim(model.c_str(),file.c_str());
+  return estim(model.c_str(),pc.c_str());
 }
+
+string estimator::pcof(string file)
+{
+  return pre_estim(file.c_str());
+}
+
 
 string estimator::getName()
 {

@@ -119,7 +119,8 @@ int main(int argc,char**argv){
       computer c(l);
       unsigned int i,t;
       t=lc.size();
-      for(i=0;i<t;i++)//string classname:lc)
+      c.signature(lc);
+      for(i=0;i<t;i++)
       {
 	int progress=(50*i)/t;
 	cout<<"\r[";
@@ -136,30 +137,54 @@ int main(int argc,char**argv){
 
     if(action=="estim")
     {
-      if(argc!=4)
+      if(argc>4)
       {
 	cout<<"Usage ./centralmotor estim nomclass fichier"<<endl;
 	return 0;
       }
-      string classname=argv[2];
-      string file=argv[3];
-      
-      vector<string> l=lookup(".");
-      computer c(l);
-      try{
-	c.score(file,classname);
+      if(argc==4)
+      {
+	string classname=argv[2];
+	string file=argv[3];
+	
+	float res;
+	
+	vector<string> l=lookup(".");
+	computer c(l);
+	try{
+	  res=c.score(file,classname);
+	}
+	catch(string s){cout<<s<<endl;return -1;}
+	cout<<"Computed score is "<<res<<endl;
+	return 0;
       }
-      catch(string s){cout<<s<<endl;}
-      return 0;
+      if(argc==3)
+      {
+	string file=argv[2];
+      
+	vector<float> res;
+	
+	vector<string> l=lookup(".");
+	computer c(l);
+	try{
+	  res=c.score(file);
+	}
+	catch(string s){cout<<s<<endl;return -1;}
+	cout<<"Computed score is (";
+	for(float s:res)
+	  cout<<s<<"|";
+	cout<<"\b)"<<endl;
+	return 0;
+      }
     }
   }
   
 
-  
+  /*-
   vector<string> l=lookup(".");
   for(string s:l)
     cout<<s<<endl;
-  /*try{
+  try{
   estimator e("./libftestim.so");
   for(int i=1;i<10;i++)
   {
@@ -172,7 +197,7 @@ int main(int argc,char**argv){
   catch(char* err)
   {
     cout<<err<<endl;
-  }*/
+  }
   computer c(l);
   vector<string> im;
   
@@ -184,5 +209,22 @@ int main(int argc,char**argv){
     im.push_back(ss.str());
   }
   c.AddClass("bat",im);
-    return 0;
+   / return 0;*/
+  cout<<"      ___           ___                   ___           ___           ___           ___  "<<endl;
+  cout<<"     /\\  \\         /\\__\\      ___        /\\__\\         /\\  \\         /\\  \\         /\\__\\ "<<endl;
+  cout<<"    /::\\  \\       /:/  /     /\\  \\      /::|  |       /::\\  \\       /::\\  \\       /:/  / "<<endl;
+  cout<<"   /:/\\:\\  \\     /:/  /      \\:\\  \\    /:|:|  |      /:/\\:\\  \\     /:/\\:\\  \\     /:/  /  "<<endl;
+  cout<<"  /:/  \\:\\  \\   /:/  /       /::\\__\\  /:/|:|__|__   /:/  \\:\\  \\   /::\\~\\:\\  \\   /:/  /   "<<endl;
+  cout<<" /:/__/ \\:\\__\\ /:/__/     __/:/\\/__/ /:/ |::::\\__\\ /:/__/_\\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/    "<<endl;
+  cout<<" \\:\\  \\  \\/__/ \\:\\  \\    /\\/:/  /    \\/__/~~/:/  / \\:\\  /\\ \\/__/ \\/_|::\\/:/  / \\:\\  \\    "<<endl;
+  cout<<"  \\:\\  \\        \\:\\  \\   \\::/__/           /:/  /   \\:\\ \\:\\__\\      |:|::/  /   \\:\\  \\   "<<endl;
+  cout<<"   \\:\\  \\        \\:\\  \\   \\:\\__\\          /:/  /     \\:\\/:/  /      |:|\\/__/     \\:\\  \\  "<<endl;
+  cout<<"    \\:\\__\\        \\:\\__\\   \\/__/         /:/  /       \\::/  /       |:|  |        \\:\\__\\ "<<endl;
+  cout<<"     \\/__/         \\/__/                 \\/__/         \\/__/         \\|__|         \\/__/ "<<endl;
+  cout<<endl;
+  cout<<"     ==============================================================================="<<endl;
+  cout<<"               ===========================================================          "<<endl;
+  cout<<endl<<endl;
+  
+  return 0;
 }

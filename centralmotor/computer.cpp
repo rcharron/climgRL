@@ -89,22 +89,46 @@ float computer::score(string file, string classname, unsigned int i)
     if(result == SQLITE_ROW)
     {
       string str = (char *)(sqlite3_column_text( stmt, 0 ));
-      res=estims[i]->scoreof(str,file);
+      string pc=estims[i]->pcof(file);
+      res=estims[i]->scoreof(str,pc);
     }
     else
     {
-      throw string("no model provided for estimator "+estims[i]->getName()+"on class "+classname);
+      throw string("Aucun modèle connu de l'estimateur "+estims[i]->getName()+" pour la classe "+classname);
     }
     sqlite3_finalize(stmt);
     return res;
 }
 
+float computer::fastscore(string precalc, string classname, unsigned int i)
+{
+sqlite3_stmt * stmt;
+    string sql="SELECT model FROM model WHERE estim='"+estims[i]->getName()+"' AND class='"+classname+"'";
+    sqlite3_prepare( db, sql.c_str(), -1, &stmt, NULL );
+    int result = sqlite3_step( stmt );
+    
+    float res=0.0f;
+    
+    if(result == SQLITE_ROW)
+    {
+      string str = (char *)(sqlite3_column_text( stmt, 0 ));
+      res=estims[i]->scoreof(str,precalc);
+    }
+    else
+    {
+      throw string("Aucun modèle connu de l'estimateur "+estims[i]->getName()+" pour la classe "+classname);
+    }
+    sqlite3_finalize(stmt);
+    return res;
+}
 
 float computer::score(string file, string classname)
 {
-  unsigned int i,t;
+  unsigned int i,t,m;
   t=estims.size();
+  m=t;
   if(t==0)throw string("Aucun estimateur ne connait cette classe");
+  
   float sc=0.0;
   for(i=0;i<t;i++)
   {
@@ -114,7 +138,72 @@ float computer::score(string file, string classname)
       sc+=v;
       cout<<"estim"<<i<<" ("<<estims[i]->getName()<<"): "<<v<<endl;
     }
-    catch(string s){cout<<s<<endl;}
+    catch(string s){cout<<s<<endl;m--;}
   }
-  return sc/t;
+  
+  if(m==0)throw string("Le résultat ne peut pas être calculé");
+  
+  return sc/m;
+}
+
+float computer::fastscore(vector< std::string >& precalc, string classname)
+{
+  unsigned int i,t,m;
+  t=estims.size();
+  m=t;
+  if(t==0)throw string("Aucun estimateur ne connait cette classe");
+  
+  float sc=0.0;
+  for(i=0;i<t;i++)
+  {
+    try
+    {
+      float v=fastscore(precalc[i],classname,i);
+      sc+=v;
+      //cout<<"estim"<<i<<" ("<<estims[i]->getName()<<"): "<<v<<endl;
+    }
+    catch(string s){cout<<s<<endl;m--;}
+  }
+  
+  if(m==0)throw string("Le résultat ne peut pas être calculé");
+  
+  return sc/m;
+}
+
+
+void computer::signature(vector< string >& classes)
+{
+  string sign;
+  ofstream os("signature.sgn");
+  if(os.fail())throw string("La signature n'a pas pu être écrite");
+  for(string c:classes)
+    os<<c<<" ";
+  os.close();
+}
+
+vector< float > computer::score(string file)
+{
+  ifstream is("signature.sgn");
+  if(is.fail())string("La signature n'a pas pu être lue");
+  
+  vector<string> precalc;
+  unsigned int i,t;
+  t=estims.size();
+  for(i=0;i<t;i++)
+  {
+    precalc.push_back(estims[i]->pcof(file));
+  }
+  
+  string classname;
+  vector< float > res;
+  try
+  {
+    while(is>>classname)
+    {
+      float s=fastscore(precalc,classname);
+      res.push_back(s);
+    }
+  }
+  catch(string s){cout<<s<<endl;}
+  return res;
 }

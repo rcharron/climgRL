@@ -23,13 +23,23 @@ string buildmodel(vector<string> images)
   return model(mean,var);
 }
 
-float estimation(string model,string img)
+string pre_estimation(string img)
+{
+  image i(img);
+  stringstream ss;
+  ss<<i.getNormMean()<<" "<<i.getNormVar();
+  return ss.str();
+}
+
+
+float estimation(string model,string pc)
 {
   try
   {
-  image i(img);
-  return score(model,i.getNormMean(),i.getNormVar());
-  //return i.getDiam();
+  stringstream ss(pc);
+  float n,v;
+  ss>>n>>v;
+  return score(model,n,v);
   }
   catch(string s)
   {
@@ -53,10 +63,15 @@ const char* buildmodel(const char* listoffiles)
   return buildmodel(res).c_str();
 }
 
-float estim(const char* modelc, const char* filec)
+float estim(const char* modelc, const char* precalc)
 {
   string model=modelc;
-  string file=filec;
-  return estimation(modelc,filec);
+  string pc=precalc;
+  return estimation(modelc,pc);
   
+}
+
+const char* pre_estim(const char* file)
+{
+  return pre_estimation(file).c_str();
 }
