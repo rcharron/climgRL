@@ -38,7 +38,9 @@ MetaImage Apply_AntiBruit (MetaImage & image){
 	    blancs += image(voisins[i]);
 	}
     }
-    new_image.setValue(*it,(1+(noirs>blancs)) %2);
+    if (noirs > blancs) {new_image.setValue(*it,0);}
+    else {new_image.setValue(*it,1);}
+//    new_image.setValue(*it,(1+(noirs>blancs)) %2);
   }
   return new_image;
 }
