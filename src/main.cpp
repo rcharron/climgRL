@@ -14,6 +14,7 @@
 #include "Modifieurs/Traitement_AntiBruit.h"
 #include "Modifieurs/Traitement_AntiInversion.h"
 #include "Tests/AntiInversion/Test_AntiInversion.h"
+#include "Tests/AntiBruit/Test_AntiBruit.h"
 #include "Tests/Remplissage/Test_Remplissage.h"
 #include "Tests/ConvexHull/Test_ConvexHull.h"
 ///////////////////////////////////////////////////////////////////////////////
@@ -27,5 +28,6 @@ int main(int argc,char** argv)
   Test_AntiInversion();
   Test_Remplissage();
   Test_ConvexHull();
+  Test_AntiBruit();
   return 0;
 }
