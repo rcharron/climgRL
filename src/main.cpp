@@ -17,7 +17,8 @@
 #include "Tests/AntiBruit/Test_AntiBruit.h"
 #include "Tests/Remplissage/Test_Remplissage.h"
 #include "Tests/ConvexHull/Test_ConvexHull.h"
-#include "Tests/Solidity/Test_Solidity.h"
+#include "Tests/Scaling/Test_Solidity.h"
+#include "Tests/Scaling/Test_Eccentricity.h"
 #include "Tests/Rotate/Test_Rotate.h"
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -32,6 +33,7 @@ int main(int argc,char** argv)
 //  Test_ConvexHull();
 //  Test_AntiBruit();
 //  Test_Solidity_Scale();
-  Test_Rotate();
+//  Test_Rotate();
+  Test_Eccentricity_Scale();
   return 0;
 }
