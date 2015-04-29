@@ -1,0 +1,23 @@
+HORSE-20 :
+Horse (scale 1) : solidité = 0.577491
+Horse (scale 0.5) : solidité = 0.584583
+Horse (scale 2) : solidité = 0.57244
+Horse (scale 5) : solidité = 0.569273
+
+APPLE-3 :
+Apple (scale 1) : solidité = 0.931911
+Apple (scale 0.5) : solidité = 0.933504
+Apple (scale 2) : solidité = 0.930546
+Apple (scale 5) : solidité = 0.929267
+
+DEVICE7-1 :
+Device7 (scale 1) : solidité = 0.768281
+Device7 (scale 0.5) : solidité = 0.77016
+Device7 (scale 2) : solidité = 0.767288
+Device7 (scale 5) : solidité = 0.703692
+
+LIZZARD-13 :
+Lizzard (scale 1) : solidité = 0.762166
+Lizzard (scale 0.5) : solidité = 0.767554
+Lizzard (scale 2) : solidité = 0.75678
+Lizzard (scale 5) : solidité = 0.7533
