@@ -31,6 +31,7 @@
 src/*.pgm
 
 build/*
+.kdev4/*
 
 # Latex files
 *.aux
