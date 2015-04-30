@@ -79,8 +79,8 @@ void Test_Solidity_Scale (){
   cout << "LIZZARD-13 :\n";
   
   MetaImage test4_1("../src/Tests/Scaling/lizzard-13.pgm");
-  Remplissage(test4_1);
-  ConvexHull(test4_1);
+//  Remplissage(test4_1);
+//  ConvexHull(test4_1);
   cout << "Lizzard (scale 1) : solidité = " << Solidity(test4_1) << "\n";
   
   MetaImage test4_2("../src/Tests/Scaling/lizzard-13-scale-0.5.pgm");

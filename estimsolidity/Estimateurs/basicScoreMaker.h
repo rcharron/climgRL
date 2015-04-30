@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iostream>
 
 std::string model(std::vector<float>& serie);
 

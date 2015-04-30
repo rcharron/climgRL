@@ -12,6 +12,7 @@ std::string model(std::vector< float >& score)
   for(i=0;i<t;i++)
   {
     m+=score[i];
+//    std::cout << score[i] << std::endl;
   }
   
   

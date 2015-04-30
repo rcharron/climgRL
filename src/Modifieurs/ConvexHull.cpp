@@ -33,6 +33,7 @@ bool Orientationof(Point p, Point q, Point r){
 vector<Point> Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne considère que les points du contour (plus rapide)
 {
   /*  Tri des Points  */
+//  if(s.empty()) {cout << "le set est empty\n";}
   Point p = *(s.begin()); //ce sera le point d'abcisse minimal = "le repère"
   int absmin = p[0];
   Domain domain = s.domain();
@@ -64,7 +65,9 @@ vector<Point> Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne con
   stack<Point> mystack;
 //  mystack.push(p);
 //  cout << "Point p : " << p << "\n";
+//  cout << "blabla1\n";
   mystack.push(L[0]);
+//  cout << "blabla2\n";
 //  cout << "Point " << 0 << " : " << L[0] << "\n";
   mystack.push(L[1]);
 //  cout << "Point " << 1 << " : " << L[1] << "\n";
@@ -111,8 +114,10 @@ void ConvexHull (MetaImage& img){
   DigitalSet img_set(domain);
   SetFromImage<DigitalSet>::append<Image>(img_set, img, 0, 255);
   MetaImage new_image = MetaImage(domain);
-//  cout << "j'ai pas encore construit convexhull" << endl; 
+//  cout << "j'ai pas encore construit convexhull" << endl;
+//  cout << "coucou1\n";
   vector<Point> convhull = Build_ConvexHull(img_set);
+//  cout << "coucou2\n";
 //  cout << "j'ai construit convexhull mais pas les contours" << endl;
   DigitalSet contours_convhull = Contours_ConvexHull(domain, convhull);
 //  cout << "j'ai construit les contours" << endl;

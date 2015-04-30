@@ -6,6 +6,7 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 			    //32bit integers
     
 pair<pair<Point,Point>,int> Find_PlusEloignes (vector<Point> ListePoints){
+//  if (ListePoints.empty()) cout << "La convexhull est vide !!\n";
   Point p1 = ListePoints[0];
   Point p2 = ListePoints[1];
   int distance = 0;
@@ -52,15 +53,22 @@ int Dist_Max_Vert (MetaImage & image){
 double Eccentricity (MetaImage & image){
   Domain domain = image.domain();
   DigitalSet img_set(domain);
-  SetFromImage<DigitalSet>::append<MetaImage>(img_set, image, 0, 255);  
+  SetFromImage<DigitalSet>::append<MetaImage>(img_set, image, 0, 255);
   vector<Point> convhull = Build_ConvexHull(img_set);
   pair<pair<Point,Point>,int> res_plus_eloignes = Find_PlusEloignes(convhull);
   Point p1 = res_plus_eloignes.first.first;
   Point p2 = res_plus_eloignes.first.second;
   int longueur = res_plus_eloignes.second;
+//  cout << p2[0]-p1[0] << "\n";
+  if (p2[0]-p1[0] == 0){ image = Rotate(image, 0); }
+  else {
   double tangente = (double)(p2[1]-p1[1])/(double)(p2[0]-p1[0]);
-  image = Rotate(image, atan(tangente));
+//  cout << "tangente : " << tangente << "\n";
+//  cout << "atan : " << atan(tangente) << "\n";
+  image = Rotate(image, atan(tangente)); }
+//  cout << "pas encore segfaulté\n";
   ConvexHull(image);
+//  cout << "a segfaulté\n";
   Remplissage(image);
   int largeur = Dist_Max_Vert(image);
   return ((double)largeur/(double)longueur);

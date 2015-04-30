@@ -33,6 +33,7 @@ int Solidity_Aire (MetaImage & image){
 
 double Solidity (MetaImage & image){
   Remplissage(image);
+  ConvexHull(image);
   int aire = Solidity_Aire(image);
   MetaImage image_convexhull(image);
   ConvexHull(image_convexhull);
