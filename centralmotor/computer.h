@@ -19,6 +19,7 @@ public:
   void AddClass(std::string name,std::vector<std::string> files);
   float score(std::string file, std::string classname);
   std::vector<float> score(std::string file);
+  std::vector<std::string> guess(std::string file);
   void signature(std::vector<std::string>& classes);
 private:
   float score(std::string file, std::string classname, unsigned int estimnb);

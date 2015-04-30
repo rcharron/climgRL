@@ -65,11 +65,12 @@ void computer::AddClass(string name, vector< string > files)
     string sql="DELETE FROM model WHERE estim='"+estims[i]->getName()+"' AND class='"+name+"'";
     sqlite3_exec(db, sql.c_str(), 0, 0, NULL);
     string res=estims[i]->makemodel(files);
+    //if(res=="") throw string(name + "res is empty");
     sql="INSERT INTO model(estim,class,model) VALUES('"+estims[i]->getName()+"','"+name+"','"+res+"')";
     char *zErrMsg = 0;
     int rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      cout<< "SQL error: "<< zErrMsg<<endl;
       sqlite3_free(zErrMsg);
     }
     
@@ -206,4 +207,40 @@ vector< float > computer::score(string file)
   }
   catch(string s){cout<<s<<endl;}
   return res;
+}
+
+
+vector< string > computer::guess(string file)
+{
+  ifstream is("signature.sgn");
+  if(is.fail())string("La signature n'a pas pu être lue");
+  
+  vector<string> precalc;
+  unsigned int i,t;
+  t=estims.size();
+  for(i=0;i<t;i++)
+  {
+    precalc.push_back(estims[i]->pcof(file));
+  }
+  
+  string classname;
+  vector< string > res;
+  try
+  {
+    while(is>>classname)
+    {
+      float s=fastscore(precalc,classname);
+      if(s>0.9f)
+      {
+	stringstream ss;
+	ss<<classname<<" : "<<s;
+	res.push_back(ss.str());
+      }
+      
+      
+    }
+  }
+  catch(string s){cout<<s<<endl;}
+  return res;
+
 }

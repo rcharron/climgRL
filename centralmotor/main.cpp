@@ -134,7 +134,7 @@ int main(int argc,char**argv){
       cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
       return 0;
     }
-
+    
     if(action=="estim")
     {
       if(argc>4)
@@ -155,7 +155,49 @@ int main(int argc,char**argv){
 	  res=c.score(file,classname);
 	}
 	catch(string s){cout<<s<<endl;return -1;}
-	cout<<"Computed score is "<<res<<endl;
+	cout<<"Le score est "<<res<<endl;
+	return 0;
+      }
+      if(argc==3)
+      {
+	string file=argv[2];
+      
+	vector<string> res;
+	
+	vector<string> l=lookup(".");
+	computer c(l);
+	try{
+	  res=c.guess(file);
+	}
+	catch(string s){cout<<s<<endl;return -1;}
+	cout<<"Les correspondances trouvées sont : "<<endl;
+	for(string s:res)
+	  cout<<s<<endl;
+	return 0;
+      }
+    }
+
+    if(action=="sign")
+    {
+      if(argc>4)
+      {
+	cout<<"Usage ./centralmotor estim nomclass fichier"<<endl;
+	return 0;
+      }
+      if(argc==4)
+      {
+	string classname=argv[2];
+	string file=argv[3];
+	
+	float res;
+	
+	vector<string> l=lookup(".");
+	computer c(l);
+	try{
+	  res=c.score(file,classname);
+	}
+	catch(string s){cout<<s<<endl;return -1;}
+	cout<<"Le score est "<<res<<endl;
 	return 0;
       }
       if(argc==3)
@@ -170,7 +212,7 @@ int main(int argc,char**argv){
 	  res=c.score(file);
 	}
 	catch(string s){cout<<s<<endl;return -1;}
-	cout<<"Computed score is (";
+	cout<<"La signauture est (";
 	for(float s:res)
 	  cout<<s<<"|";
 	cout<<"\b)"<<endl;
@@ -225,6 +267,15 @@ int main(int argc,char**argv){
   cout<<"     ==============================================================================="<<endl;
   cout<<"               ===========================================================          "<<endl;
   cout<<endl<<endl;
+  cout<<"Usage :"<<endl<<endl;
+  cout<<"Apprendre les classes d'images :"<<endl;
+  cout<<"--> Juste une classe : ./centralmotor learn nomClasse cheminVersDossierImage"<<endl;
+  cout<<"--> Toute les classes : ./centralmotor learnall cheminVersDossierImage"<<endl<<endl;
+  cout<<"Estimer :"<<endl;
+  cout<<"--> Score pour une clase : ./centralmotor estim nomClasse fichier"<<endl;
+  cout<<"--> Correspondances : ./centralmotor estim fichier"<<endl<<endl;
+  cout<<"Signer :"<<endl;
+  cout<<"-->Signature : ./centralmotor sign fichier"<<endl;
   
   return 0;
 }

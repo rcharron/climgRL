@@ -46,3 +46,20 @@ float estim(const char* modelc, const char* filec)
   return estimation(modelc,filec);
   
 }
+
+
+const char* pre_estim(const char* filec)
+{
+  image img(filec);
+  stringstream ss;
+  for(int i=0;i<64;i++)
+  {
+    for(int j=0;j<64;j++)
+    {
+      //cout<<i<<" "<<j<<" "<<endl;
+      
+      ss<<(*img.getFourier())[i][j]<<" ";
+    }
+  }
+  return ss.str().c_str();
+}

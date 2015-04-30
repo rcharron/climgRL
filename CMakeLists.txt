@@ -22,7 +22,7 @@ LINK_DIRECTORIES(${DGTAL_LIBRARY_DIRS})
 
 file(GLOB_RECURSE source_files ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11 -g")
 
 add_executable(climgRL ${source_files})
 target_link_libraries (climgRL ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
