@@ -46,4 +46,23 @@ void Test_AntiBruit (){
   MetaImage test4("../src/Tests/AntiBruit/turtle-1-bruit-0.8.pgm");
   Traitement_AntiBruit(test4);
   test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.pgm");
+  /*test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.1.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.2.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.3.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.4.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.5.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.6.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.7.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.8.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.9.pgm");
+  Traitement_AntiBruit(test4);
+  test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.10.pgm");*/
 }

@@ -63,10 +63,9 @@ double emd::compute(std::vector< std::vector< double > >& histogramme1, std::vec
   os=new ofstream("pb.pl");
   cout << "prepare" << endl;
   this->EMDObjective(d.GetObjective());
-  *os<<"SUBJECT TO"<<endl;
   cout << "objective fixed" << endl;
-  this->EMDConstraintTransfert1(d.AddNewEntry());
-  cout << "transfert1 fixed" << endl;
+//  this->EMDConstraintTransfert1(d.AddNewEntry());
+//  cout << "transfert1 fixed" << endl;
   this->EMDConstraintTransfert2(d.AddNewEntry());
   cout << "transfert2 fixed" << endl;
   for(int i=0;i<64;i++)
@@ -77,6 +76,26 @@ double emd::compute(std::vector< std::vector< double > >& histogramme1, std::vec
 		this->EMDConstraintDeparture(d.AddNewEntry(),i, j, histogramme1[i][j]);
     }
   }
+  *os<<"BOUNDS"<<endl;
+  for (int i = 0; i < 64; i++)
+	{
+		for (int j = 0; j < 64; j++)
+		{
+			for (int k = 0; k < 64; k++)
+			{
+				for (int l = 0; l < 64; l++)
+				{
+					if ((abs(i - k) > MASK_SIZE) || (abs(j - l) > MASK_SIZE))continue;
+					//stringstream ss;
+					//ss<<k<<" "<<l<<" "<<i<<" "<<j;
+					//res+=data[ss.str()]*sqrt((i-k)*(i-k)+(j-l)*(j-l));
+					*os<<intsToString(k,l,i,j)<<">=0"<<endl;
+
+				}
+			}
+		}
+	}
+  *os<<"VARIABLES"<<endl;
   os->close();
   cout<<"file ready"<<endl;
   d.RunSimplex();
@@ -123,7 +142,7 @@ void emd::EMDConstraintDeparture(DictionaryEntry* de,int arrivali, int arrivalj,
 		*os<<"-x"<<intsToString(arrivali,arrivalj,i,j)<<" ";
     }
   } 
-  *os<<" +"<<amont<<">=0"<<endl;
+  *os <<">="<<-amont<<endl;
 }
 
 void emd::EMDConstraintTransfert1(DictionaryEntry* de)
@@ -148,7 +167,7 @@ void emd::EMDConstraintTransfert1(DictionaryEntry* de)
 			}
 		}
 	}
-	*os<<" +1>=0"<<endl;
+	*os<<" >=-1"<<endl;
 }
 
 void emd::EMDConstraintTransfert2(DictionaryEntry* de)
@@ -173,7 +192,7 @@ void emd::EMDConstraintTransfert2(DictionaryEntry* de)
 			}
 		}
 	}
-	*os<<" -1>=0"<<endl;
+	*os<<" >=1"<<endl;
 }
 
 

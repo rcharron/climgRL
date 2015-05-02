@@ -25,31 +25,37 @@ vector<Point> Anti_Bruit_Make_Voisins(Point p){
   return voisins;
 }
 
-MetaImage Apply_AntiBruit (MetaImage & image){
+bool Apply_AntiBruit (MetaImage & image){
   Domain domain = image.domain();
   MetaImage new_image = MetaImage(domain);
+  bool change=false;
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
-    int noirs = 1-image(*it);		//variable indiquant le nombre de noirs
-    int blancs = image(*it);		//variable indiquant le nombre de blancs
+    int noirs =0; 		//variable indiquant le nombre de noirs
+    int blancs =0;		//variable indiquant le nombre de blancs
+    bool couleur=image(*it)>0;
+    couleur?blancs=1:noirs=1;
     vector<Point> voisins = Anti_Bruit_Make_Voisins(*it);
     for (int i = 0; i < voisins.size(); i++){
         if (domain.isInside(voisins[i])){
-	    noirs  += 1-image(voisins[i]);
-	    blancs += image(voisins[i]);
+	    image(voisins[i])>0?blancs++:noirs++;
+	    //noirs  += 1-image(voisins[i]);
+	    //blancs += image(voisins[i]);
 	}
     }
+    if((blancs>noirs)^couleur)change=true;
     if (noirs > blancs) {new_image.setValue(*it,0);}
     else {new_image.setValue(*it,1);}
 //    new_image.setValue(*it,(1+(noirs>blancs)) %2);
   }
-  return new_image;
+  image=new_image;
+  return change;
 }
 
 
 
 
 void Traitement_AntiBruit (MetaImage & image){
-  image = Apply_AntiBruit(image);
+  while(Apply_AntiBruit(image));
 }
 
     

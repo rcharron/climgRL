@@ -157,11 +157,12 @@ bool Dictionary::FirstSolve()
 		it->Simplify();
 	}
 	//Solve
-	//std::cout << *this << std::endl;
+	std::cout << "READy" << std::endl;
 	StrangeFirstStep();
+	std::cout<<"f->"<<objective.CoefficientOf(-1)<<std::endl;
 	//std::cout << *this << std::endl;
-	while (Step());
-		//std::cout<<"f->"<<objective.CoefficientOf(-1)<<std::endl;
+	while (Step())
+		std::cout<<"f->"<<objective.CoefficientOf(-1)<<std::endl;
 		//std::cout << *this << std::endl;
 	
 	if (!(objective.CoefficientOf(-1)>=0))
@@ -196,13 +197,19 @@ void Dictionary::StrangeFirstStep()
 			pos = it;
 		}
 	}
+	std::cout<<"coucou"<<std::endl;
 	if (c==0.0)return;
 	pos->Leaves(-2);
+	unsigned int i,t;
+	i=0;
+	t=data.size();
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
+	  std::cout<<"\r("<<i<<"/"<<t<<")"<<std::flush;
 		if (it == pos)continue;
 		it->EnterAndLeaves(*pos);
 		it->Simplify();
+		i++;
 	}
 	objective.EnterAndLeaves(*pos);
 }

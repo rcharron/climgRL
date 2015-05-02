@@ -31,9 +31,9 @@ int main(int argc,char** argv)
 //  Test_AntiInversion();
 //  Test_Remplissage();
 //  Test_ConvexHull();
-//  Test_AntiBruit();
-  Test_Solidity_Scale();
+  Test_AntiBruit();
+//  Test_Solidity_Scale();
 //  Test_Rotate();
-  Test_Eccentricity_Scale();
+//  Test_Eccentricity_Scale();
   return 0;
 }
