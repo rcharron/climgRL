@@ -1,11 +1,13 @@
 #include "Dictionnary.h"
 #include <limits>
+#include <iostream>
 
 
 
 Dictionary::Dictionary()
 {
 	status = Status::UNDERMINE;
+	cnumber = -3;
 }
 
 
@@ -13,24 +15,26 @@ Dictionary::~Dictionary()
 {
 }
 
-void Dictionary::SetObjective(DictionaryEntry obj)
+void Dictionary::SetObjective(DictionaryEntry& obj)
 {
 	objective = obj;
 }
 
 void Dictionary::AddEntry(DictionaryEntry entry)
 {
+	entry.SetWord(this->cnumber);
+	this->cnumber++;
 	data.push_back(entry);
 }
 
 
-std::pair<double, std::vector<DictionaryEntry>::iterator> Dictionary::FindConstraintOn(std::string variable)
+std::pair<double, std::vector<DictionaryEntry>::iterator> Dictionary::FindConstraintOn(int variable)
 {
 	double c=1;
 	auto pos = data.begin();
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
-		double l = it->CoefficientOf("42");
+		double l = it->CoefficientOf(-1);
 		double d = it->CoefficientOf(variable);
 		if (l>=0 && d>=0)continue;
 		if (l<0)throw std::string("First step not implemented yet");//SHOULD NEVER OCCURS
@@ -48,13 +52,14 @@ bool Dictionary::Step()
 {
 	for (auto itvar = objective.GetInnersValues(); itvar != objective.GetInnersValuesEnd(); itvar++)
 	{
-		if (itvar->first!="42"&&(itvar->second>=0.0) && !(itvar->second==0.0))
+		if (itvar->first!=-1&&(itvar->second>=0.0) && !(itvar->second==0.0))
 		{
 			auto c = FindConstraintOn(itvar->first);
 			if (c.first=std::numeric_limits<double>::infinity())
 			{
 				//TODO
 				status = Status::UNBOUNDED;
+				std::cout<<"Problème non borné"<<std::endl;
 				infvar = c.second->Name();
 				//FINI AVEC LE STATUS UNBOUNDED
 				return false;
@@ -73,29 +78,30 @@ bool Dictionary::Step()
 	}
 	//TODO
 	status = Status::ONEPOINT;
+	std::cout<<"Tout va bien"<<std::endl;
 	//fini
 	return false;
 }
 
 
-std::map<std::string, double> Dictionary::GetSolution()
+std::map<int, double> Dictionary::GetSolution()
 {
-	std::map<std::string, double> r;
+	std::map<int, double> r;
 	if (status != Status::UNBOUNDED)
 	{
-		r["42"] = objective.CoefficientOf("42");
+		r[-1] = objective.CoefficientOf(-1);
 		for (auto it = data.begin(); it != data.end(); it++)
 		{
-			r[it->Name()] = it->CoefficientOf("42");
+			r[it->Name()] = it->CoefficientOf(-1);
 		}
 	}
 	else
 	{
-		r["42"] = std::numeric_limits<double>::infinity();;
+		r[-1] = std::numeric_limits<double>::infinity();;
 		for (auto it = data.begin(); it != data.end(); it++)
 		{
 			if (it->Name() != this->infvar)
-				r[it->Name()] = it->CoefficientOf("42");
+				r[it->Name()] = it->CoefficientOf(-1);
 			else
 				r[this->infvar] = 0;
 		}
@@ -103,9 +109,9 @@ std::map<std::string, double> Dictionary::GetSolution()
 	return r;
 }
 
-std::map<std::string, double> Dictionary::GetAsymptote()
+std::map<int, double> Dictionary::GetAsymptote()
 {
-	std::map<std::string, double> r;
+	std::map<int, double> r;
 	if (status == Status::UNBOUNDED)
 	{
 		for (auto it = data.begin(); it != data.end(); it++)
@@ -130,7 +136,8 @@ void Dictionary::Clear()
 {
 	status = Status::UNDERMINE;
 	data.clear();
-	this->infvar = "";
+	this->infvar = 0;
+	cnumber = -3;
 }
 
 Dictionary::Status Dictionary::GetStatus()
@@ -143,25 +150,26 @@ bool Dictionary::FirstSolve()
 {
 	DictionaryEntry RealObjective = objective;
 	objective.Clear();
-	objective.AddTerm("\\aleph", -1);
+	objective.AddTerm(-2, -1);
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
-		it->AddTerm("\\aleph", 1);
+		it->AddTerm(-2, 1);
 		it->Simplify();
 	}
-
 	//Solve
 	//std::cout << *this << std::endl;
 	StrangeFirstStep();
 	//std::cout << *this << std::endl;
 	while (Step());
+		//std::cout<<"f->"<<objective.CoefficientOf(-1)<<std::endl;
 		//std::cout << *this << std::endl;
 	
-	if (!objective.CoefficientOf("42")>=0)
+	if (!(objective.CoefficientOf(-1)>=0))
 	{
 		//TODO
 		status = Status::EMPTY;
 		//SOLUTION IS EMPTY
+		std::cout<<"Problème vide"<<std::endl;
 		return false;
 	}
 
@@ -169,7 +177,7 @@ bool Dictionary::FirstSolve()
 	objective = RealObjective;
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
-		it->AddTerm("\\aleph", 0);
+		it->AddTerm(-2, 0);
 		it->Simplify();
 		objective.EnterAndLeaves(*it);
 	}
@@ -182,14 +190,14 @@ void Dictionary::StrangeFirstStep()
 	auto pos = data.begin();
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
-		if (it->CoefficientOf("42") < c)
+		if (it->CoefficientOf(-1) < c)
 		{
-			c = it->CoefficientOf("42");
+			c = it->CoefficientOf(-1);
 			pos = it;
 		}
 	}
 	if (c==0.0)return;
-	pos->Leaves("\\aleph");
+	pos->Leaves(-2);
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
 		if (it == pos)continue;
@@ -197,4 +205,19 @@ void Dictionary::StrangeFirstStep()
 		it->Simplify();
 	}
 	objective.EnterAndLeaves(*pos);
+}
+
+
+DictionaryEntry* Dictionary::GetObjective()
+{
+	return &objective;
+}
+
+DictionaryEntry* Dictionary::AddNewEntry()
+{
+	data.push_back(DictionaryEntry());
+	DictionaryEntry* de = &data[data.size() - 1];
+	de->SetWord(this->cnumber);
+	this->cnumber++;
+	return de;
 }

@@ -10,17 +10,17 @@ DictionaryEntry::~DictionaryEntry()
 {
 }
 
-void DictionaryEntry::AddTerm(std::string variable, double coefficiant)
+void DictionaryEntry::AddTerm(int variable, double coefficiant)
 {
 	data[variable] = coefficiant;
 }
 
 void DictionaryEntry::AddConstant(double coefficiant)
 {
-	data["42"] = coefficiant;
+	data[-1] = coefficiant;
 }
 
-void DictionaryEntry::SetWord(std::string w)
+void DictionaryEntry::SetWord(int w)
 {
 	word = w;
 }
@@ -30,7 +30,7 @@ void DictionaryEntry::Clear()
 	data.clear();
 }
 
-void DictionaryEntry::Leaves(std::string variableentering)
+void DictionaryEntry::Leaves(int variableentering)
 {
 	double coeff = -1/data[variableentering];
 	if (coeff==0.0)throw std::string(variableentering+" is not in the dictionnary entry");
@@ -70,23 +70,23 @@ void DictionaryEntry::Simplify()
 
 
 
-double DictionaryEntry::CoefficientOf(std::string variable)
+double DictionaryEntry::CoefficientOf(int variable)
 {
 	auto it = data.find(variable);
 	if (it == data.end())return 0;
 	return it->second;
 }
 
-std::string DictionaryEntry::Name()
+int DictionaryEntry::Name()
 {
 	return word;
 }
 
-std::unordered_map<std::string, double>::const_iterator DictionaryEntry::GetInnersValues()
+std::mymap<int, double>::const_iterator DictionaryEntry::GetInnersValues()
 {
 	return data.begin();
 }
-std::unordered_map<std::string, double>::const_iterator DictionaryEntry::GetInnersValuesEnd()
+std::mymap<int, double>::const_iterator DictionaryEntry::GetInnersValuesEnd()
 {
 	return data.end();
 }

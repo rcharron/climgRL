@@ -123,11 +123,11 @@ static void stockham(std::vector<complex>::iterator x, int n, int flag, int n2, 
       Ls <<= 1;
    };
 
-   if (y != y_orig) {                     /* copy back to permanent memory */
+   //if (y != y_orig) {                     /* copy back to permanent memory */
       for(i = 0; i < n; ++i) {               /* if it is not already there */
          y[i] = x[i];               /* performed only if log2(n/n2) is odd */
       }
-   }
+   //}
    
    assert(Ls == n/n2);                        /* ensure n is a power of 2  */
    assert(1 == n || m2 == n);           /* check array index within bound  */

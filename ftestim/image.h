@@ -12,7 +12,7 @@ public:
   void write(std::string file);
   int CanonicalValue(float x, float y);
   void dessinfourier(std::string file);
-  float distanceEMD(image i2);
+  float distanceEMD(image& i2);
   std::vector<std::vector<double> >* getFourier();
 private:
   void updateMeta();

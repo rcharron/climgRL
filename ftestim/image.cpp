@@ -133,8 +133,8 @@ int image::CanonicalValue(float x, float y)
 {
   x-=0.5f;
   y-=0.5f;
-  int i=centerx+x*4*mean;
-  int j=centery+y*4*mean;
+  int i=static_cast<int>(centerx+x*4*mean);
+  int j=static_cast<int>(centery+y*4*mean);
   return getValue(i,j);
 }
 
@@ -216,20 +216,21 @@ void image::dessinfourier(string file)
   ofstream os(file);
   if(os.fail())throw string("échec écriture "+file);
   unsigned int t=fourier.size();
+  unsigned int i,j;
   os<<"P5"<<endl<<t<<" "<<t<<endl<<255<<endl;
   
   float ma=0;
-for(int j=0;j<t;j++)
+for(j=0;j<t;j++)
   {
-    for(int i=0;i<t;i++)
+    for(i=0;i<t;i++)
     {
       if(fourier[i][j]>=ma)ma=fourier[i][j];
     }
   }
   
-  for(int j=0;j<t;j++)
+  for(j=0;j<t;j++)
   {
-    for(int i=0;i<t;i++)
+    for(i=0;i<t;i++)
     {
       int n=(fourier[i][j]/ma)*255;
       os<<(char)(n);
@@ -238,7 +239,7 @@ for(int j=0;j<t;j++)
 }
 
 
-float image::distanceEMD(image i2)
+float image::distanceEMD(image& i2)
 {
  emd EMD;
  return EMD.compute(fourier,i2.fourier);  

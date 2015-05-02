@@ -8,26 +8,30 @@ class Dictionary
 public:
 	Dictionary();
 	~Dictionary();
-	void SetObjective(DictionaryEntry objective);
+	void SetObjective(DictionaryEntry& objective);
 	void AddEntry(DictionaryEntry entry);
+
+	DictionaryEntry* GetObjective();
+	DictionaryEntry* AddNewEntry();
+
 
 	void RunSimplex();
 
 	void Clear();
 
 	enum Status{ UNBOUNDED, EMPTY, UNDERMINE, ONEPOINT };
-	std::map<std::string, double> GetSolution();
-	std::map<std::string, double> GetAsymptote();//If status is unbounded
+	std::map<int, double> GetSolution();
+	std::map<int, double> GetAsymptote();//If status is unbounded
 	Status GetStatus();
 private:
-	//private:
 	bool Step();
 	bool FirstSolve();
 	void StrangeFirstStep();
-	std::string infvar;
+	int infvar;
+	int cnumber;
 
 	Status status;
-	std::pair<double, std::vector<DictionaryEntry>::iterator> FindConstraintOn(std::string variable);
+	std::pair<double, std::vector<DictionaryEntry>::iterator> FindConstraintOn(int variable);
 	std::vector<DictionaryEntry> data;
 	DictionaryEntry objective;
 };

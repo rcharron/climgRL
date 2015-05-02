@@ -47,7 +47,10 @@ file(GLOB_RECURSE ftestim_source_files ${PROJECT_SOURCE_DIR}/ftestim/*.cpp)
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
-add_library(ftestim MODULE ${ftestim_source_files})
+#add_library(ftestim MODULE ${ftestim_source_files})
+
+add_executable(ftestim ${ftestim_source_files})
+
 
 
 project (basicestim)
