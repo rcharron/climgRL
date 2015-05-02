@@ -6,6 +6,7 @@
 #include "Estimateurs/basicScoreMaker.h"
 #include "MetaImage.h"
 #include "Estimateurs/Solidity.h"
+#include <iostream>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ const char* buildmodel(vector<string> listoffiles)
   for(string f:listoffiles)
   {
     MetaImage img(f);
+//    std::cout << f << std::endl;
     res.push_back(Solidity(img));
   }
   
