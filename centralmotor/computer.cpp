@@ -77,6 +77,33 @@ void computer::AddClass(string name, vector< string > files)
   }
 }
 
+void computer::AddClassLazy(string name, vector< string > files)
+{
+  unsigned int i,t;
+  t=estims.size();
+  for(i=0;i<t;i++)
+  {
+    sqlite3_stmt * stmt;
+    string sql="SELECT model FROM model WHERE estim='"+estims[i]->getName()+"' AND class='"+name+"'";
+    sqlite3_prepare( db, sql.c_str(), -1, &stmt, NULL );
+    int result = sqlite3_step( stmt );
+    sqlite3_finalize(stmt);
+    if(result == SQLITE_ROW)
+    {
+      continue;
+    }
+    string res=estims[i]->makemodel(files);
+    sql="INSERT INTO model(estim,class,model) VALUES('"+estims[i]->getName()+"','"+name+"','"+res+"')";
+    char *zErrMsg = 0;
+    int rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
+    if( rc != SQLITE_OK ){
+      cout<< "SQL error: "<< zErrMsg<<endl;
+      sqlite3_free(zErrMsg);
+    }
+    
+  }
+}
+
 
 float computer::score(string file, string classname, unsigned int i)
 {

@@ -17,6 +17,7 @@ public:
   computer(std::vector<std::string>& files);
   ~ computer();
   void AddClass(std::string name,std::vector<std::string> files);
+  void AddClassLazy(std::string name,std::vector<std::string> files);
   float score(std::string file, std::string classname);
   std::vector<float> score(std::string file);
   std::vector<std::string> guess(std::string file);

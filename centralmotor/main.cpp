@@ -134,6 +134,37 @@ int main(int argc,char**argv){
       cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
       return 0;
     }
+
+    if(action=="learnlazy")
+    {
+      if(argc!=3)
+      {
+	cout<<"Usage ./centralmotor learnlazy dossier"<<endl;
+	return 0;
+      }
+      string directory=argv[2];
+      if(directory.back()!='/')
+	 directory+='/';
+      vector<string> lc=listclass("../database/");
+      vector<string> l=lookup(".");
+      computer c(l);
+      unsigned int i,t;
+      t=lc.size();
+      c.signature(lc);
+      for(i=0;i<t;i++)
+      {
+	int progress=(50*i)/t;
+	cout<<"\r[";
+	for(int w=0;w<progress;w++)cout<<"=";
+	cout<<">";
+	for(int w=0;w<50-progress;w++)cout<<" ";
+	cout<<"] ("<<i<<"/"<<t<<") : "<<lc[i]<<"          "<<flush;
+	vector<string> classfiles=findfiles(directory,lc[i]+".*\\.pgm");
+	c.AddClassLazy(lc[i],classfiles);
+      }
+      cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
+      return 0;
+    }
     
     if(action=="estim")
     {
@@ -271,6 +302,7 @@ int main(int argc,char**argv){
   cout<<"Apprendre les classes d'images :"<<endl;
   cout<<"--> Juste une classe : ./centralmotor learn nomClasse cheminVersDossierImage"<<endl;
   cout<<"--> Toute les classes : ./centralmotor learnall cheminVersDossierImage"<<endl<<endl;
+  cout<<"--> Tout ce qui n'a pas été appris : ./centralmotor learnlazy cheminVersDossierImage"<<endl<<endl;
   cout<<"Estimer :"<<endl;
   cout<<"--> Score pour une clase : ./centralmotor estim nomClasse fichier"<<endl;
   cout<<"--> Correspondances : ./centralmotor estim fichier"<<endl<<endl;

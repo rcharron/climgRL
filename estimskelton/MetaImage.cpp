@@ -348,28 +348,25 @@ Object8_4 MetaImage::cleanSkelton()
   vector<Point> bestcomposante;
   vector<Point> trash;
   
-  int i=0;
   for(DigitalSet::ConstIterator it = object.begin(), itend = object.end();it != itend; ++it)
   {
     if(representant.find(*it)!=representant.end())continue;
     queue<Point> q;
     q.push(*it);
-    cout<<"-"<<flush;
     while(!q.empty())
     {
-      if(representant.find(q.front())!=representant.end())continue;
-      representant.insert(q.front());
-      composante.push_back(q.front());
-      SmallObject8_4 N=object.properNeighborhood(q.front());
+      Point pt=q.front();
+      q.pop();
+      if(representant.find(pt)!=representant.end())continue;
+      representant.insert(pt);
+      composante.push_back(pt);
+      SmallObject8_4 N=object.properNeighborhood(pt);
       for(auto sit=N.begin();sit!=N.end();++sit )
       {
 	
 	if(representant.find(*sit)==representant.end())
 	  q.push(*sit);
       }
-      q.pop();
-      i++;
-      cout<<"\r"<<i<<flush;
     }
     if(composante.size()>bestcomposante.size())
       bestcomposante.swap(composante);
@@ -379,9 +376,6 @@ Object8_4 MetaImage::cleanSkelton()
   }
   for(Point pt:trash)
     object.pointSet().erase(pt);
-  //Object8_4 o;
-  //o.pointSet().insert();
-  //cout<<"coucou connecté"<<endl;
   return object;
 }
 
