@@ -437,7 +437,7 @@ DGtal::ImageContainerBySTLVector< Domain, unsigned int >::Point MetaImage::findE
 {
     for(DigitalSet::ConstIterator it = object.begin(), itend = object.end();it != itend; ++it)
     {
-      if(object.neighborhoodSize(*it)==2)return *it;
+      if((object.neighborhoodSize(*it)==2)||(object.neighborhoodSize(*it)==1))return *it;
     }
     throw string("Pas d'extremité");
 }

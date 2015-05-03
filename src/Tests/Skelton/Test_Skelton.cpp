@@ -15,12 +15,14 @@ void MySkeltonTest(string file,string name)
   //i2.removeNoise();
   i2.Fill();
   i2.savePGM("../src/Tests/Skelton/"+name+".pgm");
-  cout<<name<<" : longueur colonne vertébrale : "<<i2.spineLength()<<endl;
+  try{cout<<name<<" : longueur colonne vertébrale : "<<i2.spineLength()<<endl;}catch(string s){}
   i2.Skelton("../src/Tests/Skelton/"+name+".sk.pgm");
 
 }
 
 void Test_Skelton (){
+  MySkeltonTest("../database/device4-1.pgm","device4-1");
+  MySkeltonTest("../database/device4-3.pgm","device4-2");
   MySkeltonTest("../database/turtle-1.pgm","turtle-1");
   MySkeltonTest("../database/turtle-14.pgm","turtle-2");
   MySkeltonTest("../database/stef-9.pgm","stef");

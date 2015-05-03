@@ -23,8 +23,15 @@ const char* buildmodel(vector<string> listoffiles)
   vector<float> res;
   for(string f:listoffiles)
   {
+    try{
+      int l=SpineLong(f);
 //    std::cout << f << std::endl;
-    res.push_back(static_cast<float>(SpineLong(f)));
+      res.push_back(static_cast<float>(l));
+    }
+    catch(std::string s)
+    {
+      cout<<"fichier "<<f<<" "<<s<<endl;
+    }
   }
   
   return model(res).c_str();
