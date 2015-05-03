@@ -20,6 +20,7 @@
 #include "Tests/Scaling/Test_Solidity.h"
 #include "Tests/Scaling/Test_Eccentricity.h"
 #include "Tests/Rotate/Test_Rotate.h"
+#include "Tests/Skelton/Test_Skelton.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -35,12 +36,6 @@ int main(int argc,char** argv)
 //  Test_Solidity_Scale();
 //  Test_Rotate();
 //  Test_Eccentricity_Scale();
-  //MetaImage i("../database/spring-1.pgm");
-  MetaImage i("../database/beetle-1.pgm");
-  MetaImage i2=i.getNormalized();
-  i2.iterRemoveNoise();
-  i2.Fill();
-  i2.savePGM("tutu.pgm");
-  i2.Skelton();
+  Test_Skelton();
   return 0;
 }

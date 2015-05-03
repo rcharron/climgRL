@@ -254,10 +254,54 @@ void MetaImage::Skelton()
       }
     }  
   }
+  /*MetaImage img(domain());
+  for(DigitalSet::ConstIterator it = object.begin(), itend = object.end();it != itend; ++it)
+    img.setValue(*it,1);
+  img.savePGM("toto.pgm");*/
+}
+
+
+void MetaImage::Skelton(string file)
+{
+DigitalSet set2d( domain() );
+  SetFromImage<DigitalSet>::append<Image>(set2d, *this, 0, 255);
+  Object8_4 object(dt8_4, set2d);
+  DigitalSet & S = object.pointSet();
+  queue<Point> P;
+  /*for(DigitalSet::ConstIterator it = S.begin(), itend = S.end(); it != itend; ++it)
+  {
+    //Remember (*it) is a Point
+    if (object.isSimple( *it ))
+      P.push(*it);
+  }*/
+  
+  Object8_4 border= object.border();
+  for(DigitalSet::ConstIterator it = border.begin(), itend = border.end(); it != itend; ++it)
+  {
+    //Remember (*it) is a Point
+    if (object.isSimple( *it ))
+      P.push(*it);
+  }
+    
+  while(!P.empty())
+  {
+    Point lp=P.front();
+    P.pop();
+    if(object.pointSet()(lp)&&object.isSimple(lp)&&object.neighborhoodSize(lp)>1)
+    {
+      object.pointSet().erase(lp);
+      SmallObject8_4 N=object.properNeighborhood(lp);
+      for(auto it=N.begin();it!=N.end();++it )
+      {
+	if(object.neighborhoodSize(lp)>1)
+	  P.push(*it);
+      }
+    }  
+  }
   MetaImage img(domain());
   for(DigitalSet::ConstIterator it = object.begin(), itend = object.end();it != itend; ++it)
     img.setValue(*it,1);
-  img.savePGM("toto.pgm");
+  img.savePGM(file);
 }
 
 

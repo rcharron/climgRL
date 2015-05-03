@@ -27,6 +27,7 @@ public:
   MetaImage getNormalized();
   void Open();
   void Skelton();
+  void Skelton(std::string file);
   void Fill();
 private:
   vector<Point> TheVoisins(Point p);
