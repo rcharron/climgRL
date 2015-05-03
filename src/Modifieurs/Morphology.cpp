@@ -13,11 +13,10 @@ void Dilate (MetaImage & image){
   MetaImage new_image = MetaImage(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
     if (image(*it)) {
-      new_image.setValue(*it,1);
-      new_image.setValue(*it-Point(0,1),1);
-      new_image.setValue(*it-Point(0,-1),1);
-      new_image.setValue(*it-Point(1,0),1);
-      new_image.setValue(*it-Point(-1,0),1);
+      if (domain.isInside(*it-Point(0,1))){ new_image.setValue(*it-Point(0,1),1);}
+      if (domain.isInside(*it-Point(0,-1))){ new_image.setValue(*it-Point(0,-1),1);}
+      if (domain.isInside(*it-Point(1,0))){ new_image.setValue(*it-Point(1,0),1);}
+      if (domain.isInside(*it-Point(-1,0))){ new_image.setValue(*it-Point(-1,0),1);}
     }
   }
   image = new_image;
@@ -28,12 +27,15 @@ void Erode (MetaImage & image){
   Domain domain = image.domain();
   MetaImage new_image = MetaImage(domain);
   for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
+    new_image.setValue(*it,1);
+  }
+  for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
     if (!image(*it)) {
-      new_image.setValue(*it,1);
-      new_image.setValue(*it-Point(0,1),0);
-      new_image.setValue(*it-Point(0,-1),0);
-      new_image.setValue(*it-Point(1,0),0);
-      new_image.setValue(*it-Point(-1,0),0);
+      new_image.setValue(*it,0);
+      if (domain.isInside(*it-Point(0,1))){ new_image.setValue(*it-Point(0,1),0);}
+      if (domain.isInside(*it-Point(0,-1))){ new_image.setValue(*it-Point(0,-1),0);}
+      if (domain.isInside(*it-Point(1,0))){ new_image.setValue(*it-Point(1,0),0);}
+      if (domain.isInside(*it-Point(-1,0))){ new_image.setValue(*it-Point(-1,0),0);}
     }
   }
   image = new_image;
@@ -42,6 +44,7 @@ void Erode (MetaImage & image){
 // Dilate à distance k
 void Dilate_k (MetaImage & image, int k){
   for (int i = 0; i < k; i++){
+//    cout << "boucle : " << i << "\n";
     Dilate(image);
   }
 }
@@ -55,17 +58,20 @@ void Erode_k (MetaImage & image, int k){
 
 // Closing avec élément structurant = boule rayon k (norme 1)
 void Closing_k (MetaImage & image, int k){
+//  image.savePGM("../src/Tests/Morphology/toto1.pgm");
   Dilate_k(image,k);
+//  image.savePGM("../src/Tests/Morphology/toto2.pgm");
   Erode_k(image,k);
+//  image.savePGM("../src/Tests/Morphology/toto3.pgm");
 }
 
 // Opening avec élément structurant = boule rayon k (norme 1)
-void Opening_k (MetaImage & image, int k){
+void Opening_k (MetaImage & image, int k){  
   Erode_k(image,k);
   Dilate_k(image,k);
 }
 
-// Trouve l'élément structurant (= le k) : nombre minimum de pixel contigus (horizontal et vertical) 
+// Trouve l'élément structurant (= le k) : nombre minimum de pixel contigus (horizontal et vertical) => ça c'est de la merde, mais comment trouver k ??
 int Find_k (MetaImage & image){
   Domain domain = image.domain();
   int min = domain.upperBound()[0] - domain.lowerBound()[0];
