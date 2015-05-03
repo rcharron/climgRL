@@ -1,0 +1,10 @@
+device4-1 : longueur colonne vertébrale : 1
+device4-2 : longueur colonne vertébrale : 1
+turtle-1 : longueur colonne vertébrale : 672
+turtle-2 : longueur colonne vertébrale : 658
+stef : longueur colonne vertébrale : 623
+spring : longueur colonne vertébrale : 1525
+butterfly : longueur colonne vertébrale : 575
+device9 : longueur colonne vertébrale : 2499
+pocket : longueur colonne vertébrale : 319
+cup : longueur colonne vertébrale : 124 

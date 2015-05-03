@@ -21,6 +21,7 @@
 #include "Tests/Scaling/Test_Eccentricity.h"
 #include "Tests/Rotate/Test_Rotate.h"
 #include "Tests/Skelton/Test_Skelton.h"
+#include "Tests/Morphology/Test_Morphology.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -36,6 +37,7 @@ int main(int argc,char** argv)
 //  Test_Solidity_Scale();
 //  Test_Rotate();
 //  Test_Eccentricity_Scale();
-  Test_Skelton();
+//  Test_Skelton();
+  Test_Morphology();
   return 0;
 }
