@@ -39,27 +39,19 @@ computer::computer(vector<string>& files)
 computer::~computer()
 {
   unsigned int i,t;
-  t=estims.size();
+  t=static_cast<unsigned int >(estims.size());
   for(i=0;i<t;i++)
     delete estims[i];
   
   sqlite3_close(db);
 }
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName){
-   int i;
-   for(i=0; i<argc; i++){
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-   printf("\n");
-   return 0;
-}
 
 
 void computer::AddClass(string name, vector< string > files)
 {
   unsigned int i,t;
-  t=estims.size();
+  t=static_cast<unsigned int >(estims.size());
   for(i=0;i<t;i++)
   {
     string sql="DELETE FROM model WHERE estim='"+estims[i]->getName()+"' AND class='"+name+"'";
@@ -68,7 +60,7 @@ void computer::AddClass(string name, vector< string > files)
     //if(res=="") throw string(name + "res is empty");
     sql="INSERT INTO model(estim,class,model) VALUES('"+estims[i]->getName()+"','"+name+"','"+res+"')";
     char *zErrMsg = 0;
-    int rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
+    int rc = sqlite3_exec(db, sql.c_str(), NULL, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
       cout<< "SQL error: "<< zErrMsg<<endl;
       sqlite3_free(zErrMsg);
@@ -80,7 +72,7 @@ void computer::AddClass(string name, vector< string > files)
 void computer::AddClassLazy(string name, vector< string > files)
 {
   unsigned int i,t;
-  t=estims.size();
+  t=static_cast<unsigned int >(estims.size());
   for(i=0;i<t;i++)
   {
     sqlite3_stmt * stmt;
@@ -95,7 +87,7 @@ void computer::AddClassLazy(string name, vector< string > files)
     string res=estims[i]->makemodel(files);
     sql="INSERT INTO model(estim,class,model) VALUES('"+estims[i]->getName()+"','"+name+"','"+res+"')";
     char *zErrMsg = 0;
-    int rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
+    int rc = sqlite3_exec(db, sql.c_str(), NULL, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
       cout<< "SQL error: "<< zErrMsg<<endl;
       sqlite3_free(zErrMsg);
@@ -116,7 +108,7 @@ float computer::score(string file, string classname, unsigned int i)
     
     if(result == SQLITE_ROW)
     {
-      string str = (char *)(sqlite3_column_text( stmt, 0 ));
+      string str=reinterpret_cast<const char*>(sqlite3_column_text( stmt, 0 ));
       string pc=estims[i]->pcof(file);
       res=estims[i]->scoreof(str,pc);
     }
@@ -139,7 +131,7 @@ sqlite3_stmt * stmt;
     
     if(result == SQLITE_ROW)
     {
-      string str = (char *)(sqlite3_column_text( stmt, 0 ));
+      string str = reinterpret_cast<const char*>(sqlite3_column_text( stmt, 0 ));
       res=estims[i]->scoreof(str,precalc);
     }
     else
@@ -153,7 +145,7 @@ sqlite3_stmt * stmt;
 float computer::score(string file, string classname)
 {
   unsigned int i,t,m;
-  t=estims.size();
+  t=static_cast<unsigned int>(estims.size());
   m=t;
   if(t==0)throw string("Aucun estimateur ne connait cette classe");
   
@@ -171,13 +163,13 @@ float computer::score(string file, string classname)
   
   if(m==0)throw string("Le résultat ne peut pas être calculé");
   
-  return sc/m;
+  return sc/static_cast<float>(m);
 }
 
 float computer::fastscore(vector< std::string >& precalc, string classname)
 {
   unsigned int i,t,m;
-  t=estims.size();
+  t=static_cast<unsigned int>(estims.size());
   m=t;
   if(t==0)throw string("Aucun estimateur ne connait cette classe");
   
@@ -195,7 +187,7 @@ float computer::fastscore(vector< std::string >& precalc, string classname)
   
   if(m==0)throw string("Le résultat ne peut pas être calculé");
   
-  return sc/m;
+  return sc/static_cast<float>(m);
 }
 
 
@@ -216,7 +208,7 @@ vector< float > computer::score(string file)
   
   vector<string> precalc;
   unsigned int i,t;
-  t=estims.size();
+  t=static_cast<unsigned int>(estims.size());
   for(i=0;i<t;i++)
   {
     precalc.push_back(estims[i]->pcof(file));
@@ -244,7 +236,7 @@ vector< string > computer::guess(string file)
   
   vector<string> precalc;
   unsigned int i,t;
-  t=estims.size();
+  t=static_cast<unsigned int>(estims.size());
   for(i=0;i<t;i++)
   {
     precalc.push_back(estims[i]->pcof(file));

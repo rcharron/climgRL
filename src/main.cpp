@@ -27,7 +27,7 @@ using namespace std;
 using namespace DGtal;
 using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 			    //32bit integers
-int main(int argc,char** argv)
+int main()
 {
 //  Test_AntiInversion();
 //  Test_Remplissage();

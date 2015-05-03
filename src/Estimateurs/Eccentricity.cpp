@@ -10,8 +10,8 @@ pair<pair<Point,Point>,int> Find_PlusEloignes (vector<Point> ListePoints){
   Point p1 = ListePoints[0];
   Point p2 = ListePoints[1];
   int distance = 0;
-  for (int i = 0; i < ListePoints.size(); i++){
-    for (int j = i+1; j < ListePoints.size(); j++){
+  for (unsigned int i = 0; i < ListePoints.size(); i++){
+    for (unsigned int j = i+1; j < ListePoints.size(); j++){
       int distance_temp, abs, ord;
       abs = ListePoints[j][0] - ListePoints[i][0];
       ord = ListePoints[j][1] - ListePoints[i][1];

@@ -5,7 +5,7 @@
 std::string model(std::vector< float >& score)
 {
   float m,v;//moyenne, écart-type
-  unsigned int t=score.size();
+  unsigned int t=static_cast<unsigned int>(score.size());
   unsigned int i;
   m=v=0;
   
@@ -15,15 +15,15 @@ std::string model(std::vector< float >& score)
   }
   
   
-  m/=t;
+  m/=static_cast<float>(t);
   
   for(i=0;i<t;i++)
   {
     v+=(score[i]-m)*(score[i]-m);
   }
-  v/=t;
+  v/=static_cast<float>(t);
   
-  v=sqrt(v);
+  v=static_cast<float>(sqrt(v));
   
   std::stringstream ss;
   ss<<m<<" "<<v;
@@ -36,7 +36,7 @@ float score(float my,float m,float v)
   v=2*v;
   t=-t*t*t*t;
   t/=v*v*v*v;
-  return exp(t);
+  return static_cast<float>(exp(t));
 }
 
 float score(std::string model, float solidite)

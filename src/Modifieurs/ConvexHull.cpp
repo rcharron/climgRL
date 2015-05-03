@@ -72,7 +72,7 @@ vector<Point> Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne con
   mystack.push(L[1]);
 //  cout << "Point " << 1 << " : " << L[1] << "\n";
 //  cout << "début de l'itération sur le vecteur\n";
-  for (int i = 2; i < L.size(); i++){
+  for (unsigned int i = 2; i < L.size(); i++){
 //    cout << "Point " << i << " : " << L[i] << "\n";
     if (mystack.size() > 1){
       Point p2 = mystack.top();
@@ -103,7 +103,7 @@ vector<Point> Build_ConvexHull(DigitalSet & s)  //TODO amélioration : on ne con
 
 DigitalSet Contours_ConvexHull(Domain domain, vector<Point> & convhull){
   DigitalSet s(domain);
-  for (int i = 0; i < convhull.size(); i++){
+  for (unsigned int i = 0; i < convhull.size(); i++){
     Trace_Line (s, convhull[i], convhull[(i+1)%convhull.size()]);
   }
   return s;

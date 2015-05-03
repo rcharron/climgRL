@@ -32,7 +32,7 @@ MetaImage Apply_AntiBruit (MetaImage & image){
     int noirs = 1-image(*it);		//variable indiquant le nombre de noirs
     int blancs = image(*it);		//variable indiquant le nombre de blancs
     vector<Point> voisins = Anti_Bruit_Make_Voisins(*it);
-    for (int i = 0; i < voisins.size(); i++){
+    for (unsigned int i = 0; i < voisins.size(); i++){
         if (domain.isInside(voisins[i])){
 	    noirs  += 1-image(voisins[i]);
 	    blancs += image(voisins[i]);

@@ -35,7 +35,7 @@ bool Apply_AntiBruit (MetaImage & image){
     bool couleur=image(*it)>0;
     couleur?blancs=1:noirs=1;
     vector<Point> voisins = Anti_Bruit_Make_Voisins(*it);
-    for (int i = 0; i < voisins.size(); i++){
+    for (unsigned int i = 0; i < voisins.size(); i++){
         if (domain.isInside(voisins[i])){
 	    image(voisins[i])>0?blancs++:noirs++;
 	    //noirs  += 1-image(voisins[i]);

@@ -15,7 +15,6 @@ image::image(string file)
   string l;
   getline(is,l);
   if(l!="P5")throw string("Format P5 obligé");
-  bool begin=false;
   do
   {
     getline(is,l);
@@ -33,23 +32,18 @@ image::image(string file)
   
   stringstream ss2(l);
   int vw;
-  char white;
   ss2>>vw;
-  white=vw;
   //getline(is,l);
   char c=0;
   data=vector<vector<bool> >(width,vector<bool>(height,false));
   
-  int test=0;
   
   for(int j=0;j<height;j++)
   {
     for(int i=0;i<width;i++)
     {
       is.get(c);
-      //if(i==0&&j==0)cout<<(int)c<<endl;
-      //if(c!=white&&c!=0)cout<<(int)c<<endl;
-      data[i][j]=(/*l[i*width+j]*//*c==white*/c!=0);
+      data[i][j]=(c!=0);
     }
   }
   //cout<<endl;
@@ -79,7 +73,7 @@ void image::write(std::string file)
   {
     for(int i=0;i<800;i++)
     {
-      os<<(char)this->CanonicalValue((1.0f/800)*i,(1.0f/800)*j);
+      os<<(char)this->CanonicalValue((1.0f/800.0f)*static_cast<float>(i),(1.0f/800.0f)*static_cast<float>(j));
     }
   }
 }
@@ -112,14 +106,14 @@ void image::ComputeCenter()
     {
       if(getValue(i,j))
       {
-	centerx+=i;
-	centery+=j;
+	centerx+=static_cast<float>(i);
+	centery+=static_cast<float>(j);
 	p++;
       }
     }
   }
-  centerx/=p;
-  centery/=p;
+  centerx/=static_cast<float>(p);
+  centery/=static_cast<float>(p);
 }
 
 void image::ComputeMean()
@@ -134,7 +128,7 @@ void image::ComputeMean()
     {
       if(getValue(i,j))
       {
-	dist=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	dist=(centerx-static_cast<float>(i))*(centerx-static_cast<float>(i))+(centery-static_cast<float>(j))*(centery-static_cast<float>(j));
 	dist=sqrt(dist);
 	if(extrema<dist)extrema=dist;
 	mean+=dist;
@@ -143,7 +137,7 @@ void image::ComputeMean()
     }
   }
   //cout<<"test !0 "<<p<<endl;
-  mean/=p;
+  mean/=static_cast<float>(p);
 }
 
 void image::ComputeVariance()
@@ -157,14 +151,14 @@ void image::ComputeVariance()
     {
       if(getValue(i,j))
       {
-	dist=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	dist=(centerx-static_cast<float>(i))*(centerx-static_cast<float>(i))+(centery-static_cast<float>(j))*(centery-static_cast<float>(j));
 	dist=sqrt(dist);
 	var+=(dist-mean)*(dist-mean);
 	p++;
       }
     }
   }
-  var/=p;
+  var/=static_cast<float>(p);
   var=sqrt(var);
 }
 
@@ -173,8 +167,8 @@ int image::CanonicalValue(float x, float y)
 {
   x-=0.5f;
   y-=0.5f;
-  int i=centerx+x*4*mean;
-  int j=centery+y*4*mean;
+  int i=static_cast<int>(centerx+x*4.0f*mean);
+  int j=static_cast<int>(centery+y*4.0f*mean);
   return getValue(i,j);
 }
 

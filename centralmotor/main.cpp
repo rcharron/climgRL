@@ -8,6 +8,8 @@
 #include <sstream>
 #include <regex>
 #include "computer.h"
+#include <thread>
+#include <mutex>
 
 
 using namespace std;
@@ -82,6 +84,60 @@ vector<string> findfiles(string where, string reg)
   } 
   return res;
 }
+
+mutex accessliste;
+
+void learnClassThread(unsigned int *thei, string directory,vector<string>* lc,computer* c)
+{
+  unsigned int i,t;
+  t=static_cast<unsigned int >(lc->size());
+  
+  accessliste.lock();
+  i=*thei;
+  (*thei)++;
+  int progress=(50*i)/t;
+  cout<<"\r[";
+  for(int w=0;w<progress;w++)cout<<"=";
+  cout<<">";
+  for(int w=0;w<50-progress;w++)cout<<" ";
+  cout<<"] ("<<i<<"/"<<t<<") "<<flush;
+  accessliste.unlock();
+  while(i<t)
+  {
+	vector<string> classfiles=findfiles(directory,(*lc)[i]+"-.*\\.pgm");
+	c->AddClassLazy((*lc)[i],classfiles);
+	accessliste.lock();
+	i=*thei;
+	(*thei)++;
+	progress=(50*i)/t;
+	cout<<"\r[";
+	for(int w=0;w<progress;w++)cout<<"=";
+	cout<<">";
+	for(int w=0;w<50-progress;w++)cout<<" ";
+	cout<<"] ("<<i<<"/"<<t<<") "<<flush;
+	accessliste.unlock();
+  }
+}
+ 
+void launchThreadPoll(unsigned int thnum, string directory)
+{
+  if(directory.back()!='/')
+	 directory+='/';
+      vector<string> lc=listclass(directory);
+      vector<string> l=lookup(".");
+      computer c(l);
+      unsigned int i=0;
+      c.signature(lc);
+      vector<std::thread> t(thnum);
+      for(unsigned int ind=0;ind<thnum;ind++)
+      {
+	t[ind]=thread(learnClassThread,&i,directory,&lc,&c);
+      }
+      for(unsigned int ind=0;ind<thnum;ind++)
+	t[ind].join();
+      cout<<"\r[===================================================] (c'est fini)"<<endl;
+      
+}
  
 int main(int argc,char**argv){
   if(argc>1)
@@ -98,7 +154,7 @@ int main(int argc,char**argv){
       string directory=argv[3];
       if(directory.back()!='/')
 	 directory+='/';
-      vector<string> classfiles=findfiles(directory,classname+".*\\.pgm");
+      vector<string> classfiles=findfiles(directory,classname+"-.*\\.pgm");
       vector<string> l=lookup(".");
       computer c(l);
       c.AddClass(classname,classfiles);
@@ -114,11 +170,11 @@ int main(int argc,char**argv){
       string directory=argv[2];
       if(directory.back()!='/')
 	 directory+='/';
-      vector<string> lc=listclass("../database/");
+      vector<string> lc=listclass(directory);
       vector<string> l=lookup(".");
       computer c(l);
       unsigned int i,t;
-      t=lc.size();
+      t=static_cast<unsigned int >(lc.size());
       c.signature(lc);
       for(i=0;i<t;i++)
       {
@@ -128,7 +184,7 @@ int main(int argc,char**argv){
 	cout<<">";
 	for(int w=0;w<50-progress;w++)cout<<" ";
 	cout<<"] ("<<i<<"/"<<t<<")"<<flush;
-	vector<string> classfiles=findfiles(directory,lc[i]+".*\\.pgm");
+	vector<string> classfiles=findfiles(directory,lc[i]+"-.*\\.pgm");
 	c.AddClass(lc[i],classfiles);
       }
       cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
@@ -145,11 +201,11 @@ int main(int argc,char**argv){
       string directory=argv[2];
       if(directory.back()!='/')
 	 directory+='/';
-      vector<string> lc=listclass("../database/");
+      vector<string> lc=listclass(directory);
       vector<string> l=lookup(".");
       computer c(l);
       unsigned int i,t;
-      t=lc.size();
+      t=static_cast<unsigned int >(lc.size());
       c.signature(lc);
       for(i=0;i<t;i++)
       {
@@ -159,10 +215,30 @@ int main(int argc,char**argv){
 	cout<<">";
 	for(int w=0;w<50-progress;w++)cout<<" ";
 	cout<<"] ("<<i<<"/"<<t<<") : "<<lc[i]<<"          "<<flush;
-	vector<string> classfiles=findfiles(directory,lc[i]+".*\\.pgm");
+	vector<string> classfiles=findfiles(directory,lc[i]+"-.*\\.pgm");
 	c.AddClassLazy(lc[i],classfiles);
       }
       cout<<"\r[===================================================] ("<<t<<"/"<<t<<")"<<endl;
+      return 0;
+    }
+    
+    if(action=="multilearnlazy")
+    {
+      if(argc!=4)
+      {
+	cout<<"Usage ./centralmotor multilearnlazy nbthreads dossier"<<endl;
+	return 0;
+      }
+      string directory=argv[3];
+      stringstream ss(argv[2]);
+      unsigned int i;
+      ss>>i;
+      if(!(i>0&&i<24))
+      {
+	cout<<"le nombre de threads devrait être entre 1 et 23"<<endl;
+	return -1;
+      }
+      launchThreadPoll(i,directory);
       return 0;
     }
     

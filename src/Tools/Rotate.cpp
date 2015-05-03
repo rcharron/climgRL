@@ -58,7 +58,7 @@ MetaImage Rotate (MetaImage & image, double angle)
   const std::string  output = vm["output"].as<std::string>();
   const double angle = vm["angle"].as<double>(); */
   
-  typedef functors::IntervalForegroundPredicate<MetaImage> Binarizer;
+  //typedef functors::IntervalForegroundPredicate<MetaImage> Binarizer;
 //  MyImage image = GenericReader<MyImage>::import( input );
 //  trace.info() <<"Input image: "<< image<<std::endl;
   

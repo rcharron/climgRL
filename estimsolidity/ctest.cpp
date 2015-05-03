@@ -17,7 +17,7 @@ const char* buildmodel(vector<string> listoffiles)
   {
     MetaImage img(f);
 //    std::cout << f << std::endl;
-    res.push_back(Solidity(img));
+    res.push_back(static_cast<float>(Solidity(img)));
   }
   
   return model(res).c_str();

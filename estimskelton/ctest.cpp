@@ -25,6 +25,7 @@ const char* buildmodel(vector<string> listoffiles)
   {
     try{
       int l=SpineLong(f);
+      //cout<<f<<" "<<l<<endl;
 //    std::cout << f << std::endl;
       res.push_back(static_cast<float>(l));
     }
