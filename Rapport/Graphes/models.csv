@@ -1,0 +1,211 @@
+estim	class	model
+./libspineestim.so	device8	453.067 106.803
+./libbasicestim.so	device8	0.494368 0.23514 0.0197343 0.00727849
+./libsolidestim.so	device8	0.872865 0.10955
+./libspineestim.so	rat	572.8 164.249
+./libbasicestim.so	rat	0.467433 0.201614 0.0294577 0.00676924
+./libsolidestim.so	rat	0.632488 0.0991686
+./libspineestim.so	device4	647.867 459.746
+./libbasicestim.so	device4	0.422278 0.187873 0.0503791 0.0109005
+./libsolidestim.so	device4	0.911111 0.0788664
+./libspineestim.so	tree	519.267 171.138
+./libbasicestim.so	tree	0.426404 0.204057 0.0298124 0.010798
+./libsolidestim.so	tree	0.838595 0.0912782
+./libspineestim.so	cellular_phone	193.533 187.616
+./libbasicestim.so	cellular_phone	0.421738 0.202984 0.00825131 0.00801775
+./libsolidestim.so	cellular_phone	0.981164 0.022461
+./libspineestim.so	Heart	389.267 59.6338
+./libbasicestim.so	Heart	0.549303 0.213874 0.0196128 0.00748883
+./libsolidestim.so	Heart	0.911878 0.030255
+./libspineestim.so	classic	490 152.93
+./libbasicestim.so	classic	0.46379 0.220287 0.0102514 0.00727168
+./libsolidestim.so	classic	0.89814 0.0516237
+./libspineestim.so	key	518.067 36.0619
+./libbasicestim.so	key	0.382175 0.205389 0.019753 0.00962964
+./libsolidestim.so	key	0.794825 0.0695239
+./libspineestim.so	teddy	539.133 69.2675
+./libbasicestim.so	teddy	0.544857 0.214203 0.0044317 0.00119804
+./libsolidestim.so	teddy	0.879328 0.00797209
+./libspineestim.so	fish	727.333 72.8273
+./libbasicestim.so	fish	0.439772 0.239758 0.0182381 0.00781507
+./libsolidestim.so	fish	0.841667 0.0809533
+./libspineestim.so	fork	489.867 116.672
+./libbasicestim.so	fork	0.43284 0.237808 0.0423023 0.0117017
+./libsolidestim.so	fork	0.569988 0.151993
+./libspineestim.so	device9	772.333 738.473
+./libbasicestim.so	device9	0.659944 0.230319 0.0125849 0.00450365
+./libsolidestim.so	device9	0.951774 0.0311084
+./libspineestim.so	carriage	572.867 21.7221
+./libbasicestim.so	carriage	0.455708 0.229984 0.0126335 0.00555007
+./libsolidestim.so	carriage	0.601571 0.0283747
+./libspineestim.so	lmfish	432.867 122.489
+./libbasicestim.so	lmfish	0.435891 0.247167 0.0115102 0.00695459
+./libsolidestim.so	lmfish	0.898131 0.0572854
+./libspineestim.so	horseshoe	870.133 154.558
+./libbasicestim.so	horseshoe	0.639858 0.143719 0.0354632 0.0173793
+./libsolidestim.so	horseshoe	0.617638 0.0996545
+./libspineestim.so	flatfish	731.267 116.69
+./libbasicestim.so	flatfish	0.433188 0.201677 0.0219852 0.00490139
+./libsolidestim.so	flatfish	0.925339 0.0327121
+./libspineestim.so	device6	657.867 369.575
+./libbasicestim.so	device6	0.570831 0.206396 0.0409391 0.0122982
+./libsolidestim.so	device6	0.838277 0.141175
+./libspineestim.so	pocket	348.333 118.61
+./libbasicestim.so	pocket	0.520135 0.184563 0.0433996 0.0147572
+./libsolidestim.so	pocket	0.930423 0.0535841
+./libspineestim.so	cattle	633.133 159.171
+./libbasicestim.so	cattle	0.478172 0.221079 0.0258563 0.0132979
+./libsolidestim.so	cattle	0.823122 0.0647784
+./libspineestim.so	spoon	541.067 64.7966
+./libbasicestim.so	spoon	0.434411 0.236214 0.012283 0.00457978
+./libsolidestim.so	spoon	0.879491 0.118435
+./libspineestim.so	truck	471.133 65.9048
+./libbasicestim.so	truck	0.500125 0.221937 0.00861378 0.00379925
+./libsolidestim.so	truck	0.891285 0.0197795
+./libspineestim.so	stef	641.467 147.585
+./libbasicestim.so	stef	0.412062 0.223873 0.0838212 0.0408765
+./libsolidestim.so	stef	0.538733 0.141704
+./libspineestim.so	Bone	494.933 24.4417
+./libbasicestim.so	Bone	0.551009 0.259227 0.0322727 0.00797293
+./libsolidestim.so	Bone	0.971984 0.0348216
+./libspineestim.so	device2	352.733 178.793
+./libbasicestim.so	device2	0.532525 0.215479 0.0469537 0.01516
+./libsolidestim.so	device2	0.729059 0.138431
+./libspineestim.so	turtle	600.533 179.775
+./libbasicestim.so	turtle	0.444972 0.205674 0.0184627 0.00643573
+./libsolidestim.so	turtle	0.870959 0.0599077
+./libspineestim.so	brick	486 142.669
+./libbasicestim.so	brick	0.491721 0.234435 0.0106797 0.00320703
+./libsolidestim.so	brick	0.863659 0.0149896
+./libspineestim.so	apple	187.133 52.2263
+./libbasicestim.so	apple	0.524228 0.19231 0.0292444 0.00849758
+./libsolidestim.so	apple	0.977069 0.0180283
+./libspineestim.so	ray	566.2 220.844
+./libbasicestim.so	ray	0.399253 0.175604 0.0184191 0.00477185
+./libsolidestim.so	ray	0.83619 0.0782656
+./libspineestim.so	device3	396.067 619.172
+./libbasicestim.so	device3	0.546224 0.203825 0.0379175 0.00881408
+./libsolidestim.so	device3	0.912423 0.0862292
+./libspineestim.so	bat	427.267 225.611
+./libbasicestim.so	bat	0.40795 0.207703 0.0296854 0.0103169
+./libsolidestim.so	bat	0.753529 0.0783723
+./libspineestim.so	hammer	309.733 231.155
+./libbasicestim.so	hammer	0.439838 0.218569 0.00303029 0.00527998
+./libsolidestim.so	hammer	0.600358 0.105092
+./libspineestim.so	device0	476.067 85.0987
+./libbasicestim.so	device0	0.526859 0.222134 0.0367903 0.0120861
+./libsolidestim.so	device0	0.746981 0.0592288
+./libspineestim.so	children	799.533 42.1313
+./libbasicestim.so	children	0.465753 0.250458 0.00185067 0.00114787
+./libsolidestim.so	children	0.858251 0.0089327
+./libspineestim.so	elephant	809.467 179.885
+./libbasicestim.so	elephant	0.46969 0.193278 0.0265327 0.00582415
+./libsolidestim.so	elephant	0.839967 0.0616316
+./libspineestim.so	deer	771.733 185.387
+./libbasicestim.so	deer	0.450984 0.227193 0.0286007 0.0103994
+./libsolidestim.so	deer	0.624076 0.0644534
+./libspineestim.so	lizzard	679.267 194.128
+./libbasicestim.so	lizzard	0.4535 0.210814 0.0338317 0.0258654
+./libsolidestim.so	lizzard	0.674266 0.184719
+./libspineestim.so	device1	429.733 120.055
+./libbasicestim.so	device1	0.528963 0.211101 0.021158 0.00591799
+./libsolidestim.so	device1	0.857539 0.0763413
+./libspineestim.so	device5	533.267 52.1248
+./libbasicestim.so	device5	0.555886 0.246189 0.0195217 0.0121366
+./libsolidestim.so	device5	0.954807 0.0508206
+./libspineestim.so	jar	309.933 120.15
+./libbasicestim.so	jar	0.529268 0.21171 0.0082238 0.0103625
+./libsolidestim.so	jar	0.96656 0.0127369
+./libspineestim.so	watch	714.6 116.133
+./libbasicestim.so	watch	0.459295 0.269763 0.0113348 0.00680826
+./libsolidestim.so	watch	0.810904 0.0391632
+./libspineestim.so	shoe	360.6 36.7347
+./libbasicestim.so	shoe	0.480116 0.221704 0.00658828 0.0063299
+./libsolidestim.so	shoe	0.923934 0.0187954
+./libspineestim.so	face	8.4 7.26453
+./libbasicestim.so	face	0.496854 0.203528 0.00233529 0.00260513
+./libsolidestim.so	face	0.963953 0.00445963
+./libspineestim.so	hat	374.067 153.159
+./libbasicestim.so	hat	0.502783 0.204236 0.0452107 0.00967139
+./libsolidestim.so	hat	0.902815 0.068284
+./libspineestim.so	bird	699.4 58.4064
+./libbasicestim.so	bird	0.448441 0.224263 0.0132921 0.00958099
+./libsolidestim.so	bird	0.815306 0.0633815
+./libspineestim.so	guitar	534 121.931
+./libbasicestim.so	guitar	0.365325 0.219958 0.0260619 0.0108494
+./libsolidestim.so	guitar	0.87322 0.0731759
+./libspineestim.so	Glas	680.6 147.256
+./libbasicestim.so	Glas	0.447789 0.209695 0.019789 0.00555295
+./libsolidestim.so	Glas	0.512127 0.0306387
+./libspineestim.so	sea_snake	959.333 239.267
+./libbasicestim.so	sea_snake	0.495879 0.189466 0.0543232 0.035254
+./libsolidestim.so	sea_snake	0.669527 0.22741
+./libspineestim.so	chopper	631.067 57.3463
+./libbasicestim.so	chopper	0.380528 0.1744 0.019804 0.00600085
+./libsolidestim.so	chopper	0.897616 0.0559811
+./libspineestim.so	octopus	625.733 113.233
+./libbasicestim.so	octopus	0.535087 0.21086 0.0294982 0.0113536
+./libsolidestim.so	octopus	0.846788 0.079777
+./libspineestim.so	bell	552.4 94.2188
+./libbasicestim.so	bell	0.486877 0.204141 0.0142071 0.00291797
+./libsolidestim.so	bell	0.908953 0.0174093
+./libspineestim.so	spring	1560.27 264.522
+./libbasicestim.so	spring	0.6019 0.252954 0.0276705 0.0241609
+./libsolidestim.so	spring	0.475794 0.215102
+./libspineestim.so	device7	505.6 121.253
+./libbasicestim.so	device7	0.50502 0.218522 0.0212787 0.00837087
+./libsolidestim.so	device7	0.673905 0.0965888
+./libspineestim.so	fly	595.933 110.756
+./libbasicestim.so	fly	0.456804 0.212883 0.0207198 0.0107178
+./libsolidestim.so	fly	0.698088 0.105635
+./libspineestim.so	camel	554.133 80.2379
+./libbasicestim.so	camel	0.487074 0.212826 0.0264096 0.0103669
+./libsolidestim.so	camel	0.730941 0.0675845
+./libspineestim.so	chicken	712.067 168.213
+./libbasicestim.so	chicken	0.475505 0.203348 0.0414786 0.0132334
+./libsolidestim.so	chicken	0.837572 0.0586609
+./libspineestim.so	dog	694.467 96.6346
+./libbasicestim.so	dog	0.473231 0.212686 0.0297983 0.00801297
+./libsolidestim.so	dog	0.596653 0.0819844
+./libspineestim.so	pencil	569.267 153.292
+./libbasicestim.so	pencil	0.453881 0.253668 0.0287473 0.0146096
+./libsolidestim.so	pencil	0.934139 0.0254405
+./libspineestim.so	fountain	216.667 60.0019
+./libbasicestim.so	fountain	0.481775 0.213799 0.0106946 0.00518682
+./libsolidestim.so	fountain	0.989722 0.00223692
+./libspineestim.so	Misk	439.933 180.224
+./libbasicestim.so	Misk	0.55349 0.217567 0.0178302 0.00835966
+./libsolidestim.so	Misk	0.844359 0.0307692
+./libspineestim.so	beetle	747 151.44
+./libbasicestim.so	beetle	0.402454 0.205023 0.0225863 0.00602271
+./libsolidestim.so	beetle	0.673346 0.263595
+./libspineestim.so	HCircle	118.2 175.252
+./libbasicestim.so	HCircle	0.468824 0.197186 0.019113 0.00742899
+./libsolidestim.so	HCircle	0.981075 0.0270045
+./libspineestim.so	cup	569.4 178.941
+./libbasicestim.so	cup	0.533488 0.21021 0.0336582 0.0125846
+./libsolidestim.so	cup	0.987851 0.0092638
+./libspineestim.so	bottle	614.133 20.3793
+./libbasicestim.so	bottle	0.410864 0.226938 0.0154572 0.00686898
+./libsolidestim.so	bottle	0.941166 0.0208082
+./libspineestim.so	personal_car	412.4 157.756
+./libbasicestim.so	personal_car	0.466745 0.225643 0.0145558 0.00751346
+./libsolidestim.so	personal_car	0.906587 0.0203618
+./libspineestim.so	butterfly	464.467 116.747
+./libbasicestim.so	butterfly	0.486068 0.213875 0.0184977 0.00566565
+./libsolidestim.so	butterfly	0.880159 0.0704751
+./libspineestim.so	Comma	262.2 244.804
+./libbasicestim.so	Comma	0.399291 0.186855 0.0251476 0.0105675
+./libsolidestim.so	Comma	0.828133 0.0603392
+./libspineestim.so	car	436.667 0
+./libbasicestim.so	car	0.47284 0.230846 0.0197326 0.00457883
+./libsolidestim.so	car	0.744012 0.144126
+./libspineestim.so	frog	339 159.838
+./libbasicestim.so	frog	0.492282 0.20229 0.021425 0.00688683
+./libsolidestim.so	frog	0.895915 0.0479592
+./libspineestim.so	horse	645.133 169.811 
+./libbasicestim.so	horse	0.459037 0.224331 0.0423113 0.00753013 
+./libsolidestim.so	horse	0.681252 0.166864 
+./libspineestim.so	crown	
+./libbasicestim.so	crown	0.464118 0.204471 0.0127931 0.0085641 
+./libsolidestim.so	crown	0.852902 0.0669793 
