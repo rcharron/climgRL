@@ -3,8 +3,32 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "basicScoreMaker.h"
+#include "MetaImage.h"
+#include <iostream>
 
 using namespace std;
+
+int SpineLong(string file)
+{
+  MetaImage i(file);
+  MetaImage i2=i.getNormalized();
+  i2.iterRemoveNoise();
+  i2.Fill();
+  return i2.spineLength();
+}
+
+const char* buildmodel(vector<string> listoffiles)
+{
+  vector<float> res;
+  for(string f:listoffiles)
+  {
+//    std::cout << f << std::endl;
+    res.push_back(static_cast<float>(SpineLong(f)));
+  }
+  
+  return model(res).c_str();
+}
 
 const char* buildmodel(const char* listoffiles)
 {
@@ -20,10 +44,21 @@ const char* buildmodel(const char* listoffiles)
   return buildmodel(res);
 }
 
-float estim(const char* modelc, const char* filec)
+float estim(const char* modelc, const char* pcc)
 {
   string model=modelc;
-  string file=filec;
-  return estimation(modelc,filec);
+  string pc=pcc;
+  stringstream ss(pc);
+  int sc;
+  ss>>sc;
+  return score(modelc,static_cast<float>(sc));
   
+}
+
+const char* pre_estim(const char* filec)
+{
+  string file=filec;
+  stringstream ss;
+  ss<<SpineLong(file);
+  return ss.str().c_str();
 }
