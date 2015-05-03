@@ -31,9 +31,16 @@ int main(int argc,char** argv)
 //  Test_AntiInversion();
 //  Test_Remplissage();
 //  Test_ConvexHull();
-  Test_AntiBruit();
+//  Test_AntiBruit();
 //  Test_Solidity_Scale();
 //  Test_Rotate();
 //  Test_Eccentricity_Scale();
+  //MetaImage i("../database/spring-1.pgm");
+  MetaImage i("../database/beetle-1.pgm");
+  MetaImage i2=i.getNormalized();
+  i2.iterRemoveNoise();
+  i2.Fill();
+  i2.savePGM("tutu.pgm");
+  i2.Skelton();
   return 0;
 }

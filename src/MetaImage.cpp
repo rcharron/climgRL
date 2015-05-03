@@ -1,5 +1,6 @@
 #include "MetaImage.h"
 #include <cmath>
+#include <queue>
 
 using namespace std;
 using namespace DGtal;
@@ -54,12 +55,12 @@ void MetaImage::updateMeta()
   width=this->domain().upperBound()[0];
   height=this->domain().upperBound()[1];
   
-  //ComputeCenter();
-  //ComputeMean();
+  ComputeCenter();
+  ComputeMean();
 }
 
 
-/*void MetaImage::ComputeCenter()
+void MetaImage::ComputeCenter()
 {
   centerx=0;
   centery=0;
@@ -68,7 +69,7 @@ void MetaImage::updateMeta()
   {
     for (int j=0;j<height;j++)
     {
-      if(getValue(i,j)>0)
+      if((*this)(Point(i,j))>0)
       {
 	centerx+=i;
 	centery+=j;
@@ -78,31 +79,228 @@ void MetaImage::updateMeta()
   }
   centerx/=p;
   centery/=p;
-}*/
+}
 
-/*void MetaImage::ComputeMean()
+void MetaImage::ComputeMean()
 {
   mean=0;
   int p=0;
+  float dist;
   for(int i=0;i<width;i++)
   {
     for (int j=0;j<height;j++)
     {
-      if(getValue(i,j))
+      if((*this)(Point(i,j)))
       {
-	mean+=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	dist=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	dist=sqrt(dist);
+	mean+=dist;
 	p++;
       }
     }
   }
+  //cout<<"test !0 "<<p<<endl;
   mean/=p;
-  mean=sqrt(mean);
-}*/
+}
 
-/*int MetaImage::CanonicalValue(float x, float y)
+bool MetaImage::CanonicalValue(float x, float y)
 {
   x-=0.5f;
-  int x=centerx+x*4*mean;
-  int y=centery+y*4*mean;
-  return getValue(x,y);
-}*/
+  y-=0.5f;
+  int i=centerx+x*4*mean;
+  int j=centery+y*4*mean;
+  if(domain().isInside(Point(i,j)))
+    return (*this)(Point(i,j))>0;
+  return false;
+}
+
+vector< Point > MetaImage::TheVoisins(Point p)
+{
+  vector<Point> voisins;
+  voisins.push_back(Point(p[0]-1,p[1]));
+  voisins.push_back(Point(p[0],p[1]-1));
+  voisins.push_back(Point(p[0]+1,p[1]));
+  voisins.push_back(Point(p[0],p[1]+1));
+  voisins.push_back(Point(p[0]-1,p[1]-1));
+  voisins.push_back(Point(p[0]+1,p[1]-1));
+  voisins.push_back(Point(p[0]+1,p[1]+1));
+  voisins.push_back(Point(p[0]-1,p[1]+1));  
+  return voisins;
+
+}
+
+
+
+bool MetaImage::removeNoise()
+{
+    Domain domain = this->domain();
+    int l,h;
+    l=domain.upperBound()[0]+1;
+    h=domain.upperBound()[1]+1;
+    vector<vector<bool> > newcol(l,vector<bool>(h,false));
+  
+  bool change=false;
+  for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
+    int noirs =0; 		//variable indiquant le nombre de noirs
+    int blancs =0;		//variable indiquant le nombre de blancs
+    bool couleur=(*this)(*it)>0;
+    couleur?blancs=1:noirs=1;
+    vector<Point> voisins = TheVoisins(*it);
+    for (int i = 0; i < voisins.size(); i++){
+        if (domain.isInside(voisins[i])){
+	    (*this)(voisins[i])>0?blancs++:noirs++;
+	    //noirs  += 1-image(voisins[i]);
+	    //blancs += image(voisins[i]);
+	}
+    }
+    if((blancs>noirs)^couleur)change=true;
+    if (noirs < blancs) {newcol[(*it)[0]][(*it)[1]]=1;}
+//    new_image.setValue(*it,(1+(noirs>blancs)) %2);
+  }
+  
+  for(int i=0;i<l;i++)
+    for(int j=0;j<h;j++)
+      setValue(Point(i,j),newcol[i][j]);
+  return change;
+
+}
+
+void MetaImage::iterRemoveNoise()
+{
+  for(int i=0;i<10&&removeNoise();i++);
+}
+
+
+void MetaImage::Open()
+{
+    Domain domain = this->domain();
+    int l,h;
+    l=domain.upperBound()[0]+1;
+    h=domain.upperBound()[1]+1;
+    queue<Point> colorize;
+  
+  bool change=false;
+  for (Domain::Iterator it = domain.begin(); it != domain.end();it++){
+    if((*this)(*it)>0)
+    {
+      vector<Point> voisins = TheVoisins(*it);
+      for(Point p:voisins)
+	if (domain.isInside(p))
+	  colorize.push(*it);
+    }
+  }
+  
+  while(!colorize.empty())
+  {
+      setValue(colorize.front(),1);
+      colorize.pop();
+  }
+
+}
+
+
+
+MetaImage MetaImage::getNormalized()
+{
+
+  MetaImage res(Domain(Point(0,0),Point(799,799)));
+  for(int i=0;i<800;i++)
+  {
+    for(int j=0;j<800;j++)
+    {
+      res.setValue(Point(i,j),CanonicalValue((1.0f/800)*i,(1.0f/800)*j));
+      
+    }
+  }
+  res.updateMeta();
+  return res;
+}
+
+
+void MetaImage::Skelton()
+{
+  DigitalSet set2d( domain() );
+  SetFromImage<DigitalSet>::append<Image>(set2d, *this, 0, 255);
+  Object8_4 object(dt8_4, set2d);
+  DigitalSet & S = object.pointSet();
+  queue<Point> P;
+  /*for(DigitalSet::ConstIterator it = S.begin(), itend = S.end(); it != itend; ++it)
+  {
+    //Remember (*it) is a Point
+    if (object.isSimple( *it ))
+      P.push(*it);
+  }*/
+  
+  Object8_4 border= object.border();
+  for(DigitalSet::ConstIterator it = border.begin(), itend = border.end(); it != itend; ++it)
+  {
+    //Remember (*it) is a Point
+    if (object.isSimple( *it ))
+      P.push(*it);
+  }
+    
+  while(!P.empty())
+  {
+    Point lp=P.front();
+    P.pop();
+    if(object.pointSet()(lp)&&object.isSimple(lp)&&object.neighborhoodSize(lp)>1)
+    {
+      object.pointSet().erase(lp);
+      SmallObject8_4 N=object.properNeighborhood(lp);
+      for(auto it=N.begin();it!=N.end();++it )
+      {
+	if(object.neighborhoodSize(lp)>1)
+	  P.push(*it);
+      }
+    }  
+  }
+  MetaImage img(domain());
+  for(DigitalSet::ConstIterator it = object.begin(), itend = object.end();it != itend; ++it)
+    img.setValue(*it,1);
+  img.savePGM("toto.pgm");
+}
+
+
+void MetaImage::Fill()
+{
+  Domain domain = this->domain();
+  /* Crée une nouvelle image toute blanche */
+  int l,h;
+    l=domain.upperBound()[0]+1;
+    h=domain.upperBound()[1]+1;
+    vector<vector<bool> > new_image(l,vector<bool>(h,true));
+//  cout << "a créé nvelle image\n";
+  /* Colorie en noir les bords */
+  queue<Point> myqueue;
+  Point current;
+  for (Point it = domain.lowerBound(); domain.isInside(it);(it)[0]++){ //itère sur les points en bas
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); }
+  }
+  for (Point it = domain.lowerBound(); domain.isInside(it);(it)[1]++){ //itère sur les points à gauche
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); } 
+  }
+  for (Point it = domain.upperBound(); domain.isInside(it);(it)[0]--){ //itère sur les points en haut
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); } 
+  }
+  for (Point it = domain.upperBound(); domain.isInside(it);(it)[1]--){ //itère sur les points à droite
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); }  
+  }
+//  cout << "avant boucle while \n";
+  while (!myqueue.empty()){
+    vector<Point> voisins = TheVoisins(myqueue.front());    
+    for (int i = 0; i < voisins.size(); i++){
+      current = voisins[i];
+      if (domain.isInside(current) && new_image[current[0]][current[1]] && !(*this)(current)){		//si le voisin est dans l'image et non traité et que sa couleur est noire, on le traite et on l'ajoute à la queue
+	new_image[current[0]][current[1]]=false;
+	myqueue.push(current);
+      }
+    }
+    myqueue.pop();
+  }
+  /* Renvoie l'image ainsi obtenue */
+//  cout << "end\n\n";
+  for(int i=0;i<l;i++)
+    for(int j=0;j<h;j++)
+      setValue(Point(i,j),new_image[i][j]);
+  
+}
