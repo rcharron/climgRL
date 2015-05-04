@@ -23,6 +23,9 @@
 \usepackage{tikz} % Let us start the fun
 \usetikzlibrary{positioning, chains, calc, arrows, decorations.pathreplacing, fit, patterns, snakes}
 
+\theoremstyle{definition} 
+\newtheorem{definition}{Définition} 
+
 \makeatletter
  
 \newskip\@bigflushglue \@bigflushglue = -100pt plus 1fil
@@ -177,9 +180,18 @@
   
     \subsection{Quelques estimateurs simples et complémentaires}
 
+      Une première idée fut de travailler sur la forme générale de la forme \textendash est-ce qu'elle est plutôt carré ? ronde ? allongée ? Pour cela, trois estimateurs simples et complémentaires ont été développés. Tous tentent de décrire une image par un simple scalaire.
+      
+      L'estimateur \texttt{estimeccentricity} qui mesure l'excentricité d'une forme permet de déterminer si la forme est plus ou moins allongée. L'estimateur \texttt{estimaveragebendingflexion}, qui n'est pas opérationnel suite à des erreurs de programmation\footnote{Il sera néanmoins présenté dans ce rapport}, devait mesurer l'énergie moyenne de flexion afin de pouvoir distinguer les formes arrondies, très arrondies ou plates. Enfin l'estimateur \texttt{estimsolidity} qui mesure la solidité d'une forme apporte une information sur comment la forme remplit son enveloppe convexe. %fin à retravailler
+    
       \subsubsection{Solidité}
       
 	\paragraph{Principe}
+	
+	  \begin{definition}[Solidité]
+	    On définit la solidité d'une forme comme le rapport de l'aire de cette forme sur l'aire de l'enveloppe convexe.
+	  \end{definition}
+
 	
 	  \begin{figure}[!h]
 	    \centering
@@ -203,7 +215,15 @@
 	
 	\paragraph{Résistance au bruit}
 	
-	\paragraph{Résistance aux rotations et symétries}
+
+%	pour résumer :
+%- quand le bruit devient vraiment important (genre 0.8), ça a tendance a foirer que ce soit debruité ou pas
+%- sinon c'est plutot pas mal
+%- par contre l'estimateur avec et sans débruitage sont assez loin
+%=> il faut le modèle avec un traitement anti bruit
+
+	
+	\paragraph{Résistance aux rotations et symmétries}
       
 	\paragraph{Résistance aux homothéties} blabla \\
 	
