@@ -147,7 +147,7 @@ int main(int argc,char**argv){
     {
       if(argc!=4)
       {
-	cout<<"Usage ./centralmotor learn nomclass dossier"<<endl;
+	cout<<"Usage ./ClimgRL learn nomclass dossier"<<endl;
 	return 0;
       }
       string classname=argv[2];
@@ -164,7 +164,7 @@ int main(int argc,char**argv){
     {
       if(argc!=3)
       {
-	cout<<"Usage ./centralmotor learnall dossier"<<endl;
+	cout<<"Usage ./ClimgRL learnall dossier"<<endl;
 	return 0;
       }
       string directory=argv[2];
@@ -195,7 +195,7 @@ int main(int argc,char**argv){
     {
       if(argc!=3)
       {
-	cout<<"Usage ./centralmotor learnlazy dossier"<<endl;
+	cout<<"Usage ./ClimgRL learnlazy dossier"<<endl;
 	return 0;
       }
       string directory=argv[2];
@@ -226,7 +226,7 @@ int main(int argc,char**argv){
     {
       if(argc!=4)
       {
-	cout<<"Usage ./centralmotor multilearnlazy nbthreads dossier"<<endl;
+	cout<<"Usage ./ClimgRL multilearnlazy nbthreads dossier"<<endl;
 	return 0;
       }
       string directory=argv[3];
@@ -246,7 +246,7 @@ int main(int argc,char**argv){
     {
       if(argc>4)
       {
-	cout<<"Usage ./centralmotor estim nomclass fichier"<<endl;
+	cout<<"Usage ./ClimgRL estim nomclass fichier"<<endl;
 	return 0;
       }
       if(argc==4)
@@ -287,7 +287,7 @@ int main(int argc,char**argv){
     {
       if(argc!=3)
       {
-	cout<<"Usage ./centralmotor guess fichier"<<endl;
+	cout<<"Usage ./ClimgRL guess fichier"<<endl;
 	return 0;
       }
       string file=argv[2];
@@ -309,7 +309,7 @@ int main(int argc,char**argv){
     {
       if(argc>4)
       {
-	cout<<"Usage ./centralmotor estim nomclass fichier"<<endl;
+	cout<<"Usage ./ClimgRL estim nomclass fichier"<<endl;
 	return 0;
       }
       if(argc==4)
@@ -397,15 +397,15 @@ int main(int argc,char**argv){
   cout<<endl<<endl;
   cout<<"Usage :"<<endl<<endl;
   cout<<"Apprendre les classes d'images :"<<endl;
-  cout<<"--> Juste une classe : ./centralmotor learn nomClasse cheminVersDossierImage"<<endl;
-  cout<<"--> Toute les classes : ./centralmotor learnall cheminVersDossierImage"<<endl;
-  cout<<"--> Tout ce qui n'a pas été appris : ./centralmotor learnlazy cheminVersDossierImage"<<endl<<endl;
+  cout<<"--> Juste une classe : ./ClimgRL learn nomClasse cheminVersDossierImage"<<endl;
+  cout<<"--> Toute les classes : ./ClimgRL learnall cheminVersDossierImage"<<endl;
+  cout<<"--> Tout ce qui n'a pas été appris : ./ClimgRL learnlazy cheminVersDossierImage"<<endl<<endl;
   cout<<"Estimer :"<<endl;
-  cout<<"--> Score pour une clase : ./centralmotor estim nomClasse fichier"<<endl;
-  cout<<"--> Correspondances : ./centralmotor estim fichier"<<endl;
-  cout<<"--> Correspondances : ./centralmotor guess fichier"<<endl<<endl;
+  cout<<"--> Score pour une clase : ./ClimgRL estim nomClasse fichier"<<endl;
+  cout<<"--> Correspondances : ./ClimgRL estim fichier"<<endl;
+  cout<<"--> Correspondances : ./ClimgRL guess fichier"<<endl<<endl;
   cout<<"Signer :"<<endl;
-  cout<<"-->Signature : ./centralmotor sign fichier"<<endl;
+  cout<<"-->Signature : ./ClimgRL sign fichier"<<endl<<endl;
   
   return 0;
 }

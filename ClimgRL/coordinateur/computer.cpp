@@ -1,4 +1,6 @@
 #include "computer.h"
+#include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -228,6 +230,11 @@ vector< float > computer::score(string file)
   return res;
 }
 
+bool componsecond(pair<string,float> a,pair<string,float> b)
+{
+  return a.second>=b.second;
+}
+
 
 vector< string > computer::match(string file)
 {
@@ -244,6 +251,7 @@ vector< string > computer::match(string file)
   
   string classname;
   vector< string > res;
+  vector< pair<string,float> > preres;
   try
   {
     while(is>>classname)
@@ -251,15 +259,22 @@ vector< string > computer::match(string file)
       float s=fastscore(precalc,classname);
       if(s>0.9f)
       {
-	stringstream ss;
-	ss<<classname<<" : "<<s;
-	res.push_back(ss.str());
+	preres.push_back(pair<string,float>(classname,s));
       }
       
       
     }
   }
   catch(string s){cout<<s<<endl;}
+  sort(preres.begin(),preres.end(),componsecond);
+  t=preres.size();
+  for(i=0;i<t;i++)
+  {
+    stringstream ss;
+    ss<<preres[i].first<<" : "<<preres[i].second<<" ";
+    res.push_back(ss.str());
+   
+  }
   return res;
 
 }

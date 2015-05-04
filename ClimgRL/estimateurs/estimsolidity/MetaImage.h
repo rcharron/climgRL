@@ -9,6 +9,7 @@
 #include <DGtal/io/writers/PGMWriter.h>
 #include "DGtal/images/imagesSetsUtils/SetFromImage.h"
 #include "DGtal/images/ImageContainerBySTLVector.h"
+#include <utility>
 
 typedef DGtal::ImageContainerBySTLVector< DGtal::Z2i::Domain, unsigned int > Image;
 
@@ -21,10 +22,16 @@ public:
   operator DGtal::Board2D();
   void savePGM(std::string filename);
   void updateMeta();
-  //int CanonicalValue(float x,float y);
+  bool CanonicalValue(float x,float y);
+  bool removeNoise();
+  void iterRemoveNoise();//Pour la terminaison, il n'y aura pas plus de 8 itérations
+  MetaImage getNormalized();
+  void Open();
+  void Fill();
 private:
-  //void ComputeCenter();
-  //void ComputeMean();
+  vector<Point> TheVoisins(Point p);
+  void ComputeCenter();
+  void ComputeMean();
   int width;
   int height;
   float centerx;

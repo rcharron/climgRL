@@ -49,6 +49,7 @@ float estim(string model, string pc)
 string pre_estim(string file)
 {
   MetaImage img(file);
+  img.iterRemoveNoise();
   stringstream ss;
   ss<<(float)Solidity(img)<<" ";
   return ss.str();

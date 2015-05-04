@@ -1,5 +1,9 @@
 #include "MetaImage.h"
 #include <cmath>
+#include <queue>
+#include <set>
+#include <unordered_set>
+
 
 using namespace std;
 using namespace DGtal;
@@ -54,12 +58,12 @@ void MetaImage::updateMeta()
   width=this->domain().upperBound()[0];
   height=this->domain().upperBound()[1];
   
-  //ComputeCenter();
-  //ComputeMean();
+  ComputeCenter();
+  ComputeMean();
 }
 
 
-/*void MetaImage::ComputeCenter()
+void MetaImage::ComputeCenter()
 {
   centerx=0;
   centery=0;
@@ -68,41 +72,192 @@ void MetaImage::updateMeta()
   {
     for (int j=0;j<height;j++)
     {
-      if(getValue(i,j)>0)
+      if((*this)(Point(i,j))>0)
       {
-	centerx+=i;
-	centery+=j;
+	centerx+=static_cast<float>(i);
+	centery+=static_cast<float>(j);
 	p++;
       }
     }
   }
-  centerx/=p;
-  centery/=p;
-}*/
+  centerx/=static_cast<float>(p);
+  centery/=static_cast<float>(p);
+}
 
-/*void MetaImage::ComputeMean()
+void MetaImage::ComputeMean()
 {
   mean=0;
   int p=0;
+  float dist;
   for(int i=0;i<width;i++)
   {
     for (int j=0;j<height;j++)
     {
-      if(getValue(i,j))
+      if((*this)(Point(i,j)))
       {
-	mean+=(centerx-i)*(centerx-i)+(centery-j)*(centery-j);
+	dist=(centerx-static_cast<float>(i))*(centerx-static_cast<float>(i))+(centery-static_cast<float>(j))*(centery-static_cast<float>(j));
+	dist=sqrt(dist);
+	mean+=dist;
 	p++;
       }
     }
   }
-  mean/=p;
-  mean=sqrt(mean);
-}*/
+  //cout<<"test !0 "<<p<<endl;
+  mean/=static_cast<float>(p);
+}
 
-/*int MetaImage::CanonicalValue(float x, float y)
+bool MetaImage::CanonicalValue(float x, float y)
 {
   x-=0.5f;
-  int x=centerx+x*4*mean;
-  int y=centery+y*4*mean;
-  return getValue(x,y);
-}*/
+  y-=0.5f;
+  int i=static_cast<int>(centerx+x*4.0f*mean);
+  int j=static_cast<int>(centery+y*4.0f*mean);
+  if(domain().isInside(Point(i,j)))
+    return (*this)(Point(i,j))>0;
+  return false;
+}
+
+vector< Point > MetaImage::TheVoisins(Point p)
+{
+  vector<Point> voisins;
+  voisins.push_back(Point(p[0]-1,p[1]));
+  voisins.push_back(Point(p[0],p[1]-1));
+  voisins.push_back(Point(p[0]+1,p[1]));
+  voisins.push_back(Point(p[0],p[1]+1));
+  voisins.push_back(Point(p[0]-1,p[1]-1));
+  voisins.push_back(Point(p[0]+1,p[1]-1));
+  voisins.push_back(Point(p[0]+1,p[1]+1));
+  voisins.push_back(Point(p[0]-1,p[1]+1));  
+  return voisins;
+
+}
+
+
+
+bool MetaImage::removeNoise()
+{
+    Domain mydomain = this->domain();
+    int l,h;
+    l=mydomain.upperBound()[0]+1;
+    h=mydomain.upperBound()[1]+1;
+    vector<vector<bool> > newcol(l,vector<bool>(h,false));
+  
+  bool change=false;
+  for (Domain::Iterator it = mydomain.begin(); it != mydomain.end();it++){
+    int noirs =0; 		//variable indiquant le nombre de noirs
+    int blancs =0;		//variable indiquant le nombre de blancs
+    bool couleur=(*this)(*it)>0;
+    couleur?blancs=1:noirs=1;
+    vector<Point> voisins = TheVoisins(*it);
+    for (unsigned int i = 0; i < voisins.size(); i++){
+        if (mydomain.isInside(voisins[i])){
+	    (*this)(voisins[i])>0?blancs++:noirs++;
+	    //noirs  += 1-image(voisins[i]);
+	    //blancs += image(voisins[i]);
+	}
+    }
+    if((blancs>noirs)^couleur)change=true;
+    if (noirs < blancs) {newcol[(*it)[0]][(*it)[1]]=1;}
+//    new_image.setValue(*it,(1+(noirs>blancs)) %2);
+  }
+  
+  for(int i=0;i<l;i++)
+    for(int j=0;j<h;j++)
+      setValue(Point(i,j),newcol[i][j]);
+  return change;
+
+}
+
+void MetaImage::iterRemoveNoise()
+{
+  for(int i=0;i<8&&removeNoise();i++);
+}
+
+
+void MetaImage::Open()
+{
+    Domain mydomain = this->domain();
+    /*int l,h;
+    l=domain.upperBound()[0]+1;
+    h=domain.upperBound()[1]+1;*/
+    queue<Point> colorize;
+  
+  for (Domain::Iterator it = mydomain.begin(); it != mydomain.end();it++){
+    if((*this)(*it)>0)
+    {
+      vector<Point> voisins = TheVoisins(*it);
+      for(Point p:voisins)
+	if (mydomain.isInside(p))
+	  colorize.push(*it);
+    }
+  }
+  
+  while(!colorize.empty())
+  {
+      setValue(colorize.front(),1);
+      colorize.pop();
+  }
+
+}
+
+
+
+MetaImage MetaImage::getNormalized()
+{
+
+  MetaImage res(Domain(Point(0,0),Point(799,799)));
+  for(int i=0;i<800;i++)
+  {
+    for(int j=0;j<800;j++)
+    {
+      res.setValue(Point(i,j),CanonicalValue((1.0f/800.0f)*static_cast<float>(i),(1.0f/800.0f)*static_cast<float>(j)));
+      
+    }
+  }
+  res.updateMeta();
+  return res;
+}
+
+void MetaImage::Fill()
+{
+  Domain mydomain = this->domain();
+  /* Crée une nouvelle image toute blanche */
+  int l,h;
+    l=mydomain.upperBound()[0]+1;
+    h=mydomain.upperBound()[1]+1;
+    vector<vector<bool> > new_image(l,vector<bool>(h,true));
+//  cout << "a créé nvelle image\n";
+  /* Colorie en noir les bords */
+  queue<Point> myqueue;
+  Point current;
+  for (Point it = mydomain.lowerBound(); mydomain.isInside(it);(it)[0]++){ //itère sur les points en bas
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); }
+  }
+  for (Point it = mydomain.lowerBound(); mydomain.isInside(it);(it)[1]++){ //itère sur les points à gauche
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); } 
+  }
+  for (Point it = mydomain.upperBound(); mydomain.isInside(it);(it)[0]--){ //itère sur les points en haut
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); } 
+  }
+  for (Point it = mydomain.upperBound(); mydomain.isInside(it);(it)[1]--){ //itère sur les points à droite
+    if (!(*this)(it)) { new_image[it[0]][it[1]]=false; myqueue.push(it); }  
+  }
+//  cout << "avant boucle while \n";
+  while (!myqueue.empty()){
+    vector<Point> voisins = TheVoisins(myqueue.front());    
+    for (unsigned int i = 0; i < voisins.size(); i++){
+      current = voisins[i];
+      if (mydomain.isInside(current) && new_image[current[0]][current[1]] && !(*this)(current)){		//si le voisin est dans l'image et non traité et que sa couleur est noire, on le traite et on l'ajoute à la queue
+	new_image[current[0]][current[1]]=false;
+	myqueue.push(current);
+      }
+    }
+    myqueue.pop();
+  }
+  /* Renvoie l'image ainsi obtenue */
+//  cout << "end\n\n";
+  for(int i=0;i<l;i++)
+    for(int j=0;j<h;j++)
+      setValue(Point(i,j),new_image[i][j]);
+}
+
