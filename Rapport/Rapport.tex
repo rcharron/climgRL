@@ -613,7 +613,7 @@
     
     \subsection{Etude du squelette} 
     
-    Le squelette de l'objet pourrait apporter beaucoup d'informations. Cependant ici on se concentrera sur ce que l'on appelle la colonne vertébrale définie comme plus grand chemin dans le squelette. Cette information est pertinente dans le sens où cela peut caractériser la longueur de l'objet une fois ``déplié''. Pour donner un sens à cela on normalisera d'abord l'image comme décrit dans le traitement normalisation. On débruitera aussi l'image pour que le squelette soit ``naturel''. On rempliera la forme pour que le squelette soit un arbre. Si la forme n'est pas connectée, on ne gardera que le plus grand arbre restant
+    Le squelette de l'objet pourrait apporter beaucoup d'informations. Cependant ici on se concentrera sur ce que l'on appelle la colonne vertébrale définie comme plus grand chemin dans le squelette. Cette information est pertinente dans le sens où cela peut caractériser la longueur de l'objet une fois ``déplié''. Pour donner un sens à cela on normalisera d'abord l'image comme décrit dans le traitement normalisation. On débruitera aussi l'image pour que le squelette soit ``naturel''. On rempliera la forme pour que le squelette soit un arbre. Si la forme n'est pas connectée, on ne gardera que le plus grand arbre restant.
     
     Ici le squelette sera calculé par effeuillages successif du contour de l'objet.
     
@@ -638,9 +638,9 @@
     \subsection{Pistes non explorées}
         \subsubsection{Transformée de Fourier} 
         
-        Utiliser la transformée de Fourier pour obtenir le spectre semble un bon moyen de caractériser une image. Surtout que supprimer le bruit reviendrait à négliger les hautes fréquences. La transformée es invariante par translation si on ne s'intéresse qu'à l'amplitude des différentes fréquences. On peut la rendre invariante par rotation en se plaçant au centre de gravité et en utilisant les coordonnées polaires
+        Utiliser la transformée de Fourier pour obtenir le spectre semble un bon moyen de caractériser une image. Surtout que supprimer le bruit reviendrait à négliger les hautes fréquences. La transformée es invariante par translation si on ne s'intéresse qu'à l'amplitude des différentes fréquences. On peut la rendre invariante par rotation en se plaçant au centre de gravité et en utilisant les coordonnées polaires.
         
-        Pour comparer les spectres l'Earth mover's distance semble être appropriée (cependant en réduisant la taille des images à $64 \times 64$ le nombre de point est beaucoup trop gros pour résoudre l'instance par une relaxation linéaire)
+        Pour comparer les spectres l'Earth mover's distance semble être appropriée (cependant en réduisant la taille des images à $64 \times 64$ le nombre de point est beaucoup trop gros pour résoudre l'instance par une relaxation linéaire).
         
         \subsubsection{Comparaison de squelette} 
         
