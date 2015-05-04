@@ -76,7 +76,9 @@
 	Un classificateur ne renvoie pas directement une classe, en fait il va comparer un modèle à une image et dire selon lui comment le modèle et l'image sont éloignés. Du point de vue extérieur un estimateur comporte trois fonctions : \verb-buildmodel-, \verb-pre_estim- et \verb-estim-. La première donne une liste de fichier d'une même classe et renvoie un modèle, celui-ce pouvant être quelconque (un entier ou un graphe par exemple). La deuxième demande de réduire l'image à une donnée, la motivation étant de pouvoir rapidement comparer cette donnée à plusieurs modèles, cette comparaison étant faite par la troisième fonction qui renvoie un score $sc \in [0,1]$ de ressemblance approchant 1 quand elle est certaine ou 0 si le modèle ne correspond pas.
 
   	   \subsection{Classifions}
-  	   Une fois que les modèles sont générés (Ils sont sauvegardés dans une base de données SQlite3 nommée \verb-estimatormodels.db-), la classification est facile. Pour chaque classe on considère les modèles de chaque classificateur, puis moyenne les scores qu'ils renvoient, ce qui détermine le score d'appartenance à cette classe. La signature d'une image est définie comme la concaténation de ces scores dans un vecteur. Le programme peut soit renvoyer cette signature, soit afficher les classes dont le score d'appartenance est supérieur à 0.9, soit rendre la classe ayant le plus haut score.
+  	   Une fois que les modèles sont générés, la classification est facile. Pour chaque classe on considère les modèles de chaque classificateur, puis moyenne les scores qu'ils renvoient, ce qui détermine le score d'appartenance à cette classe. La signature d'une image est définie comme la concaténation de ces scores dans un vecteur. Le programme peut soit renvoyer cette signature, soit afficher les classes dont le score d'appartenance est supérieur à 0.9, soit rendre la classe ayant le plus haut score.
+  	   
+  	    Les modèles sont sauvegardés dans une base de données SQlite3 nommée \verb-estimatormodels.db-. Ils ont tous été générés. Il est à noter que la durée de construction de ces modèles est d'environ une à deux heures.
   
   \section{Traitement des images}
   
@@ -394,8 +396,7 @@
 	  \[ r = \frac{|QO|}{2 \sin\left(\widehat{OPQ}\right)} = \frac{|QO|}{\frac{2 \det\left(\overrightarrow{PO}, \overrightarrow{PQ} \right)}{|OP| |PQ|}} = \frac{|OP| |PQ| |QO|}{4 \mathcal{A}_{PQO}}  \]
 	
 	\paragraph{Résultats}
-    
-    \subsection{Transformée de Fourier}  %A mettre ? RAphaël
+  
     
     \subsection{Méthode des moments} %A renommer ? Raphaël
       Cet estimateur est simple d'où son nom d'exécutable \verb-libbasicestim-. On reprend l'idée de la normalisation d'image évoquée plus haut.
@@ -407,10 +408,35 @@
       Afin de pouvoir comparer ces grandeurs, on les norme par l'écart maximal entre un point de $S$ et $G$.
       
       Ces deux valeurs constituent les grandeurs caractéristiques de l'estimateur.
+      
+      L'estimateur est ainsi naturellement résistant aux rotations, aux translations et à l'agrandissement. Statistiquement, il est insensible au bruit pour la moyenne, ainsi que pour l'écart type dans une certaine mesure.
     
     \subsection{Etude du squelette} %TODO : Raphaël
     
+    Le squelette de l'objet pourrait apporter beaucoup d'informations. Cependant ici on se concentrera sur ce que l'on appelle la colonne vertébrale définie comme plus grand chemin dans le squelette. Cette information est pertinente dans le sens où cela peut caractériser la longueur de l'objet une fois ``déplié''. Pour donner un sens à cela on normalisera d'abord l'image comme décrit dans le traitement normalisation. On débruitera aussi l'image pour que le squelette soit ``naturel''. On rempliera la forme pour que le squelette soit un arbre. Si la forme n'est pas connectée, on ne gardera que le plus grand arbre restant
+    
+    Ici le squelette sera calculé par effeuillages successif du contour de l'objet.
+    
+     \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.45\textwidth}
+	  \centering
+	  \includegraphics[scale=0.25]{Illustrations/turtle.png}
+	  \label{pocket-non-rempli}
+	\end{subfigure}
+	\begin{subfigure}{.45\textwidth}
+	  \centering
+	  \includegraphics[scale=0.25]{Illustrations/turtlesk.png}
+	\label{pocket-rempli}
+	\end{subfigure}
+	\caption{L'image de tortue normée et son squelette}
+	\label{skelton}
+      \end{figure}
+      
+      La longueur de la colonne vertébrale est par normalisation invariante à l'agrandissement. Elle est naturellement invariante par rotation et translation. Comme il y a un débruitage elle est résistante au bruit et de toute façons comme on prend la branche de longueur maximale, des branches artéfacts ne sont pas si gênantes.
+    
     \subsection{Pistes non explorées}
+        \subsubsection{Transformée de Fourier}  %A mettre ? RAphaël
   
   \section{Résultats} 
   
