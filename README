@@ -42,7 +42,10 @@ II - Utilisation
 	--> Meilleure correspondance : ./ClimgRL guess fichier
 
 	Signer :
-		-->Signature : ./ClimgRL sign fichier
+		--> Signature : ./ClimgRL sign fichier
+	
+	Comparer :
+		--> Facteur de similarité: ./ClimgRL simil fichier1 fichier2
 
 III - Utilisation avancée
 =========================
