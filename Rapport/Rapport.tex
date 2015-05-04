@@ -49,7 +49,7 @@
   \maketitle
 
   \begin{abstract}
-   
+	Laureline Pinault et Raphaël Charrondière sont fiers de vous présenter leur classificateur d'images !
   \end{abstract}
   
   \newpage
@@ -59,14 +59,23 @@
   \newpage
   
   \section{Introduction}
-  
-    \subsection{Remarques préliminaires}
-    
+
     \subsection{Objectifs du projet}
+    	Ce projet a pour but de coder un classificateur d'images en noir et blanc. Un classificateur d'images est un programme qui étant donné une image en entrée renvoie sa classe. Une classe représente un objet. Par exemple une image peut appartenir à la classe pomme si elle représente une pomme.
+
+    \subsection{Remarques préliminaires}    	
+    	Ce projet est réalisé en c++  et s'appuie sur la bibliothèque DGtal.
+    	  
+  \section{Organisation du projet} %TODO : Raphaël
+  	Ce projet a été réalisé de manière très modulaire. Il ne s'agit pas d'un classificateur unique, mais de petits classificateurs qui combinés deviennent à priori plus précis. Ainsi le choix a été fait de créer des bibliothèques chargées dynamiquement par le programme central qui les exécute les uns après les autres. L'avantage de procéder ainsi est de cloisonner chaque classificateur (que l'on appellera aussi estimateur) afin qu'aucun n'infère sur l'autre. En particulier si l'un dysfonctionne il ne perturbe pas le déroulement du programme ou il suffit juste le supprimer.
+  	   
+  	   \subsection{Estimateur, comment ça fonctionne}
+	Un classificateur ne renvoie pas directement une classe, en fait il va comparer un modèle à une image et dire selon lui comment le modèle et l'image sont éloignés. Du point de vue extérieur un estimateur comporte trois fonctions : \verb-buildmodel-, \verb-pre_estim- et \verb-estim-. La première donne une liste de fichier d'une même classe et renvoie un modèle, celui-ce pouvant être quelconque (un entier ou un graphe par exemple). La deuxième demande de réduire l'image à une donnée, la motivation étant de pouvoir rapidement comparer cette donnée à plusieurs modèles, cette comparaison étant faite par la troisième fonction.
   
-    \subsection{Organisation du projet} %TODO : Raphaël
   
   \section{Traitement des images}
+  
+  	Il est à noter que les traitements sur images ne sont pas systématiquement appliqués. Chaque estimateur peut l'appliquer s'il en a besoin, selon la résistance au bruit, à l'agrandissement d'image, etc.
   
     \subsection{Traitement anti-inversion}
     
@@ -103,6 +112,12 @@
       \end{figure}
 
     \subsection{Normalisation des images}     %TODO : Raphaël
+    
+    Cette opération consiste d'abord à calculer le centre de gravité $G$ de l'objet, puis à calculer l'éloignement moyen $m$ à celui-ci, c'est à dire le distance moyenne point de l'objet à son centre de gravité.
+    
+    Ensuite, on crée un nouvelle image d'une taille $800 \times 800$ correspondant à l'image recentrée en G affichant les points d'origines de la fenêtre de taille $4m \times 4m$.
+    
+    Cela permet d'avoir un objet normé en taille et centré (donc est idéal pour des estimateurs travaillant sur l'aire ou sensible aux translations).
       
     \subsection{Traitement anti-bruit}
     

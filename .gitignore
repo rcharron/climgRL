@@ -40,3 +40,4 @@ build/*
 *.tex.backup
 *.toc
 *.pdf
+*.gz
