@@ -20,7 +20,7 @@ for i in range(2,6):
 
 
 for i in range(0, len(liste[2])):
-    plt.errorbar(i,liste[2][i], yerr=liste[4][i], fmt = 'ro')
+    plt.errorbar(i,liste[2][i], yerr=liste[4][i], fmt = 'ro',color='blue')
     
 for i in range(0, len(liste[2])):
     plt.errorbar(i,liste[3][i], yerr=liste[5][i], fmt = 'ro')
