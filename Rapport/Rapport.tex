@@ -379,7 +379,7 @@
 	
 	\paragraph{Résistance aux occlusions}
 	  
-	  De par sa nature, l'estimateur résiste très très mal aux occlusion qui vont faire diminuer drastiquement la solidité. Dem même que pour l'élongation, aucune solution n'a été réellement recherchée pour résoudre ce problème.
+	  De par sa nature, l'estimateur résiste très très mal aux occlusion qui vont faire diminuer drastiquement la solidité. De même que pour l'élongation, aucune solution n'a été réellement recherchée pour résoudre ce problème.
 	  
 	\paragraph{Résultats}
 
@@ -398,17 +398,70 @@
       \subsubsection{Excentricté}
       
 	\paragraph{Principe}
+	
+	  L'idée de l'xcentricité d'une forme est d'adapter la notion intuitive d'excentricité d'une ellipse à une forme plus complexe. Il y a plusieurs manière de définir l'excentricité pour une forme quelconque. Celle que nous avons choisie a l'avantage d'être facile à implémenter. Elle s'interprète comme un indicateur de l'alongement de la forme.
+	  
+	  \begin{definition}[Excentricité]
+	    On appelle excentricité le rapport de la longueur sur la largeur du rectangle à limite minimum de la forme.
+	  \end{definition}
       
 	\paragraph{Programmation}
 	
+	  Pour calculer l'excentricité d'une forme, on procède de la façon suivante :
+	  \begin{itemize}
+	   \item On calcule la distance maximale entre deux points de la forme. Cette distance sera la longueur du rectangle à limite minimum de la forme.
+	   \item On pivote l'image de façon à ce que la longeur du rectangle se retrouve à être l'horizontale (par un simple calcul d'angle). De cette manière, la direction perpendiculaire à la longueur est la verticale.
+	   \item A partir de là, on trouve facilement la largueur en parcourant verticalement l'image et en retenant la distance verticale maximum entre deux points de l'image.
+	  \end{itemize}
+	
 	\paragraph{Résistance aux inversions de couleur}
+	
+	  Comme ce n'est réellement que les contours de la forme qui sont étudiés, l'estimateur en lui-même est résistant aux inversions de couleurs. Cependant il a été codé de manière à fonctionner lorsque les images sont blanches sur fond noir. Il est donc nécessaire d'appliquer un traitement anti-inversion (voire Section \ref{sec:anti-inversion}) avant de faire le calcul.
 	
 	\paragraph{Résistance au bruit}
 	
+	  Le rectangle à limite minimum de la forme est assez peu sensible au faible bruit. De plus, même si le fort bruit risque de faire s'agrandir ce rectangle, le rapport longueur sur lareur ne change pas sensiblement car la dispersion est a priori isotrope. Les tests effectués et figurant Table \ref{excentricité-noise-table}, nous confirment ce fait. \\
+	
+	  \begin{table}[!h] %Si on pouvait centrer verticalement ce serait le top
+	  \centering
+	  \begin{tabular}{|c|c|c|c|c|c|}
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Mouche & Image & \includegraphics[scale=0.15]{Illustrations/fly-6.png} & \includegraphics[scale=0.15]{Illustrations/fly-6(3).png} & \includegraphics[scale=0.15]{Illustrations/fly-6(5).png} & \includegraphics[scale=0.15]{Illustrations/fly-6(8).png} \\
+	    \cline{2-6}
+	    & Excentricité & 1.37561 & 1.42 & 1.37681 & 1.37383 \\
+	    \hline
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Clé & Image & \includegraphics[scale=0.15]{Illustrations/key-6.png} & \includegraphics[scale=0.15]{Illustrations/key-6(3).png} & \includegraphics[scale=0.15]{Illustrations/key-6(5).png} & \includegraphics[scale=0.15]{Illustrations/key-6(8).png} \\
+	    \cline{2-6}
+	    & Excentricité & 2.22143 & 2.19718 & 2.09934 & 2.04023 \\
+	    \hline
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Serpent de mer & Image & \includegraphics[scale=0.3]{Illustrations/sea_snake-20.png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20(3).png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20(5).png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20(8).png} \\
+	    \cline{2-6}
+	    & Excentricité & 1.1383 & 1.14894 & 1.16842 & 1.05426 \\
+	    \hline	    
+	  \end{tabular}
+	  \caption{Variations de l'excentricité de plusieurs objets selon le bruit}
+	  \label{excentricité-noise-table}
+	  \end{table}
+	  
+	  Des tests ont également été éffectués après un débruitage des objets, et on a pu remarquer que la stabilité de l'excentrité était un peu près la même.
+	
 	\paragraph{Résistance aux rotations et symmétries}
+      
+	  Tout comme le calcul de la solidité, l'estimateur ne tient aucun compte de l'orientation de l'image, il est donc tout à fait résistant aux rotations et aux symmétries.
       
 	\paragraph{Résistance aux homothéties} blabla
 	
+	  Si on regarde la définition de lexcentricité, on a un estimateur qui devrait être complètement résistant aux homothéties. En effet, lorsqu'on agrandit la forme, on agrandit d'autant le rectangle à limite minimum de la forme, mais le rapport longueur sur largeur de ce rectangle reste invariant. Des tests ont été conduits pour vérifier que c'était bien le cas.
+	  
+	  La Table \ref{solidité-scaling-table} montre une partie représentative de ces tests. On s'aperçoit qu'effectivement l'excentricité reste stable par homothétie.\\
 	
 	  \begin{table}[!h]
 	  \centering      
@@ -436,11 +489,51 @@
 	  
 	\paragraph{Résistance aux élongations}
 	
+	  De par sa nature, l'estimateur résiste très très mal aux élongations qui vont faire augmenter drastiquement l'excentricité. Aucune solution n'a été réellement recherchée pour résoudre ce problème.
+	
 	\paragraph{Résistance aux occlusions}
 	  
-	\paragraph{Résultats}
+	  L'estimateur est relativement résistant aux petites occlusions qui n'empiètent pas sur toute une partie de la forme. Cependant il résiste très mal aux occlusions plus sévères. Aucune solution n'a été réellement recherchée pour résoudre ce problème.
 	  
-
+	\paragraph{Résultats}
+	
+	  Lorsqu'on calcule la moyenne et l'écart type de l'excentricité pour chaque classe (représenté Figure \ref{eccentricity-graph}), ce qui frappe est que l'estimateur semble pertinent pour la plupart des classes, mais que pour quelques unes il donne des valeurs aberrantes. En ragardant la base de donnée, on s'aperçoit que c'est dans des cas où il y a de l'élongation. L'exemple typique est la classe \texttt{pocket} dont l'écart type est 19 pour des valeurs qui vont habituellement de 0 à 5. Or la classe \texttt{pocket} regroupe des images de montres qui sont vues de face, sauf dans le cas d'une qui est vue de côté (voire Figure \ref{class-pocket}).  \\
+	
+	  \begin{figure}[!h]
+	    \begin{bigcenter}
+	      \includegraphics[scale=0.38]{Graphes/eccentricity.png}
+	    \end{bigcenter}
+	    \caption{Moyenne et écart type de l'excentricité pour chaque classe}
+	    \label{eccentricity-graph}
+	  \end{figure}
+	  
+	  \begin{figure}[!h]
+	    \centering
+	    \begin{subfigure}{.2\textwidth}
+	      \centering
+	      \includegraphics[scale=0.25]{Illustrations/pocket-20.png}
+	    \end{subfigure}
+	    \begin{subfigure}{.2\textwidth}
+	      \centering
+	      \includegraphics[scale=.9]{Illustrations/pocket-9.png}
+	    \end{subfigure}
+	    \begin{subfigure}{.15\textwidth}
+	      \centering
+	      \includegraphics[scale=0.235]{Illustrations/pocket-14.png}
+	    \end{subfigure}
+	    \caption{Les objets de la classe \texttt{pocket}}
+	    \label{class-pocket}
+	  \end{figure}
+	  
+	  Si on zoome un peu sur les valeurs intéressantes du graph présenté Figure \ref{eccentricity-graph}, on observe que les valeurs ne sont pas aussi rammasées qu'on aurait pu le croire au premier coup d'oeil. L'excentrité discrimine bien les classes, du moins pour un estimateur aussi simple, et a l'air d'être un bon complémentaire à solidité.
+	  
+	  \begin{figure}[!h]
+	    \begin{bigcenter}
+	      \includegraphics[scale=0.38]{Graphes/eccentricitybis.png}
+	    \end{bigcenter}
+	    \caption{Moyenne et écart type de l'excentricité pour chaque classe}
+	    \label{eccentricity-graph-2}
+	  \end{figure}
       
       \subsubsection{Energie de flexion moyenne}
       
