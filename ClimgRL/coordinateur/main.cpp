@@ -393,6 +393,7 @@ int main(int argc,char**argv){
   cout<<"     \\/__/         \\/__/                 \\/__/         \\/__/         \\|__|         \\/__/ "<<endl;
   cout<<endl;
   cout<<"     ==============================================================================="<<endl;
+  cout<<"          ========    ©  Laureline Pinault & Raphaël Charrondière      ========     "<<endl;
   cout<<"               ===========================================================          "<<endl;
   cout<<endl<<endl;
   cout<<"Usage :"<<endl<<endl;
