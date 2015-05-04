@@ -436,7 +436,15 @@
       La longueur de la colonne vertébrale est par normalisation invariante à l'agrandissement. Elle est naturellement invariante par rotation et translation. Comme il y a un débruitage elle est résistante au bruit et de toute façons comme on prend la branche de longueur maximale, des branches artéfacts ne sont pas si gênantes.
     
     \subsection{Pistes non explorées}
-        \subsubsection{Transformée de Fourier}  %A mettre ? RAphaël
+        \subsubsection{Transformée de Fourier} 
+        
+        Utiliser la transformée de Fourier pour obtenir le spectre semble un bon moyen de caractériser une image. Surtout que supprimer le bruit reviendrait à négliger les hautes fréquences. La transformée es invariante par translation si on ne s'intéresse qu'à l'amplitude des différentes fréquences. On peut la rendre invariante par rotation en se plaçant au centre de gravité et en utilisant les coordonnées polaires
+        
+        Pour comparer les spectres l'Earth mover's distance semble être appropriée (cependant en réduisant la taille des images à $64 \times 64$ le nombre de point est beaucoup trop gros pour résoudre l'instance par une relaxation linéaire)
+        
+        \subsubsection{Comparaison de squelette}  %A mettre ? RAphaël
+        
+        Comparer des graphes serait trop ambitieux car ce genre de problème (comme l'isomorphisme) est NP-Complet. Cependant, comme vu plus le squelette est ici un arbre. Donc la comparaison semble possible en temps raisonnable. L'idée serait de voir le cout minimal des opérations pour passer d'un squelette à un autre avec les opérations élémentaires : allonger une branche, rajouter une branche.
   
   \section{Résultats} 
   
