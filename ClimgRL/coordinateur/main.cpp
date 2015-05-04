@@ -307,25 +307,9 @@ int main(int argc,char**argv){
 
     if(action=="sign")
     {
-      if(argc>4)
+      if(argc!=3)
       {
-	cout<<"Usage ./ClimgRL estim nomclass fichier"<<endl;
-	return 0;
-      }
-      if(argc==4)
-      {
-	string classname=argv[2];
-	string file=argv[3];
-	
-	float res;
-	
-	vector<string> l=lookup(".");
-	computer c(l);
-	try{
-	  res=c.score(file,classname);
-	}
-	catch(string s){cout<<s<<endl;return -1;}
-	cout<<"Le score est "<<res<<endl;
+	cout<<"Usage ./ClimgRL sign fichier"<<endl;
 	return 0;
       }
       if(argc==3)
@@ -344,6 +328,43 @@ int main(int argc,char**argv){
 	for(float s:res)
 	  cout<<s<<"|";
 	cout<<"\b)"<<endl;
+	return 0;
+      }
+    }
+    
+    if(action=="simil")
+    {
+      if(argc!=4)
+      {
+	cout<<"Usage ./ClimgRL simil fichier1 fichier2"<<endl;
+	return 0;
+      }
+      if(argc==4)
+      {
+	string file=argv[2];
+	string file2=argv[3];
+      
+	vector<float> res,res2;
+	
+	vector<string> l=lookup(".");
+	computer c(l);
+	try{
+	  res=c.score(file);
+	  res2=c.score(file2);
+	}
+	catch(string s){cout<<s<<endl;return -1;}
+	if(res.size()!=res2.size())
+	{
+	  cout<<"Erreur de signature"<<endl;
+	  return -1;
+	}
+	unsigned int i,t;
+	t=res.size();
+	float diff=0.0f;
+	for(i=0;i<t;i++)
+	  diff+=abs(res[i]-res2[i]);
+	diff/=t;
+	cout<<(1.0f-diff)<<endl;
 	return 0;
       }
     }
@@ -406,7 +427,11 @@ int main(int argc,char**argv){
   cout<<"--> Correspondances vraisemblables : ./ClimgRL estim fichier"<<endl;
   cout<<"--> Meilleure correspondance : ./ClimgRL guess fichier"<<endl<<endl;
   cout<<"Signer :"<<endl;
-  cout<<"-->Signature : ./ClimgRL sign fichier"<<endl<<endl;
+  cout<<"--> Signature : ./ClimgRL sign fichier"<<endl<<endl;
+  cout<<"Comparer :"<<endl;
+  cout<<"--> Facteur de similarité: ./ClimgRL simil fichier1 fichier2"<<endl<<endl;
+  
+  
   
   return 0;
 }
