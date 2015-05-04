@@ -86,9 +86,19 @@
   
   	Il est à noter que les traitements sur images ne sont pas systématiquement appliqués. Chaque estimateur peut l'appliquer s'il en a besoin, selon la résistance au bruit, à l'agrandissement d'image, etc.
   
-    \subsection{Traitement anti-inversion}
-    \label{sec:anti-inversion}
-    
+   \subsection{Traitement anti-inversion}
+   \label{sec:anti-inversion}
+   
+      La plupart des images de la base de données sont blanche sur fond noir, mais l'une d'elle est en noire sur fond blanc. Il faut donc faire attention lorsqu'on définit nos estimateur à ce qu'ils estiment correctement même lorsqu'il y a inversion des couleur.
+      
+      Une manière simple de faire est de ne travailler qu'avec les contours de l'objet. Mais la plupart des estimateurs développés dans ce rapport utilisent le fait que l'image soit blanche sur fond noire. C'est pourquoi nous avons codé un traitement anti-inversion consistant à détecter si une image doit être inversée, et le cas échéant le faisant. \\
+      
+      Le principe de ce traitement est très simple : on regarde la couleur majoritaire sur les bords de l'image. Si c'est noir on considère que l'image n'a pas à être inversée, si c'est blanc on considère qu'elle doit l'être.
+      
+      C'est un critère arbitraire pour distinguer la forme du fond, mais le critère est de toute façon arbitraire et celui fonctionne avec toutes les images de la base de donnée. \\
+      
+      La Figure \ref{anti-inversion} illustre ce traitement.
+   
       \begin{figure}[!h]
 	\centering
 	\begin{subfigure}{.49\textwidth}
@@ -163,6 +173,12 @@
     \subsection{Remplissage}
     \label{sec:remplissage}
     
+      On remarque en parcourant la base de donnée que les détails internes aux formes ne sont pas importants pour déterminer la classe. Cela est dû au fait que certaines des images ont une qualité médiocre et donc pas de détails. A partir de ce constat, il était intéressant d'écrire un petit programme remplissant les formes afin que les détails n'aient pas d'impacts sur les estimateurs. \\
+      
+      Pour ce faire on procède de la manière suivante : on construit les composantes connexes noires en partant des bords. Le complémentaire est alors l'objet rempli. \\
+      
+      La Figure \ref{remplissage} illustre ce traitement.
+    
       \begin{figure}[!h]
 	\centering
 	\begin{subfigure}{.25\textwidth}
@@ -178,6 +194,8 @@
 	\caption{Remplissage de l'objet pocket}
 	\label{remplissage}
       \end{figure}
+      
+      Certains problèmes se posent cependant, lors de ce remplissage. Ils sont illustrés sur la Figure \ref{problèmes-remplissage}.
       
       \begin{figure}[!h]
 	\centering
@@ -210,6 +228,8 @@
 	\caption{Problèmes soulevés par le remplissage des objets}
 	\label{problèmes-remplissage}
       \end{figure}      
+      
+      Une piste pour les régler a été d'utiliser l'opération de fermeture. Mais la difficulté fut de trouver un ``bon'' élément structurant, dépendant de l'image.
    
   \section{Estimateurs}
   
