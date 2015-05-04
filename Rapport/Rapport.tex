@@ -125,6 +125,7 @@
     \subsection{Traitement anti-bruit}
     
     \subsection{Remplissage}
+    \label{sec:remplissage}
     
       \begin{figure}[!h]
 	\centering
@@ -190,6 +191,7 @@
 	    On définit la solidité d'une forme comme le rapport de l'aire de cette forme sur l'aire de l'enveloppe convexe.
 	  \end{definition}
 
+	   Une illustration de ce que représente la solidité est donnée Figure \ref{solidité}.
 	
 	  \begin{figure}[!h]
 	    \centering
@@ -209,6 +211,14 @@
 	
 	\paragraph{Programmation}
 	
+	  Pour calculer la solidité d'une form, on procède de la façon suivante :
+	  \begin{itemize}
+	   \item Afin de ne pas être pas être trop dépendant de la qualité de l'image donné en entré, on commence par éliminer les détails interne en effectuant un remplissage de la forme (voir Section \ref{sec:remplissage}).
+	   \item On calcule ensuite l'aire de la forme ainsi obtenue. Pour calculer l'aire d'une forme, on procède tout simplement à un comptage du nombre de pixels blancs. Cette manière de procéder a le double avantage d'être simple à implémenter et d'être convergente, ce qui permettra de ne pas être dépendant de l'échelle de l'image.
+	   \item On détermine ensuite les points de l'image faisant partie de l'enveloppe convexe de la forme grâce .
+	  \end{itemize}
+  
+	
 	\paragraph{Résistance aux inversions de couleur}
 	
 	\paragraph{Résistance au bruit}
@@ -224,7 +234,7 @@
       
 	\paragraph{Résistance aux homothéties} blabla \\
 	
-	  \begin{table}
+	  \begin{table}[!h]
 	  \centering
 	  \begin{tabular}{|c|c|c|c|c|c|c|c|}
 	    \hline
@@ -260,7 +270,7 @@
 	      \includegraphics[scale=0.38]{Graphes/solidite.png}
 	    \end{bigcenter}
 	    \caption{Moyenne et écart type de la solidité pour chaque classe}
-	    \label{solidité}
+	    \label{solidité-graph}
 	  \end{figure}
 
       \subsubsection{Excentricté}
@@ -278,7 +288,7 @@
 	\paragraph{Résistance aux homothéties} blabla
 	
 	
-	  \begin{table}
+	  \begin{table}[!h]
 	  \centering      
 	  \begin{tabular}{|c|c|c|c|c|c|}
 	    \hline
