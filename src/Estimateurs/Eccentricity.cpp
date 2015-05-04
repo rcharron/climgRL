@@ -37,7 +37,7 @@ pair<pair<Point,Point>,int> Find_PlusEloignes (DigitalSet & s){
   Point p1, p2;
   for (auto it1 = s.begin(); it1 != s.end(); it1++){
     for (auto it2 = s.begin(); it2 != s.end(); it2++){
-      if (Eccentricity_Dist(*it1,*it2) > distance) { distance = Eccentricity_Dist(*it1,*it2); p1 = *it1; p2 = *it2;}
+      if (Eccentricity_Dist(*it1,*it2) > distance) { distance = static_cast<int>(Eccentricity_Dist(*it1,*it2)); p1 = *it1; p2 = *it2;}
     }
   }
   return make_pair(make_pair(p1,p2),distance);

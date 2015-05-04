@@ -53,8 +53,8 @@ double Curvature (Board2D board, Domain & domain, vector<Point> & bord, Point P)
   if (O == P) {O = LeftTangent.front();}  //au cas où
   cout << "P : " << P << "  ;  Q : " << Q << "  ;  O : " << O << "\n";
   cout << "aire = " << aire(domain,P,O,Q)  << "\n";
-  if (aire(domain,P,O,Q) == 0) {return 0;}
-  return ((dist(P,O)*dist(P,Q)*dist(O,Q))/(4*aire(domain,P,O,Q)));
+  if (aire(domain,P,O,Q) == 0.0) {return 0.0;}
+  return ((dist(P,O)*dist(P,Q)*dist(O,Q))/(4.0*aire(domain,P,O,Q)));
 }
 
 
@@ -81,7 +81,7 @@ double AverageBendingFlexion (MetaImage & image){
   cout << "N = " << N << "\n";
   Color green(0, 255, 0 );
   Color transparent(0,0,0,0);     
-  for (int i = 0; i<bord.size(); i++){
+  for (unsigned int i = 0; i<bord.size(); i++){
     Point p = bord_vector[i];
     board << CustomStyle(p.className(), new CustomColors(transparent, green)) << p;
   }
