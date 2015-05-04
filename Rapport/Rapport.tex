@@ -23,6 +23,9 @@
 \usepackage{tikz} % Let us start the fun
 \usetikzlibrary{positioning, chains, calc, arrows, decorations.pathreplacing, fit, patterns, snakes}
 
+\theoremstyle{definition} 
+\newtheorem{definition}{Définition} 
+
 \makeatletter
  
 \newskip\@bigflushglue \@bigflushglue = -100pt plus 1fil
@@ -175,9 +178,18 @@
   
     \subsection{Quelques estimateurs simples et complémentaires}
 
+      Une première idée fut de travailler sur la forme générale de la forme \textendash est-ce qu'elle est plutôt carré ? ronde ? allongée ? Pour cela, trois estimateurs simples et complémentaires ont été développés. Tous tentent de décrire une image par un simple scalaire.
+      
+      L'estimateur \texttt{estimeccentricity} qui mesure l'excentricité d'une forme permet de déterminer si la forme est plus ou moins allongée. L'estimateur \texttt{estimaveragebendingflexion}, qui n'est pas opérationnel suite à des erreurs de programmation\footnote{Il sera néanmoins présenté dans ce rapport}, devait mesurer l'énergie moyenne de flexion afin de pouvoir distinguer les formes arrondies, très arrondies ou plates. Enfin l'estimateur \texttt{estimsolidity} qui mesure la solidité d'une forme apporte une information sur comment la forme remplit son enveloppe convexe. %fin à retravailler
+    
       \subsubsection{Solidité}
       
 	\paragraph{Principe}
+	
+	  \begin{definition}[Solidité]
+	    On définit la solidité d'une forme comme le rapport de l'aire de cette forme sur l'aire de l'enveloppe convexe.
+	  \end{definition}
+
 	
 	  \begin{figure}[!h]
 	    \centering

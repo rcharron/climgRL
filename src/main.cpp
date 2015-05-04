@@ -34,7 +34,7 @@ using namespace DGtal::Z2i; //We'll only consider Z² digital space on
 			    //32bit integers
 int main()
 {
-//  Test_AntiInversion();
+  Test_AntiInversion();
 //  Test_Remplissage();
 //  Test_ConvexHull();
 //  Test_AntiBruit();
@@ -45,7 +45,7 @@ int main()
 //  Test_Morphology();
 //  Test_AverageBendingFlexion_Scale();
 //  Test_Eccentricity();
-  Test_Eccentricity_Noise();
-  Test_Solidity_Noise();
+//  Test_Eccentricity_Noise();
+//  Test_Solidity_Noise();
   return 0;
 }
