@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const char* buildmodel(vector<string> listoffiles)
+std::string buildmodel(vector<string> listoffiles)
 {
   vector<float> res;
   for(string f:listoffiles)
@@ -20,10 +20,10 @@ const char* buildmodel(vector<string> listoffiles)
     res.push_back(static_cast<float>(Eccentricity(img)));
   }
   
-  return model(res).c_str();
+  return model(res);
 }
 
-const char* buildmodel(const char* listoffiles)
+std::string buildmodel(std::string listoffiles)
 {
   stringstream ss(listoffiles);
   string l;
@@ -37,10 +37,8 @@ const char* buildmodel(const char* listoffiles)
   return buildmodel(res);
 }
 
-float estim(const char* modelc, const char* pcc)
+float estim(std::string modelc, std::string pc)
 {
-  string model=modelc;
-  string pc=pcc;
   stringstream ss(pc);
   float sc;
   ss>>sc;
@@ -48,11 +46,10 @@ float estim(const char* modelc, const char* pcc)
   
 }
 
-const char* pre_estim(const char* filec)
+std::string pre_estim(std::string file)
 {
-  string file=filec;
-  MetaImage img(filec);
+  MetaImage img(file);
   stringstream ss;
   ss<<(float)Eccentricity(img)<<" ";
-  return ss.str().c_str();
+  return ss.str();
 }

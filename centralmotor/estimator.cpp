@@ -7,9 +7,9 @@
 using namespace std;
 
 
-estimator::estimator(const char* library)
+estimator::estimator(std::string library)
 {
-  handle = dlopen (library, RTLD_LAZY);
+  handle = dlopen (library.c_str(), RTLD_LAZY);
     if (!handle) {
         throw string(dlerror());
     }
@@ -43,17 +43,17 @@ std::string estimator::makemodel(std::vector< std::string > files)
   stringstream ss;
   for(string s:files)
     ss<<s<<"\n";
-  return buildmodel(ss.str().c_str());
+  return buildmodel(ss.str());
 }
 
 float estimator::scoreof(std::string model, std::string pc)
 {
-  return estim(model.c_str(),pc.c_str());
+  return estim(model,pc);
 }
 
 string estimator::pcof(string file)
 {
-  return string(pre_estim(file.c_str()));
+  return string(pre_estim(file));
 }
 
 

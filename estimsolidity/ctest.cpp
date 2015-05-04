@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const char* buildmodel(vector<string> listoffiles)
+string buildmodel(vector<string> listoffiles)
 {
   vector<float> res;
   for(string f:listoffiles)
@@ -20,10 +20,10 @@ const char* buildmodel(vector<string> listoffiles)
     res.push_back(static_cast<float>(Solidity(img)));
   }
   
-  return model(res).c_str();
+  return model(res);
 }
 
-const char* buildmodel(const char* listoffiles)
+string buildmodel(string listoffiles)
 {
   stringstream ss(listoffiles);
   string l;
@@ -37,22 +37,19 @@ const char* buildmodel(const char* listoffiles)
   return buildmodel(res);
 }
 
-float estim(const char* modelc, const char* pcc)
+float estim(string model, string pc)
 {
-  string model=modelc;
-  string pc=pcc;
   stringstream ss(pc);
   float sc;
   ss>>sc;
-  return score(modelc,sc);
+  return score(model,sc);
   
 }
 
-const char* pre_estim(const char* filec)
+string pre_estim(string file)
 {
-  string file=filec;
-  MetaImage img(filec);
+  MetaImage img(file);
   stringstream ss;
-  ss<<(float)Solidity(img);
-  return ss.str().c_str();
+  ss<<(float)Solidity(img)<<" ";
+  return ss.str();
 }

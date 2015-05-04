@@ -27,7 +27,7 @@ string pre_estimation(string img)
 {
   image i(img);
   stringstream ss;
-  ss<<i.getNormMean()<<" "<<i.getNormVar();
+  ss<<i.getNormMean()<<" "<<i.getNormVar()<<" ";
   return ss.str();
 }
 
@@ -49,7 +49,7 @@ float estimation(string model,string pc)
   return 1.0f;
 }
 
-const char* buildmodel(const char* listoffiles)
+string buildmodel(string listoffiles)
 {
   stringstream ss(listoffiles);
   string l;
@@ -60,18 +60,16 @@ const char* buildmodel(const char* listoffiles)
       res.push_back(l);
   }
   
-  return buildmodel(res).c_str();
+  return buildmodel(res);
 }
 
-float estim(const char* modelc, const char* precalc)
+float estim(string modelc, string precalc)
 {
-  string model=modelc;
-  string pc=precalc;
-  return estimation(modelc,pc);
+  return estimation(modelc,precalc);
   
 }
 
-const char* pre_estim(const char* file)
+string pre_estim(string file)
 {
-  return pre_estimation(file).c_str();
+  return pre_estimation(file);
 }

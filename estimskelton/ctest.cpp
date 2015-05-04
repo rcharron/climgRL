@@ -18,7 +18,7 @@ int SpineLong(string file)
   return i2.spineLength();
 }
 
-const char* buildmodel(vector<string> listoffiles)
+string buildmodel(vector<string> listoffiles)
 {
   vector<float> res;
   for(string f:listoffiles)
@@ -35,10 +35,10 @@ const char* buildmodel(vector<string> listoffiles)
     }
   }
   
-  return model(res).c_str();
+  return model(res);
 }
 
-const char* buildmodel(const char* listoffiles)
+string buildmodel(string listoffiles)
 {
   stringstream ss(listoffiles);
   string l;
@@ -52,21 +52,18 @@ const char* buildmodel(const char* listoffiles)
   return buildmodel(res);
 }
 
-float estim(const char* modelc, const char* pcc)
+float estim(string model, string pc)
 {
-  string model=modelc;
-  string pc=pcc;
   stringstream ss(pc);
   int sc;
   ss>>sc;
-  return score(modelc,static_cast<float>(sc));
+  return score(model,static_cast<float>(sc));
   
 }
 
-const char* pre_estim(const char* filec)
+string pre_estim(string file)
 {
-  string file=filec;
   stringstream ss;
-  ss<<SpineLong(file);
-  return ss.str().c_str();
+  ss<<SpineLong(file)<<" ";
+  return ss.str();
 }
