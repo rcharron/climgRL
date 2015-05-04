@@ -584,7 +584,7 @@
       
       L'estimateur est ainsi naturellement résistant aux rotations, aux translations et à l'agrandissement. Statistiquement, il est insensible au bruit pour la moyenne, ainsi que pour l'écart type dans une certaine mesure.
     
-    \subsection{Etude du squelette} %TODO : Raphaël
+    \subsection{Etude du squelette} 
     
     Le squelette de l'objet pourrait apporter beaucoup d'informations. Cependant ici on se concentrera sur ce que l'on appelle la colonne vertébrale définie comme plus grand chemin dans le squelette. Cette information est pertinente dans le sens où cela peut caractériser la longueur de l'objet une fois ``déplié''. Pour donner un sens à cela on normalisera d'abord l'image comme décrit dans le traitement normalisation. On débruitera aussi l'image pour que le squelette soit ``naturel''. On rempliera la forme pour que le squelette soit un arbre. Si la forme n'est pas connectée, on ne gardera que le plus grand arbre restant
     
@@ -615,17 +615,18 @@
         
         Pour comparer les spectres l'Earth mover's distance semble être appropriée (cependant en réduisant la taille des images à $64 \times 64$ le nombre de point est beaucoup trop gros pour résoudre l'instance par une relaxation linéaire)
         
-        \subsubsection{Comparaison de squelette}  %A mettre ? RAphaël
+        \subsubsection{Comparaison de squelette} 
         
         Comparer des graphes serait trop ambitieux car ce genre de problème (comme l'isomorphisme) est NP-Complet. Cependant, comme vu plus le squelette est ici un arbre. Donc la comparaison semble possible en temps raisonnable. L'idée serait de voir le cout minimal des opérations pour passer d'un squelette à un autre avec les opérations élémentaires : allonger une branche, rajouter une branche.
   
   \section{Résultats} 
-  
-    \subsection{Méthodologie d'estimation}  %En gros : c'est quoi nos résultats ?, je sais pas trop comment le nommer
-    
-    \subsection{Résultats} %Beaucoup de section / subsection = résultats
+
+    La détermination d'appartenance à une classe n'est que exacte que dans 10 \% des cas en bruitant, pivotant et redimensionnant les images. Cependant si l'on considère toutes les classes candidates il est rare que la vraie classe n'en fasse pas partie. Donc les estimateurs sont assez convaincant même s'il ne discriminent pas assez.
   
   \section{Conclusion}
   
+  Les résultats sont assez positifs, cependant on pourrait aller plus loin avec les idées évoquées plus haut. On pourrait rendre les estimateurs insensible à l'élongation, l'occlusion.
+  
+	Cependant cela reste un problème complexe
 \end{document}
 
