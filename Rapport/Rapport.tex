@@ -20,6 +20,21 @@
 \usepackage{amssymb}
 \usepackage{authblk}
 
+\usepackage{tikz} % Let us start the fun
+\usetikzlibrary{positioning, chains, calc, arrows, decorations.pathreplacing, fit, patterns, snakes}
+
+\makeatletter
+ 
+\newskip\@bigflushglue \@bigflushglue = -100pt plus 1fil
+ 
+\def\bigcenter{\trivlist \bigcentering\item\relax}
+\def\bigcentering{\let\\\@centercr\rightskip\@bigflushglue%
+\leftskip\@bigflushglue
+\parindent\z@\parfillskip\z@skip}
+\def\endbigcenter{\endtrivlist}
+ 
+\makeatother
+
 \renewcommand\Affilfont{\small}
 
 \title{Projet Images}
@@ -190,10 +205,51 @@
 	  \end{tabular}
 	  
 	\paragraph{Résultats}
+	
+	  \begin{figure}[!h]
+	    \begin{bigcenter}
+	      \includegraphics[scale=0.38]{Graphes/solidite.png}
+	    \end{bigcenter}
+	    \caption{Apprentissage sur solidité}
+	    \label{solidité}
+	  \end{figure}
 
       \subsubsection{Excentricté}
       
       \subsubsection{Energie de flexion moyenne}
+      
+	\paragraph{Principe}
+	
+	\paragraph{Programmation}
+	
+	  Méthode du cercle circonscrit par les deux demis tangentes.
+	  
+	  \begin{figure}[!h]
+	    \centering
+	    \begin{tikzpicture}
+	    \begin{scope}[scale = .4]
+	      \draw (0,0) circle (5);
+	      \node[] at (30:5) (Q) {\textbullet};
+	      \node[right=.01cm of Q] {$Q$};
+	      \node[] at (80:5) (P) {\textbullet};
+	      \node[above=.01cm of P] {$P$};
+	      \node[] at (165:5) (O) {\textbullet};
+	      \node[left=.01cm of O] {$O$};
+	      \draw[] (30:5) -- (80:5) -- (165:5) -- (30:5);
+	      \node[] (C) {$\times$};
+	      \node[below right=.01cm and .01cm of C] {$C$};
+	      \draw[dashed] (0,0) -- node[right]{$r$} (80:5);
+	    \end{scope}
+	    \end{tikzpicture}
+	    \caption{Cercle circonscrit au triangle OPQ}
+	    \label{cercle-circonscrit}
+	  \end{figure}
+	  
+	  Par la loi des sinus, $r = \frac{|QO|}{2 \sin\left(\widehat{OPQ}\right)}$. On en déduit que :
+	  
+	  \[ r = \frac{|QO|}{2 \sin\left(\widehat{OPQ}\right)} = \frac{|QO|}{\frac{2 \det\left(\overrightarrow{PO}, \overrightarrow{PQ} \right)}{|OP| |PQ|}} = \frac{|OP| |PQ| |QO|}{4 \mathcal{A}_{PQO}}  \]
+	
+	\paragraph{Résultats}
     
     \subsection{Transformée de Fourier}
     

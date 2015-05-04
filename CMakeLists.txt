@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
 set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -pedantic-errors -Werror  -Wcast-qual -Wcast-align -Wconversion -Wdouble-promotion -Wfloat-equal -Wshadow -Wpointer-arith -Woverloaded-virtual -Wstrict-aliasing -Wstrict-overflow -Wunsafe-loop-optimizations -Wconversion -Wlogical-op -Wdisabled-optimization -Wunused")
+#set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -pedantic-errors -Werror  -Wcast-qual -Wcast-align -Wconversion -Wdouble-promotion -Wfloat-equal -Wshadow -Wpointer-arith -Woverloaded-virtual -Wstrict-aliasing -Wstrict-overflow -Wunsafe-loop-optimizations -Wconversion -Wlogical-op -Wdisabled-optimization -Wunused")
 
 project (climgRL)
 
