@@ -63,10 +63,10 @@ target_link_libraries (exentricitestim ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  
  
  
 #Pour les tests 
-project (testnewfeatures)
-file(GLOB_RECURSE source_files ${PROJECT_SOURCE_DIR}/src/*.cpp)
-add_executable(testnewfeatures ${source_files})
-target_link_libraries (testnewfeatures ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
+#project (testnewfeatures)
+#file(GLOB_RECURSE source_files ${PROJECT_SOURCE_DIR}/.src/*.cpp)
+#add_executable(testnewfeatures ${source_files})
+#target_link_libraries (testnewfeatures ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
 
 
 #project (ftestim)
