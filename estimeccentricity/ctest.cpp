@@ -53,6 +53,6 @@ const char* pre_estim(const char* filec)
   string file=filec;
   MetaImage img(filec);
   stringstream ss;
-  ss<<(float)Eccentricity(img);
+  ss<<(float)Eccentricity(img)<<" ";
   return ss.str().c_str();
 }

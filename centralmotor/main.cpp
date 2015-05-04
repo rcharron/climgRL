@@ -274,7 +274,7 @@ int main(int argc,char**argv){
 	vector<string> l=lookup(".");
 	computer c(l);
 	try{
-	  res=c.guess(file);
+	  res=c.match(file);
 	}
 	catch(string s){cout<<s<<endl;return -1;}
 	cout<<"Les correspondances trouvées sont : "<<endl;
@@ -282,6 +282,27 @@ int main(int argc,char**argv){
 	  cout<<s<<endl;
 	return 0;
       }
+    }
+    if(action=="guess")
+    {
+      if(argc!=3)
+      {
+	cout<<"Usage ./centralmotor guess fichier"<<endl;
+	return 0;
+      }
+      string file=argv[2];
+      
+	string res;
+	
+	vector<string> l=lookup(".");
+	computer c(l);
+	try{
+	  res=c.guess(file);
+	}
+	catch(string s){cout<<s<<endl;return -1;}
+	cout<<res<<endl;
+	return 0;
+      
     }
 
     if(action=="sign")
@@ -377,11 +398,12 @@ int main(int argc,char**argv){
   cout<<"Usage :"<<endl<<endl;
   cout<<"Apprendre les classes d'images :"<<endl;
   cout<<"--> Juste une classe : ./centralmotor learn nomClasse cheminVersDossierImage"<<endl;
-  cout<<"--> Toute les classes : ./centralmotor learnall cheminVersDossierImage"<<endl<<endl;
+  cout<<"--> Toute les classes : ./centralmotor learnall cheminVersDossierImage"<<endl;
   cout<<"--> Tout ce qui n'a pas été appris : ./centralmotor learnlazy cheminVersDossierImage"<<endl<<endl;
   cout<<"Estimer :"<<endl;
   cout<<"--> Score pour une clase : ./centralmotor estim nomClasse fichier"<<endl;
-  cout<<"--> Correspondances : ./centralmotor estim fichier"<<endl<<endl;
+  cout<<"--> Correspondances : ./centralmotor estim fichier"<<endl;
+  cout<<"--> Correspondances : ./centralmotor guess fichier"<<endl<<endl;
   cout<<"Signer :"<<endl;
   cout<<"-->Signature : ./centralmotor sign fichier"<<endl;
   

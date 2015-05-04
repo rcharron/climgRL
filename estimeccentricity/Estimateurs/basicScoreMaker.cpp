@@ -40,10 +40,10 @@ float score(float my,float m,float v)
   return static_cast<float>(sqrt(sqrt(exp(t))));
 }
 
-float score(std::string model, float solidite)
+float score(std::string model, float excentricite)
 {
   std::stringstream ss(model);
   float m,v;
   ss>>m>>v;
-  return score(solidite,m,v);
+  return score(excentricite,m,v);
 }

@@ -53,7 +53,7 @@ float estimator::scoreof(std::string model, std::string pc)
 
 string estimator::pcof(string file)
 {
-  return pre_estim(file.c_str());
+  return string(pre_estim(file.c_str()));
 }
 
 

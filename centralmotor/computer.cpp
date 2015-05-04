@@ -229,7 +229,7 @@ vector< float > computer::score(string file)
 }
 
 
-vector< string > computer::guess(string file)
+vector< string > computer::match(string file)
 {
   ifstream is("signature.sgn");
   if(is.fail())string("La signature n'a pas pu être lue");
@@ -254,6 +254,43 @@ vector< string > computer::guess(string file)
 	stringstream ss;
 	ss<<classname<<" : "<<s;
 	res.push_back(ss.str());
+      }
+      
+      
+    }
+  }
+  catch(string s){cout<<s<<endl;}
+  return res;
+
+}
+
+
+string computer::guess(string file)
+{
+  ifstream is("signature.sgn");
+  if(is.fail())string("La signature n'a pas pu être lue");
+  
+  vector<string> precalc;
+  unsigned int i,t;
+  t=static_cast<unsigned int>(estims.size());
+  for(i=0;i<t;i++)
+  {
+    string e=estims[i]->pcof(file);
+    precalc.push_back(e);
+  }
+  
+  string classname;
+  string res;
+  float sc=0.0f;
+  try
+  {
+    while(is>>classname)
+    {
+      float s=fastscore(precalc,classname);
+      if(s>sc)
+      {
+	sc=s;
+	res=classname;
       }
       
       
