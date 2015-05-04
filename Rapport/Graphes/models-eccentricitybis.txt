@@ -65,6 +65,3 @@
 ./libexentricitestim.so	fish	3.61572	1.55958
 ./libexentricitestim.so	bottle	3.67005	0.279062
 ./libexentricitestim.so	watch	4.52763	0.942384
-./libexentricitestim.so	tree	5.88385	15.3111
-./libexentricitestim.so	pocket	6.55763	18.9874
-./libexentricitestim.so	pencil	8.90303	2.94542
