@@ -126,6 +126,7 @@
     Cela permet d'avoir un objet normé en taille et centré (donc est idéal pour des estimateurs travaillant sur l'aire ou sensible aux translations).
       
     \subsection{Traitement anti-bruit}
+    \label{sec:anti-bruit}
     
     \subsection{Remplissage}
     \label{sec:remplissage}
@@ -232,8 +233,69 @@
 	
 	  Comme on ne travaille pas du tout avec les contours de la forme, mais avec la forme toute entière, l'estimateur n'est pas du tout résistant à l'inversion des couleurs. C'est pourquoi l'estimateur applique un traitement anti-inversion (voire Section \ref{sec:anti-inversion}) avant de faire son calcul.
 	
-	\paragraph{Résistance au bruit}
-	
+	\paragraph{Résistance au bruit} Afin de limiter l'impact du bruit, il a été choisit, lors de l'implétentation du parcours de Graham, d'initialiser la file avec tous les points de la forme et pas seulement ceux du contour. Cependant, on peut se rendre compte avec quelques expérimentation que l'estimateur n'est pas du tout résistant au bruit. La table \ref{solidité-noise-table} montre quelques unes de ces mesures. On peut constater que très rapidement la solidité de la forme explose, jusqu'à être proche de 1 lorsque le bruit atteint 0.8. Et ce quelque soit la solidité de la forme au départ (voir l'exemple du serpent de mer). Cela peut s'expliquer par le fait que lorsqu'il y a du bruit, on augmente considérablement l'aire de l'image avec le remplissage, tandis que l'aire de l'enveloppe convexe ne subit que très peu de variations. \\
+
+	  \begin{table}[!h] %Si on pouvait centrer verticalement ce serait le top
+	  \centering
+	  \begin{tabular}{|c|c|c|c|c|c|}
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Mouche & Image & \includegraphics[scale=0.15]{Illustrations/fly-6.png} & \includegraphics[scale=0.15]{Illustrations/fly-6(3).png} & \includegraphics[scale=0.15]{Illustrations/fly-6(5).png} & \includegraphics[scale=0.15]{Illustrations/fly-6(8).png} \\
+	    \cline{2-6}
+	    & Solidité & 0.65156 & 0.703824 & 0.842951 & 0.989008 \\
+	    \hline
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Clé & Image & \includegraphics[scale=0.15]{Illustrations/key-6.png} & \includegraphics[scale=0.15]{Illustrations/key-6(3).png} & \includegraphics[scale=0.15]{Illustrations/key-6(5).png} & \includegraphics[scale=0.15]{Illustrations/key-6(8).png} \\
+	    \cline{2-6}
+	    & Solidité & 0.787878 & 0.866782 & 0.849132 & 0.985798 \\
+	    \hline
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Serpent de mer & Image & \includegraphics[scale=0.3]{Illustrations/sea_snake-20.png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20(3).png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20(5).png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20(8).png} \\
+	    \cline{2-6}
+	    & Solidité & 0.47619 & 0.484626 & 0.963883 & 0.959282 \\
+	    \hline	    
+	  \end{tabular}
+	  \caption{Variations de la solidité de plusieurs objets selon le bruit}
+	  \label{solidité-noise-table}
+	  \end{table}
+	  
+	  C'est pourquoi, l'estimateur applique un traitement anti-bruit (voire Section \ref{sec:anti-bruit}) avant de faire son calcul. On peut observer, avec la Table \ref{solidité-noise-debruite-table} que les résulats sont alors bien meilleurs. En effet, la solidité reste stable tant que la valeur du bruit n'est pas trop élevée. Lorsque le bruit atteint la valeur 0.8, par contre, la solidité explose, tout comme dans le cas où l'image n'est pas débruitée avant le calcul. Cependant, on remarque que lorsque le bruit atteint de telles valeurs, l'image est alors assez déconstruite, même pour un observateur humain. Et cela est d'autant plus vrai que l'image est petite. Ce n'est donc pas si mal. \\
+	  
+	  \begin{table}[!h] %Si on pouvait centrer verticalement ce serait le top
+	  \centering
+	  \begin{tabular}{|c|c|c|c|c|c|}
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Mouche & Image & \includegraphics[scale=0.15]{Illustrations/fly-6-debruite.png} & \includegraphics[scale=0.15]{Illustrations/fly-6-debruite(3).png} & \includegraphics[scale=0.15]{Illustrations/fly-6-debruite(5).png} & \includegraphics[scale=0.15]{Illustrations/fly-6-debruite(8).png} \\
+	    \cline{2-6}
+	    & Solidité & 0.652126 & 0.650744 & 0.649821 & 0.838861 \\
+	    \hline
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Clé & Image & \includegraphics[scale=0.15]{Illustrations/key-6-debruite.png} & \includegraphics[scale=0.15]{Illustrations/key-6-debruite(3).png} & \includegraphics[scale=0.15]{Illustrations/key-6-debruite(5).png} & \includegraphics[scale=0.15]{Illustrations/key-6-debruite(8).png} \\
+	    \cline{2-6}
+	    & Solidité & 0.785436 & 0.783812 & 0.780256 & 0.735086 \\
+	    \hline
+	    \hline
+	    & Bruit & 0 & 0.3 & 0.5 & 0.8 \\
+	    \cline{2-6}
+	    Serpent de mer & Image & \includegraphics[scale=0.3]{Illustrations/sea_snake-20-debruite.png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20-debruite(3).png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20-debruite(5).png} & \includegraphics[scale=0.3]{Illustrations/sea_snake-20-debruite(8).png} \\
+	    \cline{2-6}
+	    & Solidité & 0.485542 & 0.491055 & 0.483393 & 0.960359 \\
+	    \hline	    
+	  \end{tabular}
+	  \caption{Variations de la solidité de plusieurs objets selon le bruit, après débruitage}
+	  \label{solidité-noise-debruite-table}
+	  \end{table}
+	  
+	  Les expérimentations nous amènenet également à observer que la solidité avec ou sans débruitage diffèrent sensiblement, et ce même pour des images non bruitées. Il convient donc de construire le modèle en appliquant également le traitement anti-bruit à la base de données.
 
 %	pour résumer :
 %- quand le bruit devient vraiment important (genre 0.8), ça a tendance a foirer que ce soit debruité ou pas
@@ -241,10 +303,16 @@
 %- par contre l'estimateur avec et sans débruitage sont assez loin
 %=> il faut le modèle avec un traitement anti bruit
 
-	
+
 	\paragraph{Résistance aux rotations et symmétries}
+	
+	  L'estimateur ne tient aucun compte de l'orientation de l'image, il est donc tout à fait résistant aux rotations et aux symmétries.
       
-	\paragraph{Résistance aux homothéties} blabla \\
+	\paragraph{Résistance aux homothéties} 
+	
+	  Si on regarde la définition de la solidité, on a un estimateur qui devrait être résistant aux homothéties. Cependant comme l'agrandissement ou le rétrecissement d'une image discrète ne se comporte pas toujours comme l'intuition le commanderait, nous avons réalisé des tests pour vérifier que c'était bien le cas.
+	  
+	  La Table \ref{solidité-scaling-table} montre une partie représentative de ces tests. On s'aperçoit qu'effectivement la solidité reste stable par homothétie.\\
 	
 	  \begin{table}[!h]
 	  \centering
@@ -271,12 +339,20 @@
 	  \label{solidité-scaling-table}
 	  \end{table}
 	  
+	  On peut remarquer que plus l'image est grande, plus la solidité diminue, pour une même forme. Cela vient du fait que lorsqu'on agrandit l'image, les extrémités n'augmentent pas significativement l'aire de l'image, mais augmentent en revanche beaucoup plus l'aire de l'enveloppe convexe. On remarque d'ailleurs, en comparant l'évolution de la solidité de Device et celle de Lézard, que plus la forme est ``branchée'', plus sa solidité diminue rapidement en fonction de sa taille. Une idée pourrait même être de distinguer des images selon l'évolution de la solidité par homothéties de l'image. Mais cette méthode risque d'être très coûteuse.
+	  
 	\paragraph{Résistance aux élongations}
+	
+	  L'estimateur n'est pas résistant aux élongations. Cependant, l'écart de solidité entre une forme et son allongée n'est pas vraiment catastrophique. Aucune solution n'a été réellement recherchée pour résoudre ce problème.
 	
 	\paragraph{Résistance aux occlusions}
 	  
+	  De par sa nature, l'estimateur résiste très très mal aux occlusion qui vont faire diminuer drastiquement la solidité. Dem même que pour l'élongation, aucune solution n'a été réellement recherchée pour résoudre ce problème.
+	  
 	\paragraph{Résultats}
-	
+
+	  On peut remarquer en ragardant la Figure \ref{solidité-graph}, que la solidité ne discrimine pas beaucoup de classe. En particulier lorsqu'elle vaut environ 0.8, elle correspond à une majorité de classes. Ce n'est guère suprenant venant d'un estimateur aussi simple qui réduit une forme complexe à un scalaire. \\
+	  
 	  \begin{figure}[!h]
 	    \begin{bigcenter}
 	      \includegraphics[scale=0.38]{Graphes/solidite.png}
@@ -284,6 +360,8 @@
 	    \caption{Moyenne et écart type de la solidité pour chaque classe}
 	    \label{solidité-graph}
 	  \end{figure}
+	  
+	  En revanche cet estimateur semble être relativement pertinent pour un certain nombre de classes, on peut donc espérer qu'en le couplant avec d'autres estimateurs les résultats seront satisfaisants.  
 
       \subsubsection{Excentricté}
       
