@@ -1,1 +1,63 @@
- 
+      ___           ___                   ___           ___           ___           ___  
+     /\  \         /\__\      ___        /\__\         /\  \         /\  \         /\__\ 
+    /::\  \       /:/  /     /\  \      /::|  |       /::\  \       /::\  \       /:/  / 
+   /:/\:\  \     /:/  /      \:\  \    /:|:|  |      /:/\:\  \     /:/\:\  \     /:/  /  
+  /:/  \:\  \   /:/  /       /::\__\  /:/|:|__|__   /:/  \:\  \   /::\~\:\  \   /:/  /   
+ /:/__/ \:\__\ /:/__/     __/:/\/__/ /:/ |::::\__\ /:/__/_\:\__\ /:/\:\ \:\__\ /:/__/    
+ \:\  \  \/__/ \:\  \    /\/:/  /    \/__/~~/:/  / \:\  /\ \/__/ \/_|::\/:/  / \:\  \    
+  \:\  \        \:\  \   \::/__/           /:/  /   \:\ \:\__\      |:|::/  /   \:\  \   
+   \:\  \        \:\  \   \:\__\          /:/  /     \:\/:/  /      |:|\/__/     \:\  \  
+    \:\__\        \:\__\   \/__/         /:/  /       \::/  /       |:|  |        \:\__\ 
+     \/__/         \/__/                 \/__/         \/__/         \|__|         \/__/ 
+
+     ===============================================================================
+          ========    ©  Laureline Pinault & Raphaël Charrondière      ========     
+               ===========================================================          
+
+
+I - Compilation
+===============
+
+	Il s'agit d'une build classique utilisant cmake
+		Il faut avoir installé boost (http://www.boost.org/)
+		Il faut avoir installé DGtal (http://dgtal.org/)
+		Dans un dossier nouvellement créé executer la commande cmake /chemin/vers/ce/dossier
+		Puis exécutez la commande make
+
+	Une base de donnée déjà apprise relative au dossier database sera automatiquement ajoutée
+
+II - Utilisation
+================
+	
+	Pense-bête : ./ClimgRL vous donnera un aperçut des commandes
+	
+	Apprendre les classes d'images :
+		--> Juste une classe : ./ClimgRL learn nomClasse cheminVersDossierImage
+		--> Toute les classes : ./ClimgRL learnall cheminVersDossierImage
+		--> Tout ce qui n'a pas été appris : ./ClimgRL learnlazy cheminVersDossierImage
+
+	Estimer :
+		--> Score pour une clase : ./ClimgRL estim nomClasse fichier
+		--> Correspondances vraisemblable : ./ClimgRL estim fichier
+	--> Meilleure correspondance : ./ClimgRL guess fichier
+
+	Signer :
+		-->Signature : ./ClimgRL sign fichier
+
+III - Utilisation avancée
+=========================
+
+	Pour ne plus utiliser un estimateur supprimez-le (c'est le fichier libnomestim.so)
+	Pour ne prendre en compte que certaines classes dans l'estimation supprimez leur nom dans le fichier signature.sgn (Attention réapprendre les modèles regénère le fichier)
+
+	Pour fabriquer un estimateur : 
+		Copier ClimgRL/estimateursestimbasic/ctext.h dans un dossier de votre choix
+		Implémentez les fonctions adéquates (inspirez vous des estimateurs existants par exemple)
+		Compilez pour obtenir une librairie dynamique (Regardez dans CMakeLists.txt si vous ne savez pas comment faire)
+		Copier la librairie obtenue à côté de ClimgRL
+		N'oubliez pas d'apprendre les modèles !
+
+IV - Compléments
+================
+
+	Consultez le rapport disponible dans le dossier Rapport
