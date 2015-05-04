@@ -13,21 +13,25 @@ void Test_Solidity_Noise (){
   test = MetaImage("../src/Tests/Noise/key-6.pgm");
   cout << "Key 6 (noise 0) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/key-6-debruite.pgm");
   cout << "Key 6 (noise 0, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/key-6.3.pgm");
   cout << "Key 6 (noise 0.3) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/key-6.3-debruite.pgm");
   cout << "Key 6 (noise 0.3, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/key-6.5.pgm");
   cout << "Key 6 (noise 0.5) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/key-6.5-debruite.pgm");
   cout << "Key 6 (noise 0.5, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/key-6.8.pgm");
   cout << "Key 6 (noise 0.8) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/key-6.8-debruite.pgm");
   cout << "Key 6 (noise 0.8, debruite) : " << Solidity(test) << "\n";
   
   cout <<"\n FLY 6 :\n";
@@ -35,21 +39,25 @@ void Test_Solidity_Noise (){
   test = MetaImage("../src/Tests/Noise/fly-6.pgm");
   cout << "Fly 6 (noise 0) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/fly-6-debruite.pgm");
   cout << "Fly 6 (noise 0, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/fly-6.3.pgm");
   cout << "Fly 6 (noise 0.3) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/fly-6.3-debruite.pgm");
   cout << "Fly 6 (noise 0.3, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/fly-6.5.pgm");
   cout << "Fly 6 (noise 0.5) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/fly-6.5-debruite.pgm");
   cout << "Fly 6 (noise 0.5, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/fly-6.8.pgm");
   cout << "Fly 6 (noise 0.8) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/fly-6.8-debruite.pgm");
   cout << "Fly 6 (noise 0.8, debruite) : " << Solidity(test) << "\n";
   
   cout <<"\n CHOPPER 4 :\n";
@@ -101,20 +109,24 @@ void Test_Solidity_Noise (){
   test = MetaImage("../src/Tests/Noise/sea_snake-20.pgm");
   cout << "Sea Snake 20 (noise 0) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/sea_snake-20-debruite.pgm");
   cout << "Sea Snake 20 (noise 0, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/sea_snake-20.3.pgm");
   cout << "Sea Snake 20 (noise 0.3) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/sea_snake-20.3-debruite.pgm");
   cout << "Sea Snake 20 (noise 0.3, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/sea_snake-20.5.pgm");
   cout << "Sea Snake 20 (noise 0.5) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/sea_snake-20.5-debruite.pgm");
   cout << "Sea Snake 20 (noise 0.5, debruite) : " << Solidity(test) << "\n";
   
   test = MetaImage("../src/Tests/Noise/sea_snake-20.8.pgm");
   cout << "Sea Snake 20 (noise 0.8) : " << Solidity(test) << "\n";
   test.iterRemoveNoise();
+  test.savePGM("../src/Tests/Noise/sea_snake-20.8-debruite.pgm");
   cout << "Sea Snake 20 (noise 0.8, debruite) : " << Solidity(test) << "\n";  
 }
