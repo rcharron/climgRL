@@ -23,6 +23,9 @@
 \usepackage{tikz} % Let us start the fun
 \usetikzlibrary{positioning, chains, calc, arrows, decorations.pathreplacing, fit, patterns, snakes}
 
+\theoremstyle{definition} 
+\newtheorem{definition}{Définition} 
+
 \makeatletter
  
 \newskip\@bigflushglue \@bigflushglue = -100pt plus 1fil
@@ -49,7 +52,7 @@
   \maketitle
 
   \begin{abstract}
-   
+	Laureline Pinault et Raphaël Charrondière sont fiers de vous présenter leur classificateur d'images !
   \end{abstract}
   
   \newpage
@@ -59,16 +62,30 @@
   \newpage
   
   \section{Introduction}
-  
-    \subsection{Remarques préliminaires}
-    
+
     \subsection{Objectifs du projet}
-  
-    \subsection{Organisation du projet} %TODO : Raphaël
+    	Ce projet a pour but de coder un classificateur d'images en noir et blanc. Un classificateur d'images est un programme qui étant donné une image en entrée renvoie sa classe. Une classe représente un objet. Par exemple une image peut appartenir à la classe pomme si elle représente une pomme.
+
+    \subsection{Remarques préliminaires}    	
+    	Ce projet est réalisé en c++  et s'appuie sur la bibliothèque DGtal.
+    	  
+  \section{Organisation du projet} %TODO : Raphaël
+  	Ce projet a été réalisé de manière très modulaire. Il ne s'agit pas d'un classificateur unique, mais de petits classificateurs qui combinés deviennent à priori plus précis. Ainsi le choix a été fait de créer des bibliothèques chargées dynamiquement par le programme central qui les exécute les uns après les autres. L'avantage de procéder ainsi est de cloisonner chaque classificateur (que l'on appellera aussi estimateur) afin qu'aucun n'infère sur l'autre. En particulier si l'un dysfonctionne il ne perturbe pas le déroulement du programme ou il suffit juste le supprimer.
+  	   
+  	   \subsection{Estimateur, comment ça fonctionne}
+	Un classificateur ne renvoie pas directement une classe, en fait il va comparer un modèle à une image et dire selon lui comment le modèle et l'image sont éloignés. Du point de vue extérieur un estimateur comporte trois fonctions : \verb-buildmodel-, \verb-pre_estim- et \verb-estim-. La première donne une liste de fichier d'une même classe et renvoie un modèle, celui-ce pouvant être quelconque (un entier ou un graphe par exemple). La deuxième demande de réduire l'image à une donnée, la motivation étant de pouvoir rapidement comparer cette donnée à plusieurs modèles, cette comparaison étant faite par la troisième fonction qui renvoie un score $sc \in [0,1]$ de ressemblance approchant 1 quand elle est certaine ou 0 si le modèle ne correspond pas.
+
+  	   \subsection{Classifions}
+  	   Une fois que les modèles sont générés, la classification est facile. Pour chaque classe on considère les modèles de chaque classificateur, puis moyenne les scores qu'ils renvoient, ce qui détermine le score d'appartenance à cette classe. La signature d'une image est définie comme la concaténation de ces scores dans un vecteur. Le programme peut soit renvoyer cette signature, soit afficher les classes dont le score d'appartenance est supérieur à 0.9, soit rendre la classe ayant le plus haut score.
+  	   
+  	    Les modèles sont sauvegardés dans une base de données SQlite3 nommée \verb-estimatormodels.db-. Ils ont tous été générés. Il est à noter que la durée de construction de ces modèles est d'environ une à deux heures.
   
   \section{Traitement des images}
   
+  	Il est à noter que les traitements sur images ne sont pas systématiquement appliqués. Chaque estimateur peut l'appliquer s'il en a besoin, selon la résistance au bruit, à l'agrandissement d'image, etc.
+  
     \subsection{Traitement anti-inversion}
+    \label{sec:anti-inversion}
     
       \begin{figure}[!h]
 	\centering
@@ -102,11 +119,46 @@
 	\label{anti-inversion}
       \end{figure}
 
-    \subsection{Normalisation des images}     %TODO : Raphaël
+    \subsection{Normalisation des images}  
+    
+    Cette opération consiste d'abord à calculer le centre de gravité $G$ de l'objet, puis à calculer l'éloignement moyen $m$ à celui-ci, c'est à dire le distance moyenne point de l'objet à son centre de gravité.
+    
+    Ensuite, on crée un nouvelle image d'une taille $800 \times 800$ correspondant à l'image recentrée en G affichant les points d'origines de la fenêtre de taille $4m \times 4m$.
+    
+    Cela permet d'avoir un objet normé en taille et centré (donc est idéal pour des estimateurs travaillant sur l'aire ou sensible aux translations).
       
     \subsection{Traitement anti-bruit}
     
+    On utilisera ici un traitement basique. Il s'agit juste de re-colorier un pixel par la couleur majoritaire chez ses huit voisins. Une passe peut corriger le bruit, mais itérer les passes jusqu'à la stabilité donne de meilleur résultats comme montré sur les figures ci dessous (en majorant par huit itérations pour assurer la terminaison et borner le temps d'exécution).
+    
+     \begin{figure}[!h]
+	\centering
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruit.png}
+	    \label{butterfly-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruit1.png}
+	    \label{spirale-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruit2.png}
+	  \label{1stcup-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruitf.png}
+	  \label{2ndcup-rempli}
+	  \end{subfigure}
+	\caption{Le traitement contre le bruit : dans l'ordre l'image originale, l'image corrigée une fois, puis deux, puis jusqu'à stabilité}
+	\label{Traitement-Bruit}
+    \end{figure}
+    
     \subsection{Remplissage}
+    \label{sec:remplissage}
     
       \begin{figure}[!h]
 	\centering
@@ -158,11 +210,25 @@
    
   \section{Estimateurs}
   
+    \subsection{Estimateurs et modèles}
+    
+    Tout les estimateurs ici renvoient une grandeur caractéristique (ou deux). La construction du modèle consiste juste à calculer la moyenne $m$ et l'écart-type de ce scalaire $v$ . Ensuite le score d'une image est défini par : $ \sqrt[4]{\exp{\left (-\frac{(x-m)^4}{2v}\right )}}$si $x$ est sa valeur caractéristique. Si il y a deux valeurs caractéristiques, on multipliera juste le score des deux.
+  
     \subsection{Quelques estimateurs simples et complémentaires}
 
+      Une première idée fut de travailler sur la forme générale de la forme \textendash est-ce qu'elle est plutôt carré ? ronde ? allongée ? Pour cela, trois estimateurs simples et complémentaires ont été développés. Tous tentent de décrire une image par un ou deux simples scalaires.
+      
+      L'estimateur \texttt{estimeccentricity} qui mesure l'excentricité d'une forme permet de déterminer si la forme est plus ou moins allongée. L'estimateur \texttt{estimaveragebendingflexion}, qui n'est pas opérationnel suite à des erreurs de programmation\footnote{Il sera néanmoins présenté dans ce rapport}, devait mesurer l'énergie moyenne de flexion afin de pouvoir distinguer les formes arrondies, très arrondies ou plates. Enfin l'estimateur \texttt{estimsolidity} qui mesure la solidité d'une forme apporte une information sur comment la forme remplit son enveloppe convexe. %fin à retravailler
+    
       \subsubsection{Solidité}
       
 	\paragraph{Principe}
+	
+	  \begin{definition}[Solidité]
+	    On définit la solidité d'une forme comme le rapport de l'aire de cette forme sur l'aire de l'enveloppe convexe.
+	  \end{definition}
+
+	   Une illustration de ce que représente la solidité est donnée Figure \ref{solidité}.
 	
 	  \begin{figure}[!h]
 	    \centering
@@ -179,18 +245,38 @@
 	    \caption{Solidité de l'objet horse}
 	    \label{solidité}
 	  \end{figure}
-	
+
+	  
 	\paragraph{Programmation}
 	
+	  Pour calculer la solidité d'une forme, on procède de la façon suivante :
+	  \begin{itemize}
+	   \item Afin de ne pas être pas être trop dépendant de la qualité de l'image donné en entré, on commence par éliminer les détails interne en effectuant un remplissage de la forme (voir Section \ref{sec:remplissage}).
+	   \item On calcule ensuite l'aire de la forme ainsi obtenue. Pour calculer l'aire d'une forme, on procède tout simplement à un comptage du nombre de pixels blancs. Cette manière de procéder a le double avantage d'être simple à implémenter et d'être convergente, ce qui permettra de ne pas être dépendant de l'échelle de l'image.
+	   \item On détermine ensuite les points de l'image faisant partie de l'enveloppe convexe de la forme grâce à l'algorithme du parcours de Graham\footnote{\url{http://en.wikipedia.org/wiki/Graham_scan}}. Ensuite on les relie entre eux en traçant des segments digitaux grâce à l'algorithme de Bresenham.
+	   \item On a alors plus qu'à remplir l'enveloppe convexe, à calculer son aire, et à renvoyer le rapport des deux aires.
+	  \end{itemize}
+  
+  
 	\paragraph{Résistance aux inversions de couleur}
 	
+	  Comme on ne travaille pas du tout avec les contours de la forme, mais avec la forme toute entière, l'estimateur n'est pas du tout résistant à l'inversion des couleurs. C'est pourquoi l'estimateur applique un traitement anti-inversion (voire Section \ref{sec:anti-inversion}) avant de faire son calcul.
+	
 	\paragraph{Résistance au bruit}
+	
+
+%	pour résumer :
+%- quand le bruit devient vraiment important (genre 0.8), ça a tendance a foirer que ce soit debruité ou pas
+%- sinon c'est plutot pas mal
+%- par contre l'estimateur avec et sans débruitage sont assez loin
+%=> il faut le modèle avec un traitement anti bruit
+
 	
 	\paragraph{Résistance aux rotations et symmétries}
       
 	\paragraph{Résistance aux homothéties} blabla \\
 	
-	  \begin{table}
+	  \begin{table}[!h]
 	  \centering
 	  \begin{tabular}{|c|c|c|c|c|c|c|c|}
 	    \hline
@@ -226,7 +312,7 @@
 	      \includegraphics[scale=0.38]{Graphes/solidite.png}
 	    \end{bigcenter}
 	    \caption{Moyenne et écart type de la solidité pour chaque classe}
-	    \label{solidité}
+	    \label{solidité-graph}
 	  \end{figure}
 
       \subsubsection{Excentricté}
@@ -244,7 +330,7 @@
 	\paragraph{Résistance aux homothéties} blabla
 	
 	
-	  \begin{table}
+	  \begin{table}[!h]
 	  \centering      
 	  \begin{tabular}{|c|c|c|c|c|c|}
 	    \hline
@@ -310,14 +396,47 @@
 	  \[ r = \frac{|QO|}{2 \sin\left(\widehat{OPQ}\right)} = \frac{|QO|}{\frac{2 \det\left(\overrightarrow{PO}, \overrightarrow{PQ} \right)}{|OP| |PQ|}} = \frac{|OP| |PQ| |QO|}{4 \mathcal{A}_{PQO}}  \]
 	
 	\paragraph{Résultats}
-    
-    \subsection{Transformée de Fourier}  %A mettre ? RAphaël
+  
     
     \subsection{Méthode des moments} %A renommer ? Raphaël
+      Cet estimateur est simple d'où son nom d'exécutable \verb-libbasicestim-. On reprend l'idée de la normalisation d'image évoquée plus haut.
+      
+      Notons $S$ l'ensemble des points de l'objet, $|S|$ son cardinal, $G$ son centre de gravité et $d(A,B)=||A-B||_2$ la distance entre deux points.
+      
+      On calcule $m=\frac{\sum_{P\in S}d(P,G)}{|S|}$ la distance moyenne à $G$ et $v=\sqrt{\frac{\sum_{P\in S}\left ( d(P,G) -m\right ) ^2}{|S|}}$ l'écart-type.
+      
+      Afin de pouvoir comparer ces grandeurs, on les norme par l'écart maximal entre un point de $S$ et $G$.
+      
+      Ces deux valeurs constituent les grandeurs caractéristiques de l'estimateur.
+      
+      L'estimateur est ainsi naturellement résistant aux rotations, aux translations et à l'agrandissement. Statistiquement, il est insensible au bruit pour la moyenne, ainsi que pour l'écart type dans une certaine mesure.
     
     \subsection{Etude du squelette} %TODO : Raphaël
     
+    Le squelette de l'objet pourrait apporter beaucoup d'informations. Cependant ici on se concentrera sur ce que l'on appelle la colonne vertébrale définie comme plus grand chemin dans le squelette. Cette information est pertinente dans le sens où cela peut caractériser la longueur de l'objet une fois ``déplié''. Pour donner un sens à cela on normalisera d'abord l'image comme décrit dans le traitement normalisation. On débruitera aussi l'image pour que le squelette soit ``naturel''. On rempliera la forme pour que le squelette soit un arbre. Si la forme n'est pas connectée, on ne gardera que le plus grand arbre restant
+    
+    Ici le squelette sera calculé par effeuillages successif du contour de l'objet.
+    
+     \begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.45\textwidth}
+	  \centering
+	  \includegraphics[scale=0.25]{Illustrations/turtle.png}
+	  \label{pocket-non-rempli}
+	\end{subfigure}
+	\begin{subfigure}{.45\textwidth}
+	  \centering
+	  \includegraphics[scale=0.25]{Illustrations/turtlesk.png}
+	\label{pocket-rempli}
+	\end{subfigure}
+	\caption{L'image de tortue normée et son squelette}
+	\label{skelton}
+      \end{figure}
+      
+      La longueur de la colonne vertébrale est par normalisation invariante à l'agrandissement. Elle est naturellement invariante par rotation et translation. Comme il y a un débruitage elle est résistante au bruit et de toute façons comme on prend la branche de longueur maximale, des branches artéfacts ne sont pas si gênantes.
+    
     \subsection{Pistes non explorées}
+        \subsubsection{Transformée de Fourier}  %A mettre ? RAphaël
   
   \section{Résultats} 
   
