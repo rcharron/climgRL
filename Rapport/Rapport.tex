@@ -180,9 +180,13 @@
    
   \section{Estimateurs}
   
+    \subsection{Estimateurs et modèles}
+    
+    Tout les estimateurs ici renvoient une grandeur caractéristique (ou deux). La construction du modèle consiste juste à calculer la moyenne $m$ et l'écart-type de ce scalaire $v$ . Ensuite le score d'une image est défini par : $ \sqrt[4]{\exp{\left (-\frac{(x-m)^4}{2v}\right )}}$si $x$ est sa valeur caractéristique. Si il y a deux valeurs caractéristiques, on multipliera juste le score des deux.
+  
     \subsection{Quelques estimateurs simples et complémentaires}
 
-      Une première idée fut de travailler sur la forme générale de la forme \textendash est-ce qu'elle est plutôt carré ? ronde ? allongée ? Pour cela, trois estimateurs simples et complémentaires ont été développés. Tous tentent de décrire une image par un simple scalaire.
+      Une première idée fut de travailler sur la forme générale de la forme \textendash est-ce qu'elle est plutôt carré ? ronde ? allongée ? Pour cela, trois estimateurs simples et complémentaires ont été développés. Tous tentent de décrire une image par un ou deux simples scalaires.
       
       L'estimateur \texttt{estimeccentricity} qui mesure l'excentricité d'une forme permet de déterminer si la forme est plus ou moins allongée. L'estimateur \texttt{estimaveragebendingflexion}, qui n'est pas opérationnel suite à des erreurs de programmation\footnote{Il sera néanmoins présenté dans ce rapport}, devait mesurer l'énergie moyenne de flexion afin de pouvoir distinguer les formes arrondies, très arrondies ou plates. Enfin l'estimateur \texttt{estimsolidity} qui mesure la solidité d'une forme apporte une information sur comment la forme remplit son enveloppe convexe. %fin à retravailler
     
@@ -372,7 +376,9 @@
       
       On calcule $m=\frac{\sum_{P\in S}d(P,G)}{|S|}$ la distance moyenne à $G$ et $v=\sqrt{\frac{\sum_{P\in S}\left ( d(P,G) -m\right ) ^2}{|S|}}$ l'écart-type.
       
-      Pour normer ces grandeurs, on les divise par l'écart maximal entre un point de $S$ et $G$.
+      Afin de pouvoir comparer ces grandeurs, on les norme par l'écart maximal entre un point de $S$ et $G$.
+      
+      Ces deux valeurs constituent les grandeurs caractéristiques de l'estimateur.
     
     \subsection{Etude du squelette} %TODO : Raphaël
     
