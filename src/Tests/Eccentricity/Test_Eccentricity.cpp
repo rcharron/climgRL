@@ -25,4 +25,7 @@ void Test_Eccentricity (){
   
   test = MetaImage("../database/teddy-2.pgm");
   cout << "Teddy 2 : " << Eccentricity(test) << "\n";
+  
+  test = MetaImage("../database/HCircle-1.pgm");
+  cout << "HCircle 1 : " << Eccentricity(test) << "\n";
 }

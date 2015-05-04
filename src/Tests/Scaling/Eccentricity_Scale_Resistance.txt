@@ -1,80 +1,41 @@
-HORSE-20 :
-Horse (scale 1) : excentricité = 498.439
-Horse (scale 0.5) : excentricité = 248.22
-Horse (scale 2) : excentricité = 996.777
-Horse (scale 5) : excentricité = 2495.99
+BAT 2 :
+longueur : 767
+largeur : 328
+Bat 2 (scale 1) : excentricité = 2.33841
+longueur : 382
+largeur : 164
+Bat 2 (scale 0.5) : excentricité = 2.32927
+longueur : 1535
+largeur : 656
+Bat 2 (scale 2) : excentricité = 2.33994
+longueur : 3841
+largeur : 1641
+Bat 2 (scale 5) : excentricité = 2.34065
 
-APPLE-3 :
-Apple (scale 1) : excentricité = 285.152
-Apple (scale 0.5) : excentricité = 142.209
-Apple (scale 2) : excentricité = 572.169
-Apple (scale 5) : excentricité = 1431.98
+HAMMER 20 :
+longueur : 229
+largeur : 79
+Hammer 20 (scale 1) : excentricité = 2.89873
+longueur : 114
+largeur : 39
+Hammer 20 (scale 0.5) : excentricité = 2.92308
+longueur : 461
+largeur : 158
+Hammer 20 (scale 2) : excentricité = 2.91772
+longueur : 1154
+largeur : 395
+Hammer 20 (scale 5) : excentricité = 2.92152
 
-DEVICE7-1 :
-Device7 (scale 1) : excentricité = 528.912
-Device7 (scale 0.5) : excentricité = 263.941
-Device7 (scale 2) : excentricité = 1059.37
-Device7 (scale 5) : excentricité = 2650.75
-
-LIZZARD-13 :
-Lizzard (scale 1) : excentricité = 431.79
-Lizzard (scale 0.5) : excentricité = 214.508
-Lizzard (scale 2) : excentricité = 865.542
-Lizzard (scale 5) : excentricité = 2163.44
-
-
-HORSE-20 :
-longueur : 118130
-largeur : 237
-Horse (scale 1) : excentricité = 498.439
-longueur : 29290
-largeur : 118
-Horse (scale 0.5) : excentricité = 248.22
-longueur : 474466
-largeur : 476
-Horse (scale 2) : excentricité = 996.777
-longueur : 2972722
-largeur : 1191
-Horse (scale 5) : excentricité = 2495.99
-
-APPLE-3 :
-longueur : 65585
-largeur : 230
-Apple (scale 1) : excentricité = 285.152
-longueur : 16354
-largeur : 115
-Apple (scale 0.5) : excentricité = 142.209
-longueur : 263770
-largeur : 461
-Apple (scale 2) : excentricité = 572.169
-longueur : 1653937
-largeur : 1155
-Apple (scale 5) : excentricité = 1431.98
-
-DEVICE7-1 :
-longueur : 252820
-largeur : 478
-Device7 (scale 1) : excentricité = 528.912
-longueur : 62818
-largeur : 238
-Device7 (scale 0.5) : excentricité = 263.941
-longueur : 1013818
-largeur : 957
-Device7 (scale 2) : excentricité = 1059.37
-longueur : 6345892
-largeur : 2394
-Device7 (scale 5) : excentricité = 2650.75
-
-LIZZARD-13 :
-longueur : 110970
-largeur : 257
-Lizzard (scale 1) : excentricité = 431.79
-longueur : 27457
-largeur : 128
-Lizzard (scale 0.5) : excentricité = 214.508
-longueur : 445754
-largeur : 515
-Lizzard (scale 2) : excentricité = 865.542
-longueur : 2793002
-largeur : 1291
-Lizzard (scale 5) : excentricité = 2163.44
+DEVICE9-9 :
+longueur : 402
+largeur : 396
+Device9 9 (scale 1) : excentricité = 1.01515
+longueur : 200
+largeur : 198
+Device9 9 (scale 0.5) : excentricité = 1.0101
+longueur : 805
+largeur : 792
+Device9 9 (scale 2) : excentricité = 1.01641
+longueur : 2016
+largeur : 1981
+Device9 9 (scale 5) : excentricité = 1.01767

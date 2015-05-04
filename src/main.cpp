@@ -38,10 +38,10 @@ int main()
 //  Test_AntiBruit();
 //  Test_Solidity_Scale();
 //  Test_Rotate();
-  Test_Eccentricity_Scale();
+//  Test_Eccentricity_Scale();
 //  Test_Skelton();
 //  Test_Morphology();
 //  Test_AverageBendingFlexion_Scale();
-//  Test_Eccentricity();
+  Test_Eccentricity();
   return 0;
 }

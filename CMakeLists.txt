@@ -59,10 +59,18 @@ project (solidestim)
 file(GLOB_RECURSE solidestim_source_files ${PROJECT_SOURCE_DIR}/estimsolidity/*.cpp)
 add_library(solidestim MODULE ${solidestim_source_files})
 target_link_libraries (solidestim ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
- 
+
+
 project (spineestim)
 
 file(GLOB_RECURSE spineestim_source_files ${PROJECT_SOURCE_DIR}/estimskelton/*.cpp)
 add_library(spineestim MODULE ${spineestim_source_files})
 target_link_libraries (spineestim ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
+
+
+project (exentricitestim)
+
+file(GLOB_RECURSE exentricitestim_source_files ${PROJECT_SOURCE_DIR}/estimeccentricity/*.cpp)
+add_library(exentricitestim MODULE ${exentricitestim_source_files})
+target_link_libraries (exentricitestim ${DGTAL_LIBRARIES}  ${Boost_LIBRAIRIES}  ${Boost_PROGRAM_OPTIONS_LIBRARY})
  

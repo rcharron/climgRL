@@ -64,7 +64,7 @@
 ./libspineestim.so	personal_car	412.4	157.756
 ./libspineestim.so	butterfly	464.467	116.747
 ./libspineestim.so	Comma	262.2	244.804
-./libspineestim.so	car	436.667	0
 ./libspineestim.so	frog	339	159.838
 ./libspineestim.so	horse	645.133	169.811
-./libspineestim.so	crown		
+./libspineestim.so	car	300.467	117.482
+./libspineestim.so	crown	434.933	130.1

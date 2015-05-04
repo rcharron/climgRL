@@ -57,8 +57,7 @@ void MetaImage::updateMeta()
 {
   width=this->domain().upperBound()[0];
   height=this->domain().upperBound()[1];
-//  cout << "width : " << width << "  ;  height : " << height << endl;
-//  cout << "width : " << this->domain().lowerBound()[0] << "  ;  height : " << this->domain().lowerBound()[1] << endl;
+  
   ComputeCenter();
   ComputeMean();
 }

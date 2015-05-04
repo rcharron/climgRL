@@ -27,7 +27,6 @@ std::string model(std::vector< float >& score)
   v=static_cast<float>(sqrt(v));
   
   std::stringstream ss;
-  
   ss<<m<<" "<<v<<" ";
   return ss.str();
 }
