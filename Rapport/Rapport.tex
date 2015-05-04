@@ -78,6 +78,8 @@
   	   \subsection{Classifions}
   	   Une fois que les modèles sont générés, la classification est facile. Pour chaque classe on considère les modèles de chaque classificateur, puis moyenne les scores qu'ils renvoient, ce qui détermine le score d'appartenance à cette classe. La signature d'une image est définie comme la concaténation de ces scores dans un vecteur. Le programme peut soit renvoyer cette signature, soit afficher les classes dont le score d'appartenance est supérieur à 0.9, soit rendre la classe ayant le plus haut score.
   	   
+  	   Pour comparer deux images on calculera la moyenne des écarts absolus de chaque score.
+  	   
   	    Les modèles sont sauvegardés dans une base de données SQlite3 nommée \verb-estimatormodels.db-. Ils ont tous été générés. Il est à noter que la durée de construction de ces modèles est d'environ une à deux heures.
   
   \section{Traitement des images}
