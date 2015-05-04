@@ -126,6 +126,34 @@
       
     \subsection{Traitement anti-bruit}
     
+    On utilisera ici un traitement basique. Il s'agit juste de re-colorier un pixel par la couleur majoritaire chez ses huit voisins. Une passe peut corriger le bruit, mais itérer les passes jusqu'à la stabilité donne de meilleur résultats comme montré sur les figures ci dessous (en majorant par huit itérations pour assurer la terminaison et borner le temps d'exécution).
+    
+     \begin{figure}[!h]
+	\centering
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruit.png}
+	    \label{butterfly-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruit1.png}
+	    \label{spirale-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruit2.png}
+	  \label{1stcup-rempli}
+	  \end{subfigure}
+	  \begin{subfigure}{.24\textwidth}
+	    \centering
+	    \includegraphics[scale=0.3]{Illustrations/turtle-1-bruitf.png}
+	  \label{2ndcup-rempli}
+	  \end{subfigure}
+	\caption{Le traitement contre le bruit : dans l'ordre l'image originale, l'image corrigée une fois, puis deux, puis jusqu'à stabilité}
+	\label{Traitement-Bruit}
+    \end{figure}
+    
     \subsection{Remplissage}
     \label{sec:remplissage}
     
