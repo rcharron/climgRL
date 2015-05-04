@@ -22,8 +22,10 @@
 #include "../Tools/Rotate.h"
 ///////////////////////////////////////////////////////////////////////////////
 
-   
-std::pair<std::pair<DGtal::Z2i::Point,DGtal::Z2i::Point>,int> Find_PlusEloignes (std::vector<DGtal::Z2i::Point> ListePoints);
+
+double Eccentricity_Dist (DGtal::Z2i::Point A, DGtal::Z2i::Point B);
+
+std::pair<std::pair<DGtal::Z2i::Point,DGtal::Z2i::Point>,int> Find_PlusEloignes (DGtal::Z2i::DigitalSet & s);
 
 int Dist_Max_Vert (MetaImage & image);
     

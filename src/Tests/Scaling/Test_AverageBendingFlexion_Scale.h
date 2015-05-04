@@ -1,0 +1,11 @@
+#ifndef TEST_AVERAGEBENDINGFLEXION_SCALE_H
+#define TEST_AVERAGEBENDINGFLEXION_SCALE_H
+
+///////////////////////////////////////////////////////////////////////////////
+#include "../../MetaImage.h"
+#include "../../Estimateurs/AverageBendingFlexion.h"
+///////////////////////////////////////////////////////////////////////////////
+
+void Test_AverageBendingFlexion_Scale ();
+
+#endif

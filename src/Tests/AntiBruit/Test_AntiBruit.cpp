@@ -65,4 +65,16 @@ void Test_AntiBruit (){
   test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.9.pgm");
   Traitement_AntiBruit(test4);
   test4.savePGM("../src/Tests/AntiBruit/turtle-1-bruit-0.8-debruite.10.pgm");*/
+  
+  MetaImage test5("../src/Tests/AntiBruit/cup-9.pgm");
+  Traitement_AntiBruit(test5);
+  test5.savePGM("../src/Tests/AntiBruit/cup-9-debruite.pgm");
+  
+  MetaImage test6("../src/Tests/AntiBruit/device6-2.pgm");
+  Traitement_AntiBruit(test6);
+  test6.savePGM("../src/Tests/AntiBruit/device6-2-debruite.pgm");
+  
+  MetaImage test7("../src/Tests/AntiBruit/device9-6.pgm");
+  Traitement_AntiBruit(test7);
+  test7.savePGM("../src/Tests/AntiBruit/device9-6-debruite.pgm");
 }

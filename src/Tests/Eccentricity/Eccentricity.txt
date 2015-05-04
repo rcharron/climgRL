@@ -1,0 +1,24 @@
+longueur : 767
+largeur : 328
+Bat 2 : 2.33841
+
+longueur : 767
+largeur : 563
+Bat 3 : 1.36234
+
+longueur : 494
+largeur : 335
+Bone 1 : 1.47463
+
+longueur : 402
+largeur : 396
+Device9 9 : 1.01515
+
+longueur : 229
+largeur : 79
+Hammer 20 : 2.89873
+
+longueur : 239
+largeur : 197
+Teddy 2 : 1.2132
+ 

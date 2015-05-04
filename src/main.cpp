@@ -17,12 +17,13 @@
 #include "Tests/AntiBruit/Test_AntiBruit.h"
 #include "Tests/Remplissage/Test_Remplissage.h"
 #include "Tests/ConvexHull/Test_ConvexHull.h"
-#include "Tests/Scaling/Test_Solidity.h"
-#include "Tests/Scaling/Test_Eccentricity.h"
-#include "Tests/Scaling/Test_AverageBendingFlexion.h"
+#include "Tests/Scaling/Test_Solidity_Scale.h"
+#include "Tests/Scaling/Test_Eccentricity_Scale.h"
+#include "Tests/Scaling/Test_AverageBendingFlexion_Scale.h"
 #include "Tests/Rotate/Test_Rotate.h"
 #include "Tests/Skelton/Test_Skelton.h"
 #include "Tests/Morphology/Test_Morphology.h"
+#include "Tests/Eccentricity/Test_Eccentricity.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -37,9 +38,10 @@ int main()
 //  Test_AntiBruit();
 //  Test_Solidity_Scale();
 //  Test_Rotate();
-//  Test_Eccentricity_Scale();
+  Test_Eccentricity_Scale();
 //  Test_Skelton();
 //  Test_Morphology();
-  Test_AverageBendingFlexion_Scale();
+//  Test_AverageBendingFlexion_Scale();
+//  Test_Eccentricity();
   return 0;
 }

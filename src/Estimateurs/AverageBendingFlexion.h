@@ -27,7 +27,7 @@ double dist (DGtal::Z2i::Point A, DGtal::Z2i::Point B);
 
 double aire (DGtal::Z2i::Domain & domain, DGtal::Z2i::Point A, DGtal::Z2i::Point B, DGtal::Z2i::Point C);
 
-double Curvature (DGtal::Z2i::Domain & domain, std::vector<DGtal::Z2i::Point> & bord, DGtal::Z2i::Point P);
+double Curvature (Board2D board, DGtal::Z2i::Domain & domain, std::vector<DGtal::Z2i::Point> & bord, DGtal::Z2i::Point P);
 
 
 double AverageBendingFlexion (MetaImage & image);
