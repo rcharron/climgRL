@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 #y = np.transpose(np.loadtxt('models-solidestim.txt',unpack=True,dtype=['str','str',float,float]))
-y = np.loadtxt('models-basicestim.txt', dtype='str')
+y = np.loadtxt('models-basicestim1.txt', dtype='str')
 
 y = np.transpose(y)
 
