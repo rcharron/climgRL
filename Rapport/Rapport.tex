@@ -83,6 +83,7 @@
   	Il est à noter que les traitements sur images ne sont pas systématiquement appliqués. Chaque estimateur peut l'appliquer s'il en a besoin, selon la résistance au bruit, à l'agrandissement d'image, etc.
   
     \subsection{Traitement anti-inversion}
+    \label{sec:anti-inversion}
     
       \begin{figure}[!h]
 	\centering
@@ -210,18 +211,22 @@
 	    \caption{Solidité de l'objet horse}
 	    \label{solidité}
 	  \end{figure}
-	
+
+	  
 	\paragraph{Programmation}
 	
-	  Pour calculer la solidité d'une form, on procède de la façon suivante :
+	  Pour calculer la solidité d'une forme, on procède de la façon suivante :
 	  \begin{itemize}
 	   \item Afin de ne pas être pas être trop dépendant de la qualité de l'image donné en entré, on commence par éliminer les détails interne en effectuant un remplissage de la forme (voir Section \ref{sec:remplissage}).
 	   \item On calcule ensuite l'aire de la forme ainsi obtenue. Pour calculer l'aire d'une forme, on procède tout simplement à un comptage du nombre de pixels blancs. Cette manière de procéder a le double avantage d'être simple à implémenter et d'être convergente, ce qui permettra de ne pas être dépendant de l'échelle de l'image.
-	   \item On détermine ensuite les points de l'image faisant partie de l'enveloppe convexe de la forme grâce .
+	   \item On détermine ensuite les points de l'image faisant partie de l'enveloppe convexe de la forme grâce à l'algorithme du parcours de Graham\footnote{\url{http://en.wikipedia.org/wiki/Graham_scan}}. Ensuite on les relie entre eux en traçant des segments digitaux grâce à l'algorithme de Bresenham.
+	   \item On a alors plus qu'à remplir l'enveloppe convexe, à calculer son aire, et à renvoyer le rapport des deux aires.
 	  \end{itemize}
   
-	
+  
 	\paragraph{Résistance aux inversions de couleur}
+	
+	  Comme on ne travaille pas du tout avec les contours de la forme, mais avec la forme toute entière, l'estimateur n'est pas du tout résistant à l'inversion des couleurs. C'est pourquoi l'estimateur applique un traitement anti-inversion (voire Section \ref{sec:anti-inversion}) avant de faire son calcul.
 	
 	\paragraph{Résistance au bruit}
 	
