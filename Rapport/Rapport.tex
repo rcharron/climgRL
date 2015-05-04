@@ -537,9 +537,17 @@
       
 	\paragraph{Principe}
 	
+	  Le but de cet estimateur était de pouvoir distinguer, par exemple, un cercle d'un carré, ce que ne permettent pas les deux estimateurs vus précédemment.
+	  
+	  \begin{definition}[Energie de flexion moyenne]
+	    On appelle l'énergie de flexion moyenne d'une forme la somme sur les points du contour de la courbure en ce point, divisée par le nombre de points.
+	  \end{definition}
+	
 	\paragraph{Programmation}
 	
-	  Méthode du cercle circonscrit par les deux demis tangentes.
+	  Pour implémenter cet estimateur, on parcourt les point du contour de la forme, on calcule la courbure, on l'additionne dans un accumulateur et on retourne au final le résultat divisé par le nombre de points du contour. \\
+	  
+	  Pour calculer la courbure, on utilise la méthode du cercle circonscrit par les deux demis tangentes :
 	  
 	  \begin{figure}[!h]
 	    \centering
@@ -565,9 +573,8 @@
 	  Par la loi des sinus, $r = \frac{|QO|}{2 \sin\left(\widehat{OPQ}\right)}$. On en déduit que :
 	  
 	  \[ r = \frac{|QO|}{2 \sin\left(\widehat{OPQ}\right)} = \frac{|QO|}{\frac{2 \det\left(\overrightarrow{PO}, \overrightarrow{PQ} \right)}{|OP| |PQ|}} = \frac{|OP| |PQ| |QO|}{4 \mathcal{A}_{PQO}}  \]
-	
-	\paragraph{Résultats}
-  
+
+	  Malheureusement à l'exécution, cet estimateur renvoie que pour toutes les formes, à tous les points, les demis-tangentes sont alignés, ce qui n'en fait pas un estimateur très intéressant. N'ayant pas eu le temps de régler ce bug, cet estimateur est resté à l'état d'embryon, et nous ne pouvons présenter aucun résultat.
     
     \subsection{Méthode des moments} %A renommer ? Raphaël
       Cet estimateur est simple d'où son nom d'exécutable \verb-libbasicestim-. On reprend l'idée de la normalisation d'image évoquée plus haut.
