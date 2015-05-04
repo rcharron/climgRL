@@ -1,0 +1,30 @@
+ KEY 6 :
+Key 6 (noise 0) : 0.787878
+Key 6 (noise 0.3) : 0.866782
+Key 6 (noise 0.5) : 0.849132
+Key 6 (noise 0.8) : 0.985798
+
+ FLY 6 :
+Fly 6 (noise 0) : 0.65156
+Fly 6 (noise 0.3) : 0.703824
+Fly 6 (noise 0.5) : 0.842951
+Fly 6 (noise 0.8) : 0.989008
+
+ CHOPPER 4 :
+Chopper 4 (noise 0) : 0.927645
+Chopper 4 (noise 0.3) : 0.957822
+Chopper 4 (noise 0.5) : 0.983843
+Chopper 4 (noise 0.8) : 0.98256
+
+ DEVICE0 7 :
+Device0 7 (noise 0) : 0.698907
+Device0 7 (noise 0.3) : 0.698776
+Device0 7 (noise 0.5) : 0.991294
+Device0 7 (noise 0.8) : 0.991116
+
+ SEA_SNAKE 20 :
+Sea Snake 20 (noise 0) : 0.47619
+Sea Snake 20 (noise 0.3) : 0.484626
+Sea Snake 20 (noise 0.5) : 0.963883
+Sea Snake 20 (noise 0.8) : 0.959282
+ 

@@ -24,6 +24,8 @@
 #include "Tests/Skelton/Test_Skelton.h"
 #include "Tests/Morphology/Test_Morphology.h"
 #include "Tests/Eccentricity/Test_Eccentricity.h"
+#include "Tests/Noise/Test_Solidity_Noise.h"
+#include "Tests/Noise/Test_Eccentricity_Noise.h"
 ///////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -42,6 +44,8 @@ int main()
 //  Test_Skelton();
 //  Test_Morphology();
 //  Test_AverageBendingFlexion_Scale();
-  Test_Eccentricity();
+//  Test_Eccentricity();
+  Test_Eccentricity_Noise();
+  Test_Solidity_Noise();
   return 0;
 }
