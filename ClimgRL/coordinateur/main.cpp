@@ -403,8 +403,8 @@ int main(int argc,char**argv){
   cout<<"--> Tout ce qui n'a pas été appris : ./ClimgRL learnlazy cheminVersDossierImage"<<endl<<endl;
   cout<<"Estimer :"<<endl;
   cout<<"--> Score pour une clase : ./ClimgRL estim nomClasse fichier"<<endl;
-  cout<<"--> Correspondances : ./ClimgRL estim fichier"<<endl;
-  cout<<"--> Correspondances : ./ClimgRL guess fichier"<<endl<<endl;
+  cout<<"--> Correspondances vraisemblables : ./ClimgRL estim fichier"<<endl;
+  cout<<"--> Meilleure correspondance : ./ClimgRL guess fichier"<<endl<<endl;
   cout<<"Signer :"<<endl;
   cout<<"-->Signature : ./ClimgRL sign fichier"<<endl<<endl;
   
