@@ -73,8 +73,10 @@
   	Ce projet a été réalisé de manière très modulaire. Il ne s'agit pas d'un classificateur unique, mais de petits classificateurs qui combinés deviennent à priori plus précis. Ainsi le choix a été fait de créer des bibliothèques chargées dynamiquement par le programme central qui les exécute les uns après les autres. L'avantage de procéder ainsi est de cloisonner chaque classificateur (que l'on appellera aussi estimateur) afin qu'aucun n'infère sur l'autre. En particulier si l'un dysfonctionne il ne perturbe pas le déroulement du programme ou il suffit juste le supprimer.
   	   
   	   \subsection{Estimateur, comment ça fonctionne}
-	Un classificateur ne renvoie pas directement une classe, en fait il va comparer un modèle à une image et dire selon lui comment le modèle et l'image sont éloignés. Du point de vue extérieur un estimateur comporte trois fonctions : \verb-buildmodel-, \verb-pre_estim- et \verb-estim-. La première donne une liste de fichier d'une même classe et renvoie un modèle, celui-ce pouvant être quelconque (un entier ou un graphe par exemple). La deuxième demande de réduire l'image à une donnée, la motivation étant de pouvoir rapidement comparer cette donnée à plusieurs modèles, cette comparaison étant faite par la troisième fonction.
-  
+	Un classificateur ne renvoie pas directement une classe, en fait il va comparer un modèle à une image et dire selon lui comment le modèle et l'image sont éloignés. Du point de vue extérieur un estimateur comporte trois fonctions : \verb-buildmodel-, \verb-pre_estim- et \verb-estim-. La première donne une liste de fichier d'une même classe et renvoie un modèle, celui-ce pouvant être quelconque (un entier ou un graphe par exemple). La deuxième demande de réduire l'image à une donnée, la motivation étant de pouvoir rapidement comparer cette donnée à plusieurs modèles, cette comparaison étant faite par la troisième fonction qui renvoie un score $sc \in [0,1]$ de ressemblance approchant 1 quand elle est certaine ou 0 si le modèle ne correspond pas.
+
+  	   \subsection{Classifions}
+  	   Une fois que les modèles sont générés (Ils sont sauvegardés dans une base de données SQlite3 nommée \verb-estimatormodels.db-), la classification est facile. Pour chaque classe on considère les modèles de chaque classificateur, puis moyenne les scores qu'ils renvoient, ce qui détermine le score d'appartenance à cette classe. La signature d'une image est définie comme la concaténation de ces scores dans un vecteur. Le programme peut soit renvoyer cette signature, soit afficher les classes dont le score d'appartenance est supérieur à 0.9, soit rendre la classe ayant le plus haut score.
   
   \section{Traitement des images}
   
@@ -114,7 +116,7 @@
 	\label{anti-inversion}
       \end{figure}
 
-    \subsection{Normalisation des images}     %TODO : Raphaël
+    \subsection{Normalisation des images}  
     
     Cette opération consiste d'abord à calculer le centre de gravité $G$ de l'objet, puis à calculer l'éloignement moyen $m$ à celui-ci, c'est à dire le distance moyenne point de l'objet à son centre de gravité.
     
@@ -223,6 +225,7 @@
 	
 	\paragraph{Résistance au bruit}
 	
+
 %	pour résumer :
 %- quand le bruit devient vraiment important (genre 0.8), ça a tendance a foirer que ce soit debruité ou pas
 %- sinon c'est plutot pas mal
@@ -358,6 +361,13 @@
     \subsection{Transformée de Fourier}  %A mettre ? RAphaël
     
     \subsection{Méthode des moments} %A renommer ? Raphaël
+      Cet estimateur est simple d'où son nom d'exécutable \verb-libbasicestim-. On reprend l'idée de la normalisation d'image évoquée plus haut.
+      
+      Notons $S$ l'ensemble des points de l'objet, $|S|$ son cardinal, $G$ son centre de gravité et $d(A,B)=||A-B||_2$ la distance entre deux points.
+      
+      On calcule $m=\frac{\sum_{P\in S}d(P,G)}{|S|}$ la distance moyenne à $G$ et $v=\sqrt{\frac{\sum_{P\in S}\left ( d(P,G) -m\right ) ^2}{|S|}}$ l'écart-type.
+      
+      Pour normer ces grandeurs, on les divise par l'écart maximal entre un point de $S$ et $G$.
     
     \subsection{Etude du squelette} %TODO : Raphaël
     
