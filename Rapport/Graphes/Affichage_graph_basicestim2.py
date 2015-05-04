@@ -11,6 +11,7 @@ y = np.transpose(y)
 
 liste = np.zeros(np.shape(y))
 
+fig1 = plt.gcf()
 
 for i in range(2,6):
     for k in range(np.shape(y)[1]):
@@ -35,7 +36,7 @@ plt.ylabel("Basicestim", fontsize=16)
 
 plt.show()
 
-
+fig1.savefig('basicestim2.png', dpi=100)
 
 
 

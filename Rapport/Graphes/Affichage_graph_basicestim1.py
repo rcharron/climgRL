@@ -16,7 +16,7 @@ for i in range(2,6):
     for k in range(np.shape(y)[1]):
         liste[i][k] = float(y[i][k])
 
-
+fig1 = plt.gcf()
 
 
 for i in range(0, len(liste[2])):
@@ -33,8 +33,10 @@ plt.xticks(x, y[1], rotation = 60)
 #plt.plot(liste[3], 'ro')
 plt.ylabel("Basicestim", fontsize=16)
 
+
 plt.show()
 
+fig1.savefig('basicestim1.png', dpi=100)
 
 
 

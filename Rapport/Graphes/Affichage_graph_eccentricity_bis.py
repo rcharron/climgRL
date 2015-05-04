@@ -11,6 +11,7 @@ y = np.transpose(y)
 
 liste = np.zeros(np.shape(y))
 
+fig1 = plt.gcf()
 
 for i in range(2,4):
     for k in range(np.shape(y)[1]):
@@ -32,7 +33,7 @@ plt.ylabel("Excentricite", fontsize=16)
 
 plt.show()
 
-
+fig1.savefig('eccentricitybis.png', dpi=100)
 
 
 
